@@ -49,7 +49,7 @@ function handleFiles(files) {
     // Your code to handle the selected files here
 }
 
-// acvdtozturk@gmail.com,aotoes@gmail.com
+
 const apiUrl = 'https://api.elasticemail.com/v2/email/send';
 const apiKey = '1AE90F9EA7AD6700F4891A3A548805AD389EC999501F39F74155CB0ABF3EE9B603E768D37CC12053C3C8B587C5801965';
 const apiMail = 'info@sellervibe.co'

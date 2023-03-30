@@ -78,10 +78,10 @@ pattern = [
     `&fromName=${yourName.value}`,
     `&replyTo=${yourEmail.value}`,
     `&to=${recipient_list.value.trim()}`,
-    `&bodyText=${encodeURIComponent(message.value)}`,
+    `&bodyText=${message.value}`,
 ]
 
-const response = await fetch(`${apiUrl}?apikey=${apiKey}${pattern.map(item => item).join('')}`, {
+const response = await fetch(`${apiUrl}?apikey=${apiKey}${encodeURIComponent(pattern.map(item => item).join(''))}`, {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json;charset=utf-8'

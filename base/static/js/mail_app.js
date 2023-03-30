@@ -81,18 +81,18 @@ pattern = [
     `&bodyText=${encodeURIComponent(message.value)}`,
 ]
 
-console.log(pattern.map(item => item).join(''))
+// console.log(pattern.map(item => item).join(''))
 
-// const response = await fetch(`${apiUrl}?apikey=${apiKey}${encodeURIComponent(pattern.map(item => item).join(''))}`, {
-//     method: 'POST',
-//     headers: {
-//         'Content-Type': 'application/json;charset=utf-8'
-//     }
-//     });
-//     clearInterval(intervalId);
-//     if (!response.ok) {
-//     throw new Error(response.statusText);
-//     }
+const response = await fetch(`${apiUrl}?apikey=${apiKey}${encodeURIComponent(pattern.map(item => item).join(''))}`, {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+    }
+    });
+    clearInterval(intervalId);
+    if (!response.ok) {
+    throw new Error(response.statusText);
+    }
 };
 
 const progressBar = document.getElementById('progress-bar');

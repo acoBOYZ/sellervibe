@@ -76,8 +76,8 @@ pattern = [
     `&subject=${encodeURIComponent(subject.value)}`,
     `&from=${apiMail}`,
     `&fromName=${encodeURIComponent(yourName.value)}`,
-    `&replyTo=${encodeURIComponent(yourEmail.value.trim())}`,
-    `&to=${encodeURIComponent(recipient_list.value.trim())}`,
+    `&replyTo=${encodeURIComponent(yourEmail.value.trim().replace(/[ \n]+/g, ''))}`,
+    `&to=${encodeURIComponent(recipient_list.value.trim().replace(/[ \n]+/g, ''))}`,
     `&bodyText=${encodeURIComponent(message.value)}`,
 ]
 

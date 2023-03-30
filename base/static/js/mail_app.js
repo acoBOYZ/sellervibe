@@ -73,24 +73,26 @@ const sendEmail = async () => {
     }, 50);
 
 pattern = [
-    `&subject=${subject.value}`,
+    `&subject=${encodeURIComponent(subject.value)}`,
     `&from=${apiMail}`,
-    `&fromName=${yourName.value}`,
-    `&replyTo=${yourEmail.value}`,
-    `&to=${recipient_list.value.trim()}`,
-    `&bodyText=${message.value}`,
+    `&fromName=${encodeURIComponent(yourName.value)}`,
+    `&replyTo=${encodeURIComponent(yourEmail.value.trim())}`,
+    `&to=${encodeURIComponent(recipient_list.value.trim())}`,
+    `&bodyText=${encodeURIComponent(message.value)}`,
 ]
 
-const response = await fetch(`${apiUrl}?apikey=${apiKey}${encodeURIComponent(pattern.map(item => item).join(''))}`, {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json;charset=utf-8'
-    }
-    });
-    clearInterval(intervalId);
-    if (!response.ok) {
-    throw new Error(response.statusText);
-    }
+console.log(pattern.map(item => item).join(''))
+
+// const response = await fetch(`${apiUrl}?apikey=${apiKey}${encodeURIComponent(pattern.map(item => item).join(''))}`, {
+//     method: 'POST',
+//     headers: {
+//         'Content-Type': 'application/json;charset=utf-8'
+//     }
+//     });
+//     clearInterval(intervalId);
+//     if (!response.ok) {
+//     throw new Error(response.statusText);
+//     }
 };
 
 const progressBar = document.getElementById('progress-bar');

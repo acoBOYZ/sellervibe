@@ -30,6 +30,7 @@ SECRET_KEY = 'django-insecure-=8^vy1x8=5j+mit-i$-0hpmajs2l6uq(fgd%bn-ybn#v514&zj
 
 INSTALLED_APPS = [
     'account',
+    'tool_mail',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -53,7 +54,9 @@ ROOT_URLCONF = 'base.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            BASE_DIR / 'templates'
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -115,3 +118,15 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# """
+# EMAIL SERVICES
+# """
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = 'your_email@example.com'  # Replace with your Gmail email address
+# EMAIL_HOST_PASSWORD = 'your_email_password'  # Replace with your Gmail email password
+# """"""

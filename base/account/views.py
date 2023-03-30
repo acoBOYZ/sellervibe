@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-def login(request):
-    return render(request, 'login.html')
+def get_started(request):
+    return render(request, 'get_started/index.html')
 
 #degisiklik

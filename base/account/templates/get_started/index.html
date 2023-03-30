@@ -1,0 +1,52 @@
+{% extends "base/index.html" %}
+{% load static %}
+
+{% block title %}sellervibe | get started{% endblock %}
+
+{% block stylesheet %}
+<style>
+    ._body{
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        min-height: 85.5vh;
+        justify-content: center;
+        align-items: center;
+    }
+
+    ._container{
+        background-color: rgba(255, 255, 255, .1);
+        box-shadow: 0 6px 10px rgba(0, 0, 0, .3);
+        padding: 30px;
+        border-radius: 15px;
+        width: 30%;
+        margin: 10px;
+        text-align: center;
+        color: lightgrey;
+        transition: all 100ms ease;
+    }
+
+    ._container:hover{
+        background-color: rgba(255, 255, 255, .2);
+        transform: scale(1.05);
+        transition: all 300ms ease;
+    }
+    
+    ._header{
+        font-size: 35px;
+        text-shadow: 5px 5px 5px rgba(0, 0, 0, .3);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<section class="_body">
+    <div class="_container">
+        <h1 class="_header">very soon</h1>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block script %}{% endblock %}

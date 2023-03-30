@@ -176,3 +176,5 @@ cython_debug/
 
 # private
 .ssh
+.user
+commands.txt

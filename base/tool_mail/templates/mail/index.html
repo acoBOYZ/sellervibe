@@ -1,0 +1,77 @@
+{% extends "base/index.html" %}
+{% load static %}
+
+{% block title %}sellervibe | mail tool{% endblock %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="{%static 'css/mail_style.css'%}">
+{% endblock %}
+
+{% block content %}
+
+<form method="post">
+    {% csrf_token %}
+    <section class="_body">
+        <div class="_container">
+
+            <section class="card-section">
+                <div class="card text-center" style="max-width: 18rem;">
+                    <div class="card-header">
+                        <div class="container mt-1">
+                            <div class="drop-zone" id="drop-zone">
+                                <i class="fas fa-cloud-upload-alt fa-3x mb-1"></i>
+                                <div>Drag and drop files here or click to select files (max ~7Mb)</div>
+                            </div>
+                            <form>
+                                <input type="file" name="attachment" id="attachment" multiple hidden>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card-header">
+                        <div class="form-outline">
+                            <textarea type="text" class="form-control" id="recipient" rows="6" style="font-size: 12px;" required spellcheck="false"></textarea>
+                            <label class="form-label" style="font-size: 13px;">Recipient email address</label>
+                        </div>
+                    </div>
+                    <div class="card-header">
+                        <div class="form-outline">
+                            <input type="text" id="name" class="form-control" required style="margin-bottom: 10px; font-size: 12px;">
+                            <label class="form-label" style="font-size: 13px;">Your name</label>
+                        </div>
+                        <div class="form-outline">
+                            <input type="email" id="email" class="form-control" required style="margin-bottom: 10px; font-size: 12px;">
+                            <label class="form-label" style="font-size: 13px;">Your email</label>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-outline">
+                            <input type="text" id="subject" class="form-control" required style="margin-bottom: 10px; font-size: 12px;">
+                            <label class="form-label" style="font-size: 13px;">Subject</label>
+                        </div>
+                        <div class="form-outline">
+                            <textarea class="form-control" id="message" rows="6" style="font-size: 12px;" required></textarea>
+                            <label class="form-label" style="font-size: 13px;">Message</label>
+                        </div>
+                    </div>
+                    <div class="card-footer text-muted">
+                        <button type="button" class="btn btn-outline-primary btn-floating" style="margin: 0 30px; margin-left: -50px;">
+                        <i class="fas fa-ellipsis"></i>
+                        </button>
+
+                        <button type="button" id="send-email-button" class="btn btn-outline-primary btn-rounded">Transfer</button>
+                        
+                        <div id="progress-bar" style="display: none; background-color: #ddd; height: 10px; width: 100%;">
+                            <div id="progress-bar-value" style="background-color: #4CAF50; height: 100%; width: 0%;"></div>
+                          </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </section>
+</form>
+{% endblock %}
+
+{% block script %}
+<script src="{%static 'js/mail_app.js'%}"></script>
+{% endblock %}

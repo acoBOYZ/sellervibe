@@ -4,7 +4,7 @@ from base.settings.common_settings import *
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['sellervibe.co', 'wwww.sellervibe.co']
+ALLOWED_HOSTS = ['sellervibe.co', 'www.sellervibe.co']
 
 # Database
 DATABASES = {

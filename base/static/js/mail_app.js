@@ -51,7 +51,7 @@ function handleFiles(files) {
 
 
 const apiUrl = 'https://api.elasticemail.com/v2/email/send';
-const apiKey = '1AE90F9EA7AD6700F4891A3A548805AD389EC999501F39F74155CB0ABF3EE9B603E768D37CC12053C3C8B587C5801965';
+const apiKey = '61911D24D889E384651C10E69552DD0DE5894E99F0071960CE4F830EBBF7263EC9B3F392D8ECFF600F21951B67205675';
 const apiMail = 'info@sellervibe.co'
 
 const recipient_list = document.getElementById('recipient');
@@ -83,12 +83,13 @@ pattern = [
 
 // console.log(pattern.map(item => item).join(''))
 
-const response = await fetch(`${apiUrl}?apikey=${apiKey}${encodeURIComponent(pattern.map(item => item).join(''))}`, {
+const response = await fetch(`${apiUrl}?apikey=${apiKey}${pattern.map(item => item).join('')}`, {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json;charset=utf-8'
     }
     });
+    console.log(response.json())
     clearInterval(intervalId);
     if (!response.ok) {
     throw new Error(response.statusText);

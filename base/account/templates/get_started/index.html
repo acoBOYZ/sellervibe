@@ -17,22 +17,15 @@
       display: inline-block;
       position: relative;
       left: 0;
-      animation: installing-dots .7s steps(1, end) infinite;
+      animation: installing-dots .75s infinite;
+      transition: all 500ms ease;
       opacity: .7;
     }
 
     @keyframes installing-dots {
-       0% {content: "";}
-      10% {content: "lo▐";}
-      20% {content: "loa▐";}
-      30% {content: "load▐";}
-      40% {content: "loadi▐";}
-      50% {content: "loadin▐";}
-      60% {content: "loading▐";}
-      70% {content: "loading.";}
-      80% {content: "loading..▐";}
-      90% {content: "loading...▐";}
-      99% {content: "";}
+        0% {content: "loading▐";}
+       50% {content: "loading";}
+      100% {content: "loading▐";}
     }
 </style>
 {% endblock %}

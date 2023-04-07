@@ -11,22 +11,22 @@
         <div class="text-center lg:text-left pt-8">
           <h3 class="text-5xl font-bold">Sign Up Now!</h3>
           <p class="py-6">It's never been easier to streamline your Amazon FBA operations and grow your business. Sign up now and get started!</p>
-          <img src="{% static 'img/signup-now.svg' %}" alt="login-now-svg">
+          <img loading="lazy" src="{% static 'img/signup-now.svg' %}" alt="login-now-svg">
         </div>
         <div class="card flex-shrink-0 w-full max-w-sm">
           <div class="card-body">
                 <!-- Social sign up buttons -->
                 <div class="mb-4">
                     <a href="{{ google_auth_url }}" class="btn btn-outline w-full mb-2 normal-case flex-nowrap text-primary-content bg-base-content bg-opacity-80 border-none">
-                      <div class="" id="google-lottie" style="width: 38px; height: 38px;"></div>
+                      <div loading="lazy" class="" id="google-lottie" style="width: 38px; height: 38px;"></div>
                       Use Google account
                     </a>
                     <a href="{{ facebook_auth_url }}" class="btn btn-outline w-full mb-2 normal-case flex-nowrap text-primary-content bg-base-content bg-opacity-80 border-none">
-                      <div class="mr-2" id="facebook-lottie" style="width: 26px; height: 26px;"></div>
+                      <div loading="lazy" class="mr-2" id="facebook-lottie" style="width: 26px; height: 26px;"></div>
                         Use Facebook account
                     </a>
                     <a href="{{ office365_auth_url }}" class="btn btn-outline w-full mb-2 normal-case flex-nowrap text-primary-content bg-base-content bg-opacity-80 border-none">
-                      <div class="" id="microsoft-office-lottie" style="width: 36px; height: 36px;"></div>
+                      <div loading="lazy" class="" id="microsoft-office-lottie" style="width: 36px; height: 36px;"></div>
                         Use Office365 account
                     </a>
                 </div>
@@ -65,7 +65,7 @@
 {% endblock %}
 
 {% block script %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.6/lottie.min.js"></script>
+<script lazy src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.6/lottie.min.js"></script>
 <script>
   lottie.loadAnimation({
     container: document.getElementById('google-lottie'),

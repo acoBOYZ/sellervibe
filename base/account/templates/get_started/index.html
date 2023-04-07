@@ -45,15 +45,16 @@
             <div class="mockup-code border-base-content w-full max-w-xs flex-1 border-0 border-opacity-10 bg-opacity-20 pb-8 text-left text-current shadow-primary shadow-2xl lg:mx-0 hover:translate-y-3 hover:scale-105 transform-gpu transition-all duration-500">
                 <pre data-prefix="$"><code><a href="/tools/mail">sellervibe email</a></code></pre>
                 <pre data-prefix="$"><code><a href="#">sellervibe asin</a></code></pre>
-                <pre data-prefix=">" class="text-warning flex items-center">
+                <pre data-prefix=">" class="text-primary flex items-center">
                     <code>loading </code>
-                    <svg class="animate-spin -ml-1 mr-5 h-3 w-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
+                    <!-- <svg class="animate-spin -ml-1 mr-5 h-3 w-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg> -->
+                    <div loading="lazy" class="" id="loading-lottie" style="width: 24px; height: 24px;"></div>
                 </pre>
             </div>
             <div class="relative rounded-xl overflow-auto w-full max-w-xs flex-1 border-0 border-opacity-10 bg-opacity-20 shadow-primary shadow-2xl lg:mx-0 hover:translate-y-3 hover:scale-105 transform-gpu transition-all duration-500">
               <!-- <iframe class="w-full rounded-lg" src="https://www.youtube.com/embed/IvVFylXBAVY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" loading="lazy"></iframe> -->
-              <lite-youtube videoid="IvVFylXBAVY" playlabel="Play: AMAZON JAPONYA'DA SATTIĞIMIZ ÜRÜNLERİ GÖSTERİYORUM | Online Arbitrage'da Kârlı Ürünleri İnceleyelim"></lite-youtube>
+              <lite-youtube loading="lazy" videoid="IvVFylXBAVY" playlabel="Play: AMAZON JAPONYA'DA SATTIĞIMIZ ÜRÜNLERİ GÖSTERİYORUM | Online Arbitrage'da Kârlı Ürünleri İnceleyelim"></lite-youtube>
               </div>
         </div>
         <div class="mb-2 py-4 text-center lg:py-10 lg:text-left">
@@ -159,4 +160,21 @@
 
 {% endblock %}
 
-{% block script %}{% endblock %}
+{% block script %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.6/lottie.min.js"></script>
+<script>
+  lottie.loadAnimation({
+    container: document.getElementById('loading-lottie'),
+    renderer: 'svg',
+    loop: true,
+    autoplay: true,
+    path: '{% static "img/loading-lottie.json" %}',
+    rendererSettings: {
+      preserveAspectRatio: 'xMidYMid slice',
+      progressiveLoad: false,
+      scaleMode: 'noScale',
+      hideOnTransparent: true
+    }
+  });
+</script>
+{% endblock %}

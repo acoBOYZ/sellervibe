@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>{% block title %}{% endblock %}</title>
     <link rel="icon" href="{%static 'img/logo.svg'%}" type="image/x-icon">
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@2.51.5/dist/full.css" rel="stylesheet" type="text/css" />
+    <link href="{% static 'daisyui/daisyui.min.css' %}" rel="stylesheet" type="text/css" />
     {% block stylesheet %}{% endblock %}
     <style>
       body {
@@ -666,7 +666,7 @@
     </main>
 
       {% block script %}{% endblock %}
-      <script src="https://cdn.tailwindcss.com"></script>
+      <script src="{% static 'daisyui/daisyui.min.js' %}"></script>
       <script>
         const themeButtons = document.querySelectorAll('[data-set-theme]');
         

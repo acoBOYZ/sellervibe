@@ -33,6 +33,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 INSTALLED_APPS = [
     'compressor',
     'django_extensions',
+    'htmlmin',
     'account',
     'tool_mail',
     'django.contrib.admin',
@@ -46,7 +47,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.gzip.GZipMiddleware',
-    'htmlmin.middleware.HtmlMinifyMiddleware',
+    # 'htmlmin.middleware.HtmlMinifyMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

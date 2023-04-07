@@ -4,8 +4,8 @@
 {% block title %}sellervibe | get started{% endblock %}
 
 {% block stylesheet %}
-<link rel="stylesheet" href="{% static 'liteyt/lite-yt-embed.css' %}" />
-<script src="{% static 'liteyt/lite-yt-embed.js' %}"></script>
+<link rel="stylesheet" href="{% static 'liteyt/lite-yt-embed.css' %}" defer/>
+<script src="{% static 'liteyt/lite-yt-embed.js' %}" defer></script>
 {% endblock %}
 
 {% block content %}
@@ -161,7 +161,7 @@
 {% endblock %}
 
 {% block script %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.6/lottie.min.js"></script>
+<script src="{% static 'lottie/lottie.min.js' %}"></script>
 <script>
   lottie.loadAnimation({
     container: document.getElementById('loading-lottie'),

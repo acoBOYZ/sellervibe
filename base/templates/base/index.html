@@ -671,7 +671,7 @@
       {% block script %}{% endblock %}
 
       <!-- {% compress js %} -->
-        <script src="{% static 'daisyui/daisyui.min.js' %}"></script>
+        <script src="{% static 'daisyui/daisyui.min.js' %}" defer></script>
         <script>
           const themeButtons = document.querySelectorAll('[data-set-theme]');
           

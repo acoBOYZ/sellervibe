@@ -65,7 +65,7 @@
 {% endblock %}
 
 {% block script %}
-<script lazy src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.6/lottie.min.js"></script>
+<script src="{% static 'lottie/lottie.min.js' %}"></script>
 <script>
   lottie.loadAnimation({
     container: document.getElementById('google-lottie'),

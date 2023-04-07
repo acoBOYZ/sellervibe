@@ -31,6 +31,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # Application definition
 
 INSTALLED_APPS = [
+    'django_extensions',
     'account',
     'tool_mail',
     'django.contrib.admin',
@@ -42,6 +43,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'django.middleware.cache.UpdateCacheMiddleware',
+    'django.middleware.gzip.GZipMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -49,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
 ]
 
 ROOT_URLCONF = 'base.urls'
@@ -132,3 +136,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # EMAIL_HOST_USER = 'your_email@example.com'  # Replace with your Gmail email address
 # EMAIL_HOST_PASSWORD = 'your_email_password'  # Replace with your Gmail email password
 # """"""
+
+EXPIRES_DEFAULT = 'access plus 1 month'
+EXPIRES_IMAGES = 'access plus 1 year'
+EXPIRES_CSS = 'access plus 1 year'
+EXPIRES_JS = 'access plus 1 year'
+EXPIRES_FONTS = 'access plus 1 year'
+
+GZIP_COMPRESS_MIN_SIZE = 1024

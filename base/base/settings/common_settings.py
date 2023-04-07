@@ -124,6 +124,7 @@ STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'compressor.finders.CompressorFinder', # Add this line
 ]
+STATICFILES_CACHE_CONTROL = 'max-age=31536000'
 
 # STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
 

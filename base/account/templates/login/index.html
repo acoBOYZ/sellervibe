@@ -3,7 +3,10 @@
 
 {% block title %}sellervibe | get started{% endblock %}
 
-{% block stylesheet %}{% endblock %}
+{% block stylesheet %}
+{% endblock %}
+
+
 
 {% block content %}
 <div class="preview border-none bg-base-200 rounded-b-box rounded-tr-box flex min-h-[6rem] min-w-[18rem] max-w-4xl flex-wrap items-center justify-center gap-2 overflow-x-hidden border bg-cover bg-top p-16 undefined text-primary-content bg-opacity-0 shadow-2xl subpixel-antialiased" style="background-size: 5px 5px">
@@ -17,22 +20,16 @@
           <div class="card-body">
                 <!-- Social sign up buttons -->
                 <div class="mb-4">
-                    <a href="{{ google_auth_url }}" class="btn btn-outline w-full mb-2 normal-case flex-nowrap text-primary-content">
-                        <svg class="mr-2" fill="currentColor" width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-opacity=".95" stroke-width="0.2" stroke-linejoin="round" d="M19.76 10.77L19.67 10.42H12.23V13.58H16.68C16.4317 14.5443 15.8672 15.3974 15.0767 16.0029C14.2863 16.6084 13.3156 16.9313 12.32 16.92C11.0208 16.9093 9.77254 16.4135 8.81999 15.53C8.35174 15.0685 7.97912 14.5191 7.72344 13.9134C7.46777 13.3077 7.33407 12.6575 7.33 12C7.34511 10.6795 7.86792 9.41544 8.79 8.47002C9.7291 7.58038 10.9764 7.08932 12.27 7.10002C13.3779 7.10855 14.4446 7.52101 15.27 8.26002L17.47 6.00002C16.02 4.70638 14.1432 3.9941 12.2 4.00002C11.131 3.99367 10.0713 4.19793 9.08127 4.60115C8.09125 5.00436 7.19034 5.59863 6.43 6.35002C4.98369 7.8523 4.16827 9.85182 4.15152 11.9371C4.13478 14.0224 4.918 16.0347 6.34 17.56C7.12784 18.3449 8.06422 18.965 9.09441 19.3839C10.1246 19.8029 11.2279 20.0123 12.34 20C13.3484 20.0075 14.3479 19.8102 15.2779 19.42C16.2078 19.0298 17.0488 18.4549 17.75 17.73C19.1259 16.2171 19.8702 14.2347 19.83 12.19C19.8408 11.7156 19.8174 11.2411 19.76 10.77Z"/>
-                            </svg>
-                        Use Google account
+                    <a href="{{ google_auth_url }}" class="btn btn-outline w-full mb-2 normal-case flex-nowrap text-primary-content bg-base-content bg-opacity-80 border-none">
+                      <div class="mr-2" id="google-lottie" style="width: 38px; height: 38px;"></div>
+                      Use Google account
                     </a>
-                    <a href="{{ facebook_auth_url }}" class="btn btn-outline w-full mb-2 normal-case flex-nowrap text-primary-content">
-                        <svg class="mr-2" fill="currentColor" width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-opacity=".95" stroke-width="0.2" stroke-linejoin="round" d="M12 2.03998C6.5 2.03998 2 6.52998 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.84998C10.44 7.33998 11.93 5.95998 14.22 5.95998C15.31 5.95998 16.45 6.14998 16.45 6.14998V8.61998H15.19C13.95 8.61998 13.56 9.38998 13.56 10.18V12.06H16.34L15.89 14.96H13.56V21.96C15.9164 21.5878 18.0622 20.3855 19.6099 18.57C21.1576 16.7546 22.0054 14.4456 22 12.06C22 6.52998 17.5 2.03998 12 2.03998Z"/>
-                            </svg>
+                    <a href="{{ facebook_auth_url }}" class="btn btn-outline w-full mb-2 normal-case flex-nowrap text-primary-content bg-base-content bg-opacity-80 border-none">
+                      <div class="mr-2" id="facebook-lottie" style="width: 26px; height: 26px;"></div>
                         Use Facebook account
                     </a>
-                    <a href="{{ office365_auth_url }}" class="btn btn-outline w-full mb-2 normal-case flex-nowrap text-primary-content">
-                        <svg class="mr-2" fill="currentColor" width="24px" height="24px" viewBox="0 0 76 76" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" baseProfile="full" enable-background="new 0 0 76.00 76.00" xml:space="preserve">
-                            <path fill-opacity=".95" stroke-width="0.2" stroke-linejoin="round" d="M 20,51L 28,48L 28,27L 43,23L 43,54L 20.9999,51.2501L 43,59L 56,56L 56,20L 43,17L 20,25L 20,51 Z "/>
-                        </svg>
+                    <a href="{{ office365_auth_url }}" class="btn btn-outline w-full mb-2 normal-case flex-nowrap text-primary-content bg-base-content bg-opacity-80 border-none">
+                      <div class="mr-2" id="microsoft-office-lottie" style="width: 36px; height: 36px;"></div>
                         Use Office365 account
                     </a>
                 </div>
@@ -64,4 +61,47 @@
   </div>
 {% endblock %}
 
-{% block script %}{% endblock %}
+{% block script %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.6/lottie.min.js"></script>
+<script>
+  lottie.loadAnimation({
+    container: document.getElementById('google-lottie'),
+    renderer: 'svg',
+    loop: true,
+    autoplay: true,
+    path: '{% static "img/google-lottie.json" %}',
+    rendererSettings: {
+    preserveAspectRatio: 'xMidYMid meet',
+    progressiveLoad: false,
+    scaleMode: 'noScale',
+    hideOnTransparent: true
+  }
+  });
+  lottie.loadAnimation({
+    container: document.getElementById('facebook-lottie'),
+    renderer: 'svg',
+    loop: true,
+    autoplay: true,
+    path: '{% static "img/facebook-lottie.json" %}',
+    rendererSettings: {
+    preserveAspectRatio: 'xMidYMid meet',
+    progressiveLoad: false,
+    scaleMode: 'noScale',
+    hideOnTransparent: true
+  }
+  });
+  lottie.loadAnimation({
+    container: document.getElementById('microsoft-office-lottie'),
+    renderer: 'svg',
+    loop: true,
+    autoplay: true,
+    path: '{% static "img/microsoft-office-lottie.json" %}',
+    rendererSettings: {
+    preserveAspectRatio: 'xMidYMid meet',
+    progressiveLoad: false,
+    scaleMode: 'noScale',
+    hideOnTransparent: true
+  }
+  });
+</script>
+{% endblock %}

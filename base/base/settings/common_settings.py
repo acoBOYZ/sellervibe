@@ -151,8 +151,8 @@ EXPIRES_FONTS = 'access plus 1 year'
 
 GZIP_COMPRESS_MIN_SIZE = 1024
 
-COMPRESS_ENABLED = True
-COMPRESS_OFFLINE = True
+COMPRESS_ENABLED = False
+COMPRESS_OFFLINE = False
 COMPRESS_OUTPUT_DIR = 'compressed'
 COMPRESS_CSS_FILTERS = [
     'compressor.filters.cssmin.CSSMinFilter',

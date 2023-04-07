@@ -1,4 +1,5 @@
 {% load static %}
+{% load compress %}
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
@@ -7,26 +8,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>{% block title %}{% endblock %}</title>
     <link rel="icon" href="{%static 'img/logo.svg'%}" type="image/x-icon">
-    <link href="{% static 'daisyui/daisyui.min.css' %}" rel="stylesheet" type="text/css" />
     {% block stylesheet %}{% endblock %}
-    <style>
-      body {
-        margin: 0;
-        padding: 0;
-        min-height: 100vh;
-      }
+    {% compress css %}
+      <link href="{% static 'daisyui/daisyui.min.css' %}" rel="stylesheet" type="text/css" />
+      <style>
+        body {
+          margin: 0;
+          padding: 0;
+          min-height: 100vh;
+        }
 
-      @keyframes scale {
-        0% {transform: scale(1); opacity: .7;}
-        50% {transform: scale(1.06); opacity: .5;}
-        100% {transform: scale(1); opacity: .7;}
-      }
-      .animate-scale {
-        animation: scale 6s infinite;
-        transform-origin: top;
-        transition: all 300ms ease;
-      }
-    </style>
+        @keyframes scale {
+          0% {transform: scale(1); opacity: .7;}
+          50% {transform: scale(1.06); opacity: .5;}
+          100% {transform: scale(1); opacity: .7;}
+        }
+        .animate-scale {
+          animation: scale 6s infinite;
+          transform-origin: top;
+          transition: all 300ms ease;
+        }
+      </style>
+    {% endcompress %}
 </head>
 
 <body>    
@@ -666,53 +669,56 @@
     </main>
 
       {% block script %}{% endblock %}
-      <script src="{% static 'daisyui/daisyui.min.js' %}"></script>
-      <script>
-        const themeButtons = document.querySelectorAll('[data-set-theme]');
-        
-        themeButtons.forEach(function(button) {
-          button.addEventListener('click', function () {
-            const newTheme = this.getAttribute('data-set-theme');
-            document.documentElement.setAttribute('data-theme', newTheme);
 
-            themeButtons.forEach(function(otherButton) {
-              const activeClass = otherButton.getAttribute('data-act-class');
-              if (otherButton === button) {
-                otherButton.classList.add(activeClass);
-              } else {
-                otherButton.classList.remove(activeClass);
-              }
+      {% compress js %}
+        <script src="{% static 'daisyui/daisyui.min.js' %}"></script>
+        <script>
+          const themeButtons = document.querySelectorAll('[data-set-theme]');
+          
+          themeButtons.forEach(function(button) {
+            button.addEventListener('click', function () {
+              const newTheme = this.getAttribute('data-set-theme');
+              document.documentElement.setAttribute('data-theme', newTheme);
+
+              themeButtons.forEach(function(otherButton) {
+                const activeClass = otherButton.getAttribute('data-act-class');
+                if (otherButton === button) {
+                  otherButton.classList.add(activeClass);
+                } else {
+                  otherButton.classList.remove(activeClass);
+                }
+              });
             });
           });
-        });
 
-        const header = document.getElementById('navBar')
-        const logo = document.getElementById('primary-logo')
+          const header = document.getElementById('navBar')
+          const logo = document.getElementById('primary-logo')
 
-        window.addEventListener('scroll', function () {
-          const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-          
-          if (currentScrollTop >= 15) {
-            header.classList.add('bg-base-100', 'shadow-2xl');
-            logo.classList.add('text-primary')
-          } else {
-            header.classList.remove('bg-base-100', 'shadow-2xl');
-            logo.classList.remove('text-primary')
-          }
-        });
+          window.addEventListener('scroll', function () {
+            const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            if (currentScrollTop >= 15) {
+              header.classList.add('bg-base-100', 'shadow-2xl');
+              logo.classList.add('text-primary')
+            } else {
+              header.classList.remove('bg-base-100', 'shadow-2xl');
+              logo.classList.remove('text-primary')
+            }
+          });
 
-        const changeTransformOrigin = () => {
-          const animatedElement = document.querySelector(".animate-scale");
-          const originOptions = ["top", "bottom", "left", "right", "center"];
-          const randomTransformOrigin = originOptions[Math.floor(Math.random() * originOptions.length)];
-          animatedElement.style.transformOrigin = randomTransformOrigin;
-        };
+          const changeTransformOrigin = () => {
+            const animatedElement = document.querySelector(".animate-scale");
+            const originOptions = ["top", "bottom", "left", "right", "center"];
+            const randomTransformOrigin = originOptions[Math.floor(Math.random() * originOptions.length)];
+            animatedElement.style.transformOrigin = randomTransformOrigin;
+          };
 
-      const animatedElement = document.querySelector(".animate-scale");
-      const animationDuration = parseFloat(getComputedStyle(animatedElement).getPropertyValue("animation-duration")) * 1000;
+        const animatedElement = document.querySelector(".animate-scale");
+        const animationDuration = parseFloat(getComputedStyle(animatedElement).getPropertyValue("animation-duration")) * 1000;
 
-      setInterval(changeTransformOrigin, animationDuration);
-      </script>
+        setInterval(changeTransformOrigin, animationDuration);
+        </script>
+      {% endcompress %}
 </body>
 
 </html>

@@ -31,6 +31,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # Application definition
 
 INSTALLED_APPS = [
+    'compressor',
     'django_extensions',
     'account',
     'tool_mail',
@@ -45,6 +46,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.gzip.GZipMiddleware',
+    'htmlmin.middleware.HtmlMinifyMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -144,3 +146,14 @@ EXPIRES_JS = 'access plus 1 year'
 EXPIRES_FONTS = 'access plus 1 year'
 
 GZIP_COMPRESS_MIN_SIZE = 1024
+
+COMPRESS_ENABLED = True
+COMPRESS_OFFLINE = True
+COMPRESS_OUTPUT_DIR = 'compressed'
+COMPRESS_CSS_FILTERS = [
+    'compressor.filters.cssmin.CSSMinFilter',
+]
+COMPRESS_JS_FILTERS = [
+    'compressor.filters.jsmin.JSMinFilter',
+]
+COMPRESS_STORAGE = 'compressor.storage.GzipCompressorFileStorage'

@@ -1,5 +1,5 @@
 {% load static %}
-{% load compress %}
+<!-- {% load compress %} -->
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
@@ -9,7 +9,7 @@
     <title>{% block title %}{% endblock %}</title>
     <link rel="icon" href="{%static 'img/logo.svg'%}" type="image/x-icon">
     {% block stylesheet %}{% endblock %}
-    {% compress css %}
+    <!-- {% compress css %} -->
       <link href="{% static 'daisyui/daisyui.min.css' %}" rel="stylesheet" type="text/css" />
       <style>
         body {
@@ -29,7 +29,7 @@
           transition: all 300ms ease;
         }
       </style>
-    {% endcompress %}
+    <!-- {% endcompress %} -->
 </head>
 
 <body>    
@@ -670,7 +670,7 @@
 
       {% block script %}{% endblock %}
 
-      {% compress js %}
+      <!-- {% compress js %} -->
         <script src="{% static 'daisyui/daisyui.min.js' %}"></script>
         <script>
           const themeButtons = document.querySelectorAll('[data-set-theme]');
@@ -718,7 +718,7 @@
 
         setInterval(changeTransformOrigin, animationDuration);
         </script>
-      {% endcompress %}
+      <!-- {% endcompress %} -->
 </body>
 
 </html>

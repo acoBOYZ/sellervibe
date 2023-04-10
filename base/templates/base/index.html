@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>{% block title %}{% endblock %}</title>
     <link rel="icon" href="{%static 'img/logo.svg'%}" type="image/x-icon">
+    <script src="{% static 'daisyui/daisyui.min.js' %}"></script>
     {% block stylesheet %}{% endblock %}
     <!-- {% compress css %} -->
       <link href="{% static 'daisyui/daisyui.min.css' %}" rel="stylesheet" type="text/css" defer/>
@@ -32,10 +33,10 @@
     <!-- {% endcompress %} -->
 </head>
 
-<body>    
-  <div class="sticky top-0 z-30 flex h-16 w-full justify-center bg-opacity-10 backdrop-blur transition-all duration-100 text-primary-content" id="navBar">
-    <nav class="navbar w-full">
-      <div class="flex flex-1 md:gap-1 lg:gap-2">
+<body>
+  <div class="sticky top-0 z-30 bg-opacity-10 backdrop-blur transition-all duration-100 flex h-16 w-full justify-center text-primary-content" id="navBar">
+    <nav class="navbar w-full flex-row">
+      <div class="flex-1 md:gap-1 lg:gap-2">
         <span class="tooltip tooltip-bottom before:text-xs before:content-[attr(data-tip)] hidden" data-tip="Menu">
           <label for="drawer" class="btn btn-square btn-ghost drawer-button ">
             <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block h-5 w-5 stroke-current md:h-6 md:w-6">
@@ -649,9 +650,14 @@
           </ul>
         </div>
       </div>
-    </nav>
-
+    </nav>  
+    <div class="progress-container h-0.5 w-full absolute mt-16" id="progress">
+      <div class="h-0.5 w-full bg-transparent">
+        <div class="h-0.5 transition-all duration-300 bg-primary rounded" style="width: 0%;"></div>
+      </div>
+    </div>
   </div>
+
 
     <main>
       <div class="from-success to-secondary text-primary-content -mt-[4rem] grid place-items-center items-end bg-gradient-to-br pt-20 min-h-[100vh]">
@@ -671,53 +677,7 @@
       {% block script %}{% endblock %}
 
       <!-- {% compress js %} -->
-        <script src="{% static 'daisyui/daisyui.min.js' %}"></script>
-        <script>
-          const themeButtons = document.querySelectorAll('[data-set-theme]');
-          
-          themeButtons.forEach(function(button) {
-            button.addEventListener('click', function () {
-              const newTheme = this.getAttribute('data-set-theme');
-              document.documentElement.setAttribute('data-theme', newTheme);
-
-              themeButtons.forEach(function(otherButton) {
-                const activeClass = otherButton.getAttribute('data-act-class');
-                if (otherButton === button) {
-                  otherButton.classList.add(activeClass);
-                } else {
-                  otherButton.classList.remove(activeClass);
-                }
-              });
-            });
-          });
-
-          const header = document.getElementById('navBar')
-          const logo = document.getElementById('primary-logo')
-
-          window.addEventListener('scroll', function () {
-            const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            
-            if (currentScrollTop >= 15) {
-              header.classList.add('bg-base-100', 'shadow-2xl');
-              logo.classList.add('text-primary')
-            } else {
-              header.classList.remove('bg-base-100', 'shadow-2xl');
-              logo.classList.remove('text-primary')
-            }
-          });
-
-          const changeTransformOrigin = () => {
-            const animatedElement = document.querySelector(".animate-scale");
-            const originOptions = ["top", "bottom", "left", "right", "center"];
-            const randomTransformOrigin = originOptions[Math.floor(Math.random() * originOptions.length)];
-            animatedElement.style.transformOrigin = randomTransformOrigin;
-          };
-
-        const animatedElement = document.querySelector(".animate-scale");
-        const animationDuration = parseFloat(getComputedStyle(animatedElement).getPropertyValue("animation-duration")) * 1000;
-
-        setInterval(changeTransformOrigin, animationDuration);
-        </script>
+        <script src="{% static 'js/base_app.js' %}"></script>
       <!-- {% endcompress %} -->
 </body>
 

@@ -1,0 +1,236 @@
+{% extends "light_base/index.html" %}
+{% load static %}
+
+{% block title %}sellervibe | mail tool{% endblock %}
+
+{% block stylesheet %}{% endblock %}
+
+{% block contacts_active %}active{% endblock %}
+{% block templates_active %}{% endblock %}
+{% block send_active %}{% endblock %}
+
+{% block content %}
+
+    <h1 class="text-4xl font-extrabold my-8">Create Contacts</h1>
+    <p>With this new feature, you can simply upload a file or copy and paste text containing your contacts' information and quickly add them to your email list. You can also easily send bulk emails to all of your contacts with just a few clicks.</p>
+    <div class="bg-base-content/10 my-10 mx-1 h-px"></div>
+    <div class="component-preview not-prose text-base-content my-4 max-w-4xl" id="collapse-with-checkbox">
+        <div class="collapse collapse-open collapse-arrow border border-base-300 bg-base-100" id="c_1">
+            <div class="collapse-title text-xl font-medium flex items-center space-x-4">
+                <div class="rounded-full bg-base-100 border-none w-7 h-7 flex justify-center items-center inline-flex shadow" id="n_1">
+                    <p class="text-base">1</p>
+                </div>
+                <p>Confirmation of terms</p>
+            </div>
+            <div class="collapse-content">
+              <p>
+                <div class="form-control">
+                    <label class="label cursor-pointer justify-start ml-12 space-x-4">
+                        <input type="checkbox" class="checkbox checkbox-sm transition-all ease-in-out duration-75" id="1_checkbox"/>
+                        <span class="label-text">I confirm these contacts have consented to receive my communications</span> 
+                    </label>
+                </div>
+                <div class="bg-base-content/10 my-4 mx-1 h-px"></div>
+                <button class="btn float-right normal-case" id="cb_1" disabled="disabled">Continue</button>
+              </p>
+            </div>
+        </div>
+        <div class="collapse collapse-close border border-base-300 bg-base-100 opacity-50" id="c_2">
+            <div class="collapse-title text-xl font-medium flex items-center space-x-4">
+                <div class="rounded-full bg-base-100 border-none w-7 h-7 flex justify-center items-center inline-flex shadow" id="n_2">
+                    <p class="text-base">2</p>
+                </div>
+                <p>How do you want to upload contacts?</p>
+            </div>
+            <div class="collapse-content">
+              <p>
+                <div class="form-control">
+                    <div class="flex-col space-y-2">
+                        <label class="label cursor-pointer flex-row justify-start ml-12 space-x-4">
+                            <input type="radio" name="r_2" class="radio radio-sm transition-all ease-in-out duration-75" id="r_2_1" checked/>
+                            <span class="label-text">Upload contacts from file (zip, csv, json, xml)</span> 
+                        </label>
+                        <label class="label cursor-pointer flex-row justify-start ml-12 space-x-4">
+                            <input type="radio" name="r_2" class="radio radio-sm transition-all ease-in-out duration-75" id="r_2_2"/>
+                            <span class="label-text">Type or copy and paste contacts</span> 
+                        </label>
+                    </div>
+                </div>
+                <div class="bg-base-content/10 my-4 mx-1 h-px"></div>
+                <div class="flex items-center justify-end space-x-4">
+                    <button class="btn btn-outline border-none float-right normal-case" id="bb_2">Back</button>
+                    <button class="btn float-right normal-case" id="cb_2">Continue</button>
+                </div>
+              </p>
+            </div>
+        </div>
+        <div class="collapse collapse-close border border-base-300 bg-base-100 opacity-50" id="c_3">
+            <div class="collapse-title text-xl font-medium flex items-center space-x-4">
+                <div class="rounded-full bg-base-100 border-none w-7 h-7 flex justify-center items-center inline-flex shadow" id="n_3">
+                    <p class="text-base">3</p>
+                </div>
+                <p>Add contacts</p>
+            </div>
+            <div class="collapse-content">
+              <p>
+                <div class="form-control">
+                    <div class="flex-col space-y-4">
+                        <div class="rounded-md border-none flex justify-center items-center bg-info bg-opacity-20 mx-12 inline-flex shadow">
+                            <div class="text-sm m-2">
+                                <div class="flex items-start space-x-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 24 24" width="2em" fill="currentColor" class="text-success opacity-75">
+                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path>
+                                      </svg>
+                                    <span class="m-1">
+                                          We support various formats but for the smoothest performance we recommend .csv file. Make sure that the file has included field labeled 'email'. Find out more about how you can prepare your file <a href="#" class="link link-hover link-success opacity-75">here</a>.
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <input type="file" name="" id="fi_3" hidden>
+                        <div class="form-control mx-12 space-y-4" id="ff_3">
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-base-content/10 my-4 mx-1 h-px"></div>
+                <div class="flex items-center justify-end space-x-4">
+                    <button class="btn btn-outline border-none float-right normal-case" id="bb_3">Back</button>
+                    <button class="btn float-right normal-case" id="cb_3" disabled="disabled">Continue</button>
+                </div>
+              </p>
+            </div>
+        </div>
+        <div class="collapse collapse-close border border-base-300 bg-base-100 opacity-50" id="c_4">
+            <div class="collapse-title text-xl font-medium flex items-center space-x-4">
+                <div class="rounded-full bg-base-100 border-none w-7 h-7 flex justify-center items-center inline-flex shadow" id="n_4">
+                    <p class="text-base">4</p>
+                </div>
+                <p>Contact fields</p>
+            </div>
+            <div class="collapse-content">
+              <p>
+                <div class="form-control space-y-4">
+                    <label class="label cursor-pointer justify-start ml-12 space-x-4">
+                        <span class="label-text">We have found <span class="text-warning font-bold" id="sc_4_1">0</span> contacts, <span class="text-success font-bold" id="sc_4_2">0</span> recognized contact fields, <span class="text-error font-bold" id="sc_4_3">0</span> unknown contact fields.</span> 
+                    </label>
+
+                    <div class="rounded-md border-none flex justify-center items-center bg-info bg-opacity-20 mx-12 inline-flex shadow">
+                        <div class="text-sm m-2">
+                            <div class="flex items-start space-x-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 24 24" width="2em" fill="currentColor" class="text-success opacity-75">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path>
+                                  </svg>
+                                <span class="m-1">
+                                    Please, define the unknown contact fields or skip to options. Please note that you might not have access to all available contact fields or you're trying to add contact fields that don't exist. <a href="#" class="link link-hover link-success opacity-75">Learn more</a>.
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="bg-base-content/10 my-4 mx-1 h-px"></div>
+                <div class="flex items-center justify-end space-x-4">
+                    <button class="btn btn-outline border-none float-right normal-case" id="bb_4">Back</button>
+                    <button class="btn float-right normal-case" id="cb_4">Continue</button>
+                </div>
+              </p>
+            </div>
+        </div>
+        <div class="collapse collapse-close border border-base-300 bg-base-100 opacity-50" id="c_5">
+            <div class="collapse-title text-xl font-medium flex items-center space-x-4">
+                <div class="rounded-full bg-base-100 border-none w-7 h-7 flex justify-center items-center inline-flex shadow" id="n_5">
+                    <p class="text-base">5</p>
+                </div>
+                <p>Assign contacts</p>
+            </div>
+            <div class="collapse-content">
+              <p>
+                <div class="form-control space-y-4">
+                    <div class="bg-base-100 flex flex-col sm:flex-row justify-center sm:justify-between items-center mx-6">
+                        <div class="rounded-md border border-base-300 flex flex-row justify-between items-center w-full h-24 cursor-pointer px-6 mx-6 my-4" id="rc_5_1">
+                            <label class="label cursor-pointer">
+                                <span class="label-text">Existing list</span> 
+                            </label>
+                            <input type="radio" name="radio-10" class="radio radio-sm checked:bg-red-500" id="rb_5_1" checked />
+                        </div>
+                        <div class="rounded-md border border-base-300 flex flex-row justify-between items-center w-full h-24 cursor-pointer px-6 mx-6 my-4" id="rc_5_2">
+                            <label class="label cursor-pointer">
+                              <span class="label-text">New list</span> 
+                            </label>
+                            <input type="radio" name="radio-10" class="radio radio-sm checked:bg-blue-500" id="rb_5_2" />
+                        </div>
+                    </div>
+
+                    <div class="rounded-md border-none flex justify-center items-center bg-info bg-opacity-20 mx-12 inline-flex shadow">
+                        <div class="text-sm m-2">
+                            <div class="flex items-start space-x-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 24 24" width="2em" fill="currentColor" class="text-success opacity-75">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path>
+                                  </svg>
+                                <span class="m-1">
+                                    Please note that we will automatically remove all duplicates available on the uploaded list.
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-control w-full px-12">
+                        <label class="label">
+                          <span class="label-text">Select list name</span>
+                        </label>
+                        <select class="select select-bordered" id="tb_5_1">
+                          <option disabled selected>Pick one</option>
+                          <option>Star Wars</option>
+                          <option>Harry Potter</option>
+                          <option>Lord of the Rings</option>
+                          <option>Planet of the Apes</option>
+                          <option>Star Trek</option>
+                        </select>
+                        <input type="text" placeholder="..." class="input input-bordered" id="tb_5_2" hidden/>
+                      </div>
+
+                </div>
+                <div class="bg-base-content/10 my-4 mx-1 h-px"></div>
+                <div class="flex items-center justify-end space-x-4">
+                    <button class="btn btn-outline border-none float-right normal-case" id="bb_5">Back</button>
+                    <button class="btn float-right normal-case" id="cb_5">Continue</button>
+                </div>
+              </p>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block content_btn %}
+<div class="bg-base-content/10 my-10 mx-1 h-px"></div>
+<div class="flex justify-between">
+    <div>
+        <a href="/tools/mail/" class="btn btn-sm md:btn-md btn-ghost gap-2 normal-case lg:gap-3">
+        <svg class="h-6 w-6 fill-current md:h-8 md:w-8" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <path d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z"></path>
+        </svg>
+        <div class="flex flex-col items-start">
+            <span class="text-base-content/50 hidden text-xs font-normal md:block">Prev</span>
+            <span>Started</span>
+        </div>
+        </a>
+    </div>
+    <div>
+        <a href="/tools/mail/templates" class="btn btn-sm md:btn-md gap-2 normal-case lg:gap-3">
+        <div class="flex flex-col items-end">
+            <span class="text-neutral-content/50 hidden text-xs font-normal md:block">Next</span>
+            <span>Templates</span>
+        </div>
+        <svg class="h-6 w-6 fill-current md:h-8 md:w-8" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"></path>
+        </svg>
+        </a>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'lottie/lottie.min.js' %}"></script>
+<script src="{%static 'js/mail_contacts.js'%}"></script>
+{% endblock %}

@@ -51,7 +51,7 @@ function handleFiles(files) {
 
 
 const apiUrl = 'https://api.elasticemail.com/v2/email/send';
-const apiKey = '61911D24D889E384651C10E69552DD0DE5894E99F0071960CE4F830EBBF7263EC9B3F392D8ECFF600F21951B67205675';
+const apiKey = '45BA65AC4B8C40A0A790177282D6DB83C5CF0980D6A82336FD0CBC2E3A96E35CB866131C562BA8DA99B998939A20FC1D';
 const apiMail = 'info@sellervibe.co'
 
 const recipient_list = document.getElementById('recipient');

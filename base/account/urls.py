@@ -7,8 +7,9 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('', views.get_started),
-    path('login/', views.login),
-    path('signup/', views.signup),
+    path('login/', views.login_page),
+    path('signup/', views.signup_page),
+    path('logout/', views.logout_page),
 ]
 
 # serve static files with cache control headers

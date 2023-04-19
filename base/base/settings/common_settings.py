@@ -58,6 +58,11 @@ MIDDLEWARE = [
     'django.middleware.cache.FetchFromCacheMiddleware',
 ]
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'base.backends.EmailBackend',
+]
+
 ROOT_URLCONF = 'base.urls'
 
 TEMPLATES = [

@@ -1,7 +1,7 @@
 {% extends "base/index.html" %}
 {% load static %}
 
-{% block title %}sellervibe | get started{% endblock %}
+{% block title %}sellervibe | login-now{% endblock %}
 
 {% block stylesheet %}
 {% endblock %}
@@ -38,19 +38,19 @@
                 <div class="divider font-bold">OR</div> 
     
                 <!-- Sign up form -->
-                <form method="post">
+                <form method="POST">
                     {% csrf_token %}
                     <div class="form-control mb-2 text-base-content">
                         <label class="label">
                           <span class="label-text">Email</span>
                         </label>
-                        <input type="email" placeholder="email" class="input input-bordered" required/>
+                        <input type="email" placeholder="email" class="input input-bordered" name="email" required/>
                       </div>
                       <div class="form-control mb-2 text-base-content">
                           <label class="label">
                             <span class="label-text">Password</span>
                           </label>
-                          <input type="password" placeholder="password" class="input input-bordered" required/>
+                          <input type="password" placeholder="password" class="input input-bordered" name="password" required/>
                         </div>
                         <button type="submit" class="btn btn-active btn-primary w-full normal-case text-primary-content">Log In</button>
                 </form>

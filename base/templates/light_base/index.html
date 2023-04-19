@@ -1,0 +1,259 @@
+{% load static %}
+<!-- {% load compress %} -->
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="icon" href="{%static 'img/logo.svg'%}" type="image/x-icon">
+    <script src="{% static 'js/preload_light_base_app.js' %}"></script>
+    <script src="{% static 'daisyui/daisyui.min.js' %}"></script>
+    {% block stylesheet %}{% endblock %}
+    <!-- {% compress css %} -->
+      <link href="{% static 'daisyui/daisyui.min.css' %}" rel="stylesheet" type="text/css" defer/>
+      <style>
+        body {
+          margin: 0;
+          padding: 0;
+          min-height: 100vh;
+        }
+      </style>
+    <!-- {% endcompress %} -->
+</head>
+
+<body>
+
+  <body tabindex="-1">
+    <div class="bg-base-100 drawer drawer-mobile">
+      <input id="drawer" type="checkbox" class="drawer-toggle">
+      <div class="drawer-content" style="scroll-behavior: smooth; scroll-padding-top: 5rem;">
+        <div class="sticky top-0 z-30 flex h-16 w-full justify-center bg-opacity-10 backdrop-blur transition-all duration-100 bg-base-100 text-base-content" id="navBar">
+          <nav class="navbar w-full">
+            <div class="flex flex-1 md:gap-1 lg:gap-2">
+              <span class="tooltip tooltip-bottom before:text-xs before:content-[attr(data-tip)]" data-tip="Menu">
+                <label for="drawer" class="btn btn-square btn-ghost drawer-button lg:hidden">
+                  <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block h-5 w-5 stroke-current md:h-6 md:w-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                  </svg>
+                </label>
+              </span>
+              <div class="flex items-center gap-2 lg:hidden">
+                <a href="/" aria-current="page" aria-label="Homepage" class="flex-0 btn btn-ghost px-2 ">
+                  <div class="font-title text-primary inline-flex text-lg transition-all duration-200 md:text-3xl">
+                    <span class="lowercase text-primary" id="primary-logo">seller</span>
+                    <span class="uppercase text-base-content">VIBE</span>
+                  </div>
+                </a>
+                <a href="/" class="link link-hover font-mono text-xs text-opacity-50 ">
+                  <div data-tip="Current version" class="tooltip tooltip-bottom">0.00.3</div>
+                </a>
+              </div>
+            </div>
+            <div class="flex-0">
+              <div title="Change Language" class="dropdown dropdown-end lg:block hidden">
+                <div tabindex="0" class="btn btn-ghost gap-1 normal-case">
+                  <svg class="inline-block h-4 w-4 fill-current md:h-5 md:w-5" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 512 512">
+                    <path d="M363,176,246,464h47.24l24.49-58h90.54l24.49,58H480ZM336.31,362,363,279.85,389.69,362Z"></path>
+                    <path d="M272,320c-.25-.19-20.59-15.77-45.42-42.67,39.58-53.64,62-114.61,71.15-143.33H352V90H214V48H170V90H32v44H251.25c-9.52,26.95-27.05,69.5-53.79,108.36-32.68-43.44-47.14-75.88-47.33-76.22L143,152l-38,22,6.87,13.86c.89,1.56,17.19,37.9,54.71,86.57.92,1.21,1.85,2.39,2.78,3.57-49.72,56.86-89.15,79.09-89.66,79.47L64,368l23,36,19.3-11.47c2.2-1.67,41.33-24,92-80.78,24.52,26.28,43.22,40.83,44.3,41.67L255,362Z"></path>
+                  </svg>
+                  <svg width="12px" height="12px" class="ml-1 hidden h-3 w-3 fill-current opacity-60 sm:inline-block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048">
+                    <path d="M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"></path>
+                  </svg>
+                </div>
+                <div class="dropdown-content bg-base-200 text-base-content rounded-t-box rounded-b-box top-px mt-16 w-56 overflow-y-auto shadow-2xl bg-neutral bg-opacity-70 text-neutral-content">
+                  <ul class="menu menu-compact gap-1 p-3" tabindex="0">
+                    <li>
+                      <button class="flex active">
+                        <img loading="lazy" width="20" height="20" alt="English" src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.0/svg/1f1ec-1f1e7.svg">
+                        <span class="flex flex-1 justify-between">English </span>
+                      </button>
+                    </li>
+                    <li>
+                      <button class="flex">
+                        <img loading="lazy" width="20" height="20" alt="Türkçe" src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.0/svg/1f1f9-1f1f7.svg">
+                        <span class="flex flex-1 justify-between">Türkçe </span>
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div title="Edit Profile" class="dropdown dropdown-end">
+                <label tabindex="0" class="btn btn-ghost btn-circle avatar">
+                  <div class="w-10 rounded-full">
+                    <img loading="lazy" src="{% static 'img/me.png' %}" />
+                  </div>
+                </label>
+                <ul tabindex="0" class="mt-3 p-2 shadow menu menu-compact dropdown-content rounded-box w-52 bg-neutral bg-opacity-70 text-neutral-content space-y-2">
+                  <div class="text-sm font-bold flex justify-center items-center">Signed in as:&nbsp;<span class="font-normal text-success"> {{ request.user }}</span></div>
+                  <div class="bg-base-content/10 my-4 mx-1 h-px"></div>
+                  <li>
+                    <a class="justify-between">
+                      Profile
+                      <span class="badge">New</span>
+                    </a>
+                  </li>
+                  <li><a>Settings</a></li>
+                  <li><a href="/logout">Logout</a></li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+        </div>
+        <div class="px-6 xl:pr-2 pb-16">
+          <div class="flex flex-col-reverse justify-between gap-6 xl:flex-row">
+            <div class="prose w-full max-w-4xl flex-grow">
+
+              {% block content %}{% endblock %}
+
+              <div class="not-prose pb-10">
+
+                {% block content_btn %}{% endblock %}
+                
+                <div class="bg-base-content/10 my-10 mx-1 h-px"></div>
+                <div class="flex flex-col justify-between gap-2 px-4 text-xs md:flex-row">
+                  <div class="flex flex-col gap-2">
+                    <div class="flex items-center gap-2">
+                      <svg class="inline-block h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <path fill-rule="evenodd" d="M12,23 C5.92486775,23 1,18.0751322 1,12 C1,5.92486775 5.92486775,1 12,1 C18.0751322,1 23,5.92486775 23,12 C23,18.0751322 18.0751322,23 12,23 Z M12,21 C16.9705627,21 21,16.9705627 21,12 C21,7.02943725 16.9705627,3 12,3 C7.02943725,3 3,7.02943725 3,12 C3,16.9705627 7.02943725,21 12,21 Z M12.0003283,16.9983464 C11.4478622,16.9983464 11,16.5506311 11,15.9983464 C11,15.4460616 11.4478622,14.9983464 12.0003283,14.9983464 C12.5527943,14.9983464 13.0006565,15.4460616 13.0006565,15.9983464 C13.0006565,16.5506311 12.5527943,16.9983464 12.0003283,16.9983464 Z M13,14 L11,14 C11,12.2983529 11.6245803,11.5696759 13.0527864,10.8555728 C13.8745803,10.4446759 14,10.2983529 14,9.5 C14,8.556407 13.2771608,8 12,8 C10.8954305,8 10,8.8954305 10,10 L8,10 C8,7.790861 9.790861,6 12,6 C14.2843464,6 16,7.32062807 16,9.5 C16,11.2016471 15.3754197,11.9303241 13.9472136,12.6444272 C13.1254197,13.0553241 13,13.2016471 13,14 Z"></path>
+                      </svg>
+                      <div>Do you have a question? <a target="_blank" rel="noopener" class="link" href="#">ask the experts</a>
+                      </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <svg class="inline-block h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 1792 1792">
+                        <path d="M1696 960q0 26-19 45t-45 19h-224q0 171-67 290l208 209q19 19 19 45t-19 45q-18 19-45 19t-45-19l-198-197q-5 5-15 13t-42 28.5-65 36.5-82 29-97 13v-896h-128v896q-51 0-101.5-13.5t-87-33-66-39-43.5-32.5l-15-14-183 207q-20 21-48 21-24 0-43-16-19-18-20.5-44.5t15.5-46.5l202-227q-58-114-58-274h-224q-26 0-45-19t-19-45 19-45 45-19h224v-294l-173-173q-19-19-19-45t19-45 45-19 45 19l173 173h844l173-173q19-19 45-19t45 19 19 45-19 45l-173 173v294h224q26 0 45 19t19 45zm-480-576h-640q0-133 93.5-226.5t226.5-93.5 226.5 93.5 93.5 226.5z"></path>
+                      </svg>
+                      <div>Do you see a bug? <a target="_blank" rel="noopener" class="link" href="#">open an issue</a>
+                      </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <svg class="inline-block h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"></path>
+                      </svg>
+                      <div>Do you like sellerVIBE? <a target="_blank" rel="noopener" class="link" href="#">tweet about it!</a>
+                      </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <svg class="inline-block h-4 w-4 fill-rose-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 512 512">
+                        <path d="M256,448a32,32,0,0,1-18-5.57c-78.59-53.35-112.62-89.93-131.39-112.8-40-48.75-59.15-98.8-58.61-153C48.63,114.52,98.46,64,159.08,64c44.08,0,74.61,24.83,92.39,45.51a6,6,0,0,0,9.06,0C278.31,88.81,308.84,64,352.92,64,413.54,64,463.37,114.52,464,176.64c.54,54.21-18.63,104.26-58.61,153-18.77,22.87-52.8,59.45-131.39,112.8A32,32,0,0,1,256,448Z"></path>
+                      </svg>
+                      <div>Support sellerVIBE's development: <a target="_blank" rel="noopener" class="link" href="#">Open Collective</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="not-prose flex justify-center xl:hidden">
+                <div class="flex flex-col gap-2 pb-6">
+                  <h3 class="text-base-content/50 text-xs font-bold">Sponsors</h3>
+                  <a href="https://opencollective.com/" target="_blank" rel="nofollow" class="group link link-hover text-xs opacity-80">Become a sponsor <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="inline-block w-4 fill-current opacity-0 group-hover:opacity-50">
+                      <path fill-rule="evenodd" d="M19,14 L19,19 C19,20.1045695 18.1045695,21 17,21 L5,21 C3.8954305,21 3,20.1045695 3,19 L3,7 C3,5.8954305 3.8954305,5 5,5 L10,5 L10,7 L5,7 L5,19 L17,19 L17,14 L19,14 Z M18.9971001,6.41421356 L11.7042068,13.7071068 L10.2899933,12.2928932 L17.5828865,5 L12.9971001,5 L12.9971001,3 L20.9971001,3 L20.9971001,11 L18.9971001,11 L18.9971001,6.41421356 Z"></path>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="sticky top-20 xl:mt-32 my-6 xl:my-0 xl:w-[130px]">
+                <div class="hidden xl:block ">
+                  <div class="flex flex-col gap-2 pb-6">
+                    <h3 class="text-base-content/50 text-xs font-bold">Sponsors</h3>
+                    <a href="https://opencollective.com/" target="_blank" rel="nofollow" class="group link link-hover text-xs opacity-80">Become a sponsor <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" class="inline-block w-4 fill-current opacity-0 group-hover:opacity-50">
+                        <path fill-rule="evenodd" d="M19,14 L19,19 C19,20.1045695 18.1045695,21 17,21 L5,21 C3.8954305,21 3,20.1045695 3,19 L3,7 C3,5.8954305 3.8954305,5 5,5 L10,5 L10,7 L5,7 L5,19 L17,19 L17,14 L19,14 Z M18.9971001,6.41421356 L11.7042068,13.7071068 L10.2899933,12.2928932 L17.5828865,5 L12.9971001,5 L12.9971001,3 L20.9971001,3 L20.9971001,11 L18.9971001,11 L18.9971001,6.41421356 Z"></path>
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="drawer-side" style="scroll-behavior: smooth; scroll-padding-top: 5rem;">
+        <label for="drawer" class="drawer-overlay"></label>
+        <aside class="bg-base-200 w-80">
+          <div class="z-20 bg-base-200 bg-opacity-90 backdrop-blur sticky top-0 items-center gap-2 px-4 py-2 hidden lg:flex ">
+            <a href="/" aria-current="page" aria-label="Homepage" class="flex-0 btn btn-ghost px-2">
+              <div class="font-title text-primary inline-flex text-lg transition-all duration-200 md:text-3xl">
+                <span class="lowercase" id="primary-logo">seller</span>
+                <span class="text-base-content uppercase">VIBE</span>
+              </div>
+            </a>
+            <a href="/" class="link link-hover font-mono text-xs text-opacity-50">
+              <div data-tip="Current version" class="tooltip tooltip-bottom">0.00.3</div>
+            </a>
+          </div>
+          <div class="h-4"></div>
+          <ul class="menu menu-compact flex flex-col p-0 px-4">
+            <li>
+              <a sveltekit:prefetch="" href="#" id="" class="flex gap-4   ">
+                <span class="flex-none">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"  class="w-6 h-6 stroke-current">
+                    <path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6.65721519,18.7714023 L6.65721519,15.70467 C6.65719744,14.9246392 7.29311743,14.2908272 8.08101266,14.2855921 L10.9670886,14.2855921 C11.7587434,14.2855921 12.4005063,14.9209349 12.4005063,15.70467 L12.4005063,15.70467 L12.4005063,18.7809263 C12.4003226,19.4432001 12.9342557,19.984478 13.603038,20 L15.5270886,20 C17.4451246,20 19,18.4606794 19,16.5618312 L19,16.5618312 L19,7.8378351 C18.9897577,7.09082692 18.6354747,6.38934919 18.0379747,5.93303245 L11.4577215,0.685301154 C10.3049347,-0.228433718 8.66620456,-0.228433718 7.51341772,0.685301154 L0.962025316,5.94255646 C0.362258604,6.39702249 0.00738668938,7.09966612 0,7.84735911 L0,16.5618312 C0,18.4606794 1.55487539,20 3.47291139,20 L5.39696203,20 C6.08235439,20 6.63797468,19.4499381 6.63797468,18.7714023 L6.63797468,18.7714023" transform="translate(2.5 2)"></path>
+                  </svg>                
+                </span>
+                <span class="flex-1">Home</span>
+              </a>
+            </li>
+          </ul>
+          <ul class="menu menu-compact flex flex-col p-0 px-4">
+            <li></li>
+            <li class="menu-title">
+              <span>Fba</span>
+            </li>
+          </ul>
+          <ul class="menu menu-compact flex flex-col p-0 px-4">
+            <li></li>
+            <div tabindex="0" class="collapse collapse-open">
+              <input type="checkbox" />
+              <div class="collapse-title">
+                  <div class="flex gap-4">
+                    <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  viewBox="0 0 75.294 75.294" class="h-6 w-6 fill-current">
+                      <path d="M66.097,12.089h-56.9C4.126,12.089,0,16.215,0,21.286v32.722c0,5.071,4.126,9.197,9.197,9.197h56.9c5.071,0,9.197-4.126,9.197-9.197V21.287C75.295,16.215,71.169,12.089,66.097,12.089z M61.603,18.089L37.647,33.523L13.691,18.089H61.603z M66.097,57.206h-56.9C7.434,57.206,6,55.771,6,54.009V21.457l29.796,19.16c0.04,0.025,0.083,0.042,0.124,0.065c0.043,0.024,0.087,0.047,0.131,0.069c0.231,0.119,0.469,0.215,0.712,0.278c0.025,0.007,0.05,0.01,0.075,0.016c0.267,0.063,0.537,0.102,0.807,0.102c0.001,0,0.002,0,0.002,0c0.002,0,0.003,0,0.004,0c0.27,0,0.54-0.038,0.807-0.102c0.025-0.006,0.05-0.009,0.075-0.016c0.243-0.063,0.48-0.159,0.712-0.278c0.044-0.022,0.088-0.045,0.131-0.069c0.041-0.023,0.084-0.04,0.124-0.065l29.796-19.16v32.551C69.295,55.771,67.86,57.206,66.097,57.206z"></path>
+                    </svg>
+                    <span class="flex-1">Email</span>
+                    <span class="badge badge-sm flex-none lowercase">new</span>
+                  </div>
+              </div>
+              <div class="collapse-content">
+                <p>
+                  <li>
+                    <a sveltekit:prefetch="" href="/tools/mail/contacts" id="" class="flex gap-4 {% block contacts_active %}{% endblock %}">
+                      <span class="flex-1">Contacts</span>
+                      <span class="badge badge-sm flex-none lowercase">new</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a sveltekit:prefetch="" href="/tools/mail/templates" id="" class="flex gap-4 {% block templates_active %}{% endblock %}">
+                      <span class="flex-1">Templates</span>
+                      <span class="badge badge-sm flex-none lowercase">coming soon</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a sveltekit:prefetch="" href="/tools/mail/send" id="" class="flex gap-4 {% block send_active %}{% endblock %}">
+                      <span class="flex-1">Send</span>
+                      <span class="badge badge-sm flex-none lowercase">new</span>
+                    </a>
+                  </li>
+                </p>
+              </div>
+            </div>
+          </ul>
+
+          <!-- <div class="from-base-200 pointer-events-none sticky bottom-0 flex h-20 bg-gradient-to-t to-transparent"></div> -->
+        </aside>
+      </div>
+    </div>
+  </body>
+
+
+  {% block script %}{% endblock %}
+
+  <!-- {% compress js %} -->
+    <script src="{% static 'js/light_base_app.js' %}"></script>
+  <!-- {% endcompress %} -->
+</body>
+
+</html>

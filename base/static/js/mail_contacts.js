@@ -60,7 +60,7 @@ const successToast = document.getElementById('successToast');
 const errorToast = document.getElementById('errorToast');
 
 function showSuccesToast(message=''){
-  successToast.innerHTML = message;
+  successToast.querySelector('span').innerHTML = message;
   successToast.classList.remove('hidden');
 
   setTimeout(() => {
@@ -99,6 +99,25 @@ checkbox.addEventListener("change", function() {
   }
 });
 
+function restart_form(){
+  const inner = '<p class="text-base">1</p>';
+  n_1.innerHTML = inner;
+
+  c_1.classList.add("collapse-open");
+  c_1.classList.remove("collapse-close");
+  c_1.classList.add("collapse-arrow");
+  c_1.classList.remove("opacity-50");
+
+  c_5.classList.add("opacity-50");
+  c_5.classList.remove("collapse-arrow");
+  c_5.classList.add("collapse-close");
+  c_5.classList.remove("collapse-open");
+
+  em_d = null;
+  sc_4_1.innerHTML = 0;
+  sc_4_2.innerHTML = 0;
+  sc_4_3.innerHTML = 0;
+}
 
 cb_1.addEventListener("click", function(){
   const inner = '<svg width="32" height="32" viewBox="0 0 20 20"><path id="Path_11514" data-name="Path 11514" d="M10,0A10,10,0,1,1,0,10,10,10,0,0,1,10,0Z" fill="#C6F6D5"></path><path id="Path_11516" data-name="Path 11516" d="M0,0H12V12H0Z" transform="translate(4 4)" fill="none"></path><path id="Path_11517" data-name="Path 11517" d="M6.4,11.1l-1.75-1.75a.495.495,0,0,0-.7.7l2.1,2.1a.5.5,0,0,0,.7,0l5.3-5.3a.495.495,0,0,0-.7-.7Z" transform="translate(2.096 0.996)" fill="#22543D"></path></svg>';
@@ -250,14 +269,21 @@ cb_2.addEventListener("click", function(){
       }
     });
 
+    let fi_3 = document.createElement('input');
+    fi_3.type = 'file';
+    fi_3.accept = '.xlsx';
+
     fi_3.addEventListener('change', async function(event) {
+      console.log('change');
+      event.preventDefault();
       const file = event.target.files[0];
-      if(file.type === 'text/csv' || file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'){
+      if(file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'){
         await handleFiles(event.target.files);
       }
     });
 
     dropZone.addEventListener('click', function(event) {
+      console.log('click');
       event.preventDefault();
       fi_3.click();
     });
@@ -513,6 +539,7 @@ function save_form(){
       if (response.success) {
         showSuccesToast('Task complate successfully.');
         setTimeout(tab_2_func, 200, name);
+        setTimeout(restart_form, 300);
       } else {
         showSuccesToast('Error! Task failed.');
       }

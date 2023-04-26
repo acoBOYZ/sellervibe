@@ -1,8 +1,8 @@
 function getTheme() {
   if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      return 'dark';
+      return 'night';
   } else {
-      return 'light';
+      return 'winter';
   }
 }
 

@@ -9,6 +9,8 @@
     <title>{% block title %}{% endblock %}</title>
     <link rel="icon" href="{%static 'img/logo.svg'%}" type="image/x-icon">
     <script src="{% static 'js/preload_light_base_app.js' %}"></script>
+    <!-- <link rel="stylesheet" href="{% static 'tailwind/dist/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'daisyui/daisyui.css' %}"> -->
     <script src="{% static 'daisyui/daisyui.min.js' %}"></script>
     {% block stylesheet %}{% endblock %}
     <!-- {% compress css %} -->
@@ -62,7 +64,7 @@
                     <path d="M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"></path>
                   </svg>
                 </div>
-                <div class="dropdown-content bg-base-200 text-base-content rounded-t-box rounded-b-box top-px mt-16 w-56 overflow-y-auto shadow-2xl bg-neutral bg-opacity-70 text-neutral-content">
+                <div class="dropdown-content bg-base-200 text-base-content rounded-t-box rounded-b-box top-px mt-16 w-56 overflow-y-auto shadow-2xl bg-neutral bg-opacity-90 text-neutral-content">
                   <ul class="menu menu-compact gap-1 p-3" tabindex="0">
                     <li>
                       <button class="flex active">
@@ -85,7 +87,7 @@
                     <img loading="lazy" src="{% static 'img/me.png' %}" />
                   </div>
                 </label>
-                <ul tabindex="0" class="mt-3 p-2 shadow menu menu-compact dropdown-content rounded-box w-52 bg-neutral bg-opacity-70 text-neutral-content space-y-2">
+                <ul tabindex="0" class="mt-3 p-2 shadow menu menu-compact dropdown-content rounded-box w-52 bg-neutral bg-opacity-90 text-neutral-content space-y-2">
                   <div class="text-sm font-bold flex justify-center items-center">Signed in as:&nbsp;<span class="font-normal text-success"> {{ request.user }}</span></div>
                   <div class="bg-base-content/10 my-4 mx-1 h-px"></div>
                   <li>
@@ -246,6 +248,7 @@
         </aside>
       </div>
     </div>
+    {% block before_body %}{% endblock %}
   </body>
 
 

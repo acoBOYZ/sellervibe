@@ -112,6 +112,7 @@ function restart_form(){
   c_5.classList.remove("collapse-arrow");
   c_5.classList.add("collapse-close");
   c_5.classList.remove("collapse-open");
+  cb_3.setAttribute("disabled", "disabled");
 
   em_d = null;
   sc_4_1.innerHTML = 0;
@@ -530,16 +531,12 @@ function save_form(){
   xhr.open('POST', '/tools/save_emails/')
   xhr.send(formData)
   xhr.onload = function() {
-
-    cpr_5.style.display = 'none';
-    p_5.style.removeProperty('display');
-
     if (xhr.status == 200) {
       const response = JSON.parse(xhr.responseText);
       if (response.success) {
         showSuccesToast('Task complate successfully.');
         setTimeout(tab_2_func, 200, name);
-        setTimeout(restart_form, 300);
+        setTimeout(restart_form, 250);
       } else {
         showSuccesToast('Error! Task failed.');
       }
@@ -547,6 +544,10 @@ function save_form(){
     else{
       showSuccesToast('Error! Task failed for unsported reason! ERR_003');
     }
+    setTimeout(function(){
+      cpr_5.style.display = 'none';
+      p_5.style.removeProperty('display');
+    }, 300);
   }
 }
 

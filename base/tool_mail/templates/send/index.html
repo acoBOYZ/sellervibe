@@ -12,7 +12,90 @@
 {% block content %}
 
     <h1 class="text-4xl font-extrabold my-8">Send Email</h1>
-    <p>Sending bulk emails has never been easier! With our intuitive email tool, you can easily select your contacts, upload any necessary attachments, and customize the sender details including the "from" email address and name. Craft your email message with ease using our text editor, and when you're ready, simply click "send" to deliver your message to your entire contact list at once. Streamline your email communication today and start reaching your customers and contacts with ease!</p>
+    <p>Sending bulk emails has never been easier! With our intuitive email tool, you can easily select your contacts, upload any necessary attachments, and customize the sender details including the "from" email address and name. Craft your email message with ease using our text editor, and when you're ready, simply click "send" to deliver your message to your entire contact list at once. Streamline your email communication today and start reaching your customers and contacts with ease!</p>    
+    <div class="bg-base-content/10 my-10 mx-1 h-px"></div>
+    <div class="component-preview not-prose text-base-content max-w-4xl relative overflow-x-auto transition-all duration-200 space-y-4">
+        <div class="grid">
+            <div class="rounded-md border-2 border-dashed border-base-content border-opacity-75 flex justify-center items-center flex-col bg-base-100 bg-opacity-30 cursor-pointer space-y-2 h-36 m-6" id="dropZone">
+                <div class="flex justify-center items-center flex-col space-y-2" id="dropZone_base">
+                    <div class="rounded-full h-10 w-10 justify-center items-center bg-base-100 border-none inline-flex shadow my-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="currentColor" , class="h-6 w-6 text-success opacity-75">
+                          <path cd="M0,0H20V20H0Z"></path>
+                          <path d="M15.833,11.667H11.667v4.167a.833.833,0,0,1-1.667,0V11.667H5.833a.833.833,0,1,1,0-1.667H10V5.833a.833.833,0,1,1,1.667,0V10h4.167a.833.833,0,0,1,0,1.667Z" transform="translate(-0.833 -0.833)"></path>
+                        </svg>
+                      </div>
+                      <span class="m-1 text-sm opacity-75">
+                        <a href="#" class="link link-hover link-success opacity-75">Upload a file </a>or drag and drop </span>
+                      <span class="pb-4 text-xs opacity-50">almost all data files supported. max size of files ~7mb</span>
+                </div>
+                <div layz class="w-24 absolute" id="success-lottie" style="display: none;"></div>
+                <div class="flex justify-center items-center flex-col space-y-4" style="display: none;" id="dropZone_progress"><progress class="progress progress-success w-56" value="0" max="100" id="dropZone_progress_obj"></progress><h1 class="text-sm font-bold">Please wait until files upload</h1></div>
+                <div class="px-2 w-full flex-col space-y-2 overflow-auto" id="dropZone_fileBase" style="display: none;"></div>
+            </div>
+        </div>
+        <div class="bg-base-content/10 h-px mx-6"></div>
+        <div class="grid">
+            <div class="form-control mx-6 my-2">
+                <label class="input-group input-group-vertical">
+                  <span>From:</span>
+                  <input type="email" class="input input-bordered focus:outline-none focus:animate-pulse" readonly value="info@sellervibe.co" required/>
+                </label>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 place-items-stretch">
+                <div class="form-control mx-6 my-2">
+                    <label class="input-group input-group-vertical">
+                    <span>Reply to:</span>
+                    <input type="email" class="input input-bordered focus:outline-none focus:placeholder-transparent" placeholder="your email" required/>
+                    </label>
+                </div>
+                <div class="form-control mx-6 my-2">
+                    <label class="input-group input-group-vertical">
+                    <span>Cc: <span class="text-xs opacity-75">(not required)</span></span>
+                    <input type="text" class="input input-bordered focus:outline-none focus:placeholder-transparent" placeholder="email1, email2, ..."/>
+                    </label>
+                </div>
+            </div>
+            <div class="form-control mx-6 my-2">
+                <label class="input-group input-group-vertical">
+                  <span>To:</span>
+                  <select class="select select-bordered focus:outline-none" id="pick_list" required><option disabled selected>Select a contact</option></select>
+                </label>
+            </div>
+            <div class="form-control mx-6 my-2">
+                <label class="input-group input-group-vertical">
+                <span>Subject:</span>
+                <input type="text" class="input input-bordered focus:outline-none focus:placeholder-transparent" placeholder="Text here..." required/>
+                </label>
+            </div>
+            <div class="form-control mx-6 my-2">
+                <label class="input-group input-group-vertical">
+                  <span class="flex flex-row justify-between items-center">
+                    <div>Message:</div>
+                    <div class="form-control flex items-center">
+                      <label class="label cursor-pointer">
+                        <span class="label-text text-xs">Use template:</span> 
+                        <input type="checkbox" class="toggle toggle-xs toggle-primary" style="border-radius: 10% 10% 10% 10%" disabled/>
+                      </label>
+                    </div>
+                  </span>
+                  <textarea type="text" class="input input-bordered focus:outline-none focus:placeholder-transparent h-36" placeholder="Message here..." required></textarea>
+                </label>
+            </div>
+        </div>
+        <div class="grid">
+            <div class="form-control mx-6 place-items-end">
+                <button type="submit" class="btn btn-outline gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" enable-background="new 0 0 100 100" viewBox="0 0 100 100"><path d="M89.442,11.418c-12.533,5.19-66.27,27.449-81.118,33.516c-9.958,3.886-4.129,7.529-4.129,7.529s8.5,2.914,15.786,5.1
+                        c7.286,2.186,11.172-0.243,11.172-0.243l34.244-23.073c12.143-8.257,9.229-1.457,6.315,1.457
+                        c-6.315,6.315-16.758,16.272-25.501,24.287c-3.886,3.4-1.943,6.315-0.243,7.772c6.315,5.343,23.558,16.272,24.53,17.001
+                        c5.131,3.632,15.223,8.861,16.758-2.186c0,0,6.072-38.13,6.072-38.13c1.943-12.872,3.886-24.773,4.129-28.173
+                        C98.185,8.018,89.442,11.418,89.442,11.418z"></path></svg>
+                    Send Emails
+                </button>
+            </div>
+        </div>
+    </div>
+    
 
 
 <!-- <div class="card w-full bg-base-100 shadow-xl text-base-content">
@@ -121,5 +204,6 @@
 {% endblock %}
 
 {% block script %}
-<!-- <script src="{%static 'js/mail_app.js'%}"></script> -->
+<script src="{% static 'lottie/lottie.min.js' %}"></script>
+<script src="{% static 'js/mail_send.js' %}"></script>
 {% endblock %}

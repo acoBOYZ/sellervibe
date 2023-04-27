@@ -187,7 +187,7 @@
                                 <label class="label">
                                   <span class="label-text">Select list name</span>
                                 </label>
-                                <select class="select select-bordered" id="tb_5_1">
+                                <select class="select select-bordered focus:outline-none" id="tb_5_1">
                                   <option disabled selected>Pick one</option>
                                 </select>
                                 <input type="text" placeholder="..." class="input input-bordered" id="tb_5_2" hidden/>
@@ -215,10 +215,10 @@
                     <label class="label">
                       <span class="label-text">Select list name</span>
                     </label>
-                    <select class="select select-bordered" id="ms_1">
+                    <select class="select select-bordered focus:outline-none" id="ms_1">
                       <option disabled selected>Pick one</option>
                     </select>
-                    <input type="text" placeholder="..." class="input input-bordered" id="tb_5_2" hidden/>
+                    <input type="text" placeholder="..." class="input input-bordered outline-none" id="tb_5_2" hidden/>
                 </div>
 
                 <div class="form-control w-full gap-4" id="mf_1" style="display: none;">
@@ -229,19 +229,6 @@
                 <div class="form-control w-full gap-4 h-64 flex justify-center items-center" id="mfp_1" style="display: none;">
                     <div loading="lazy" class="h-24 w-24" id="loading-files-lottie"></div>
                 </div>
-            </div>
-        </div>
-    </div>
-                
-    <div class="toast">
-        <div id="successToast"  class="alert alert-success shadow-lg hidden">
-            <div>
-                <span>Success.</span>
-            </div>
-        </div>
-        <div id="errorToast"  class="alert alert-error shadow-lg hidden">
-            <div>
-                <span>Error.</span>
             </div>
         </div>
     </div>
@@ -289,14 +276,14 @@
     <p class="pb-4 text-sm">In the first row of the spreadsheet, enter the following column headers:</p>
     <ul><li>&#8226;&#8195;In cell A1, type <code class="font-bold">Name</code>.</li><li>&#8226;&#8195;In cell B1, type <code class="font-bold">Title</code>.</li><li>&#8226;&#8195;In cell C1, type <code class="font-bold">Email</code>.</li></ul>
     <p class="pb-4 text-sm">It should look like this:</p>
-    <div class="mockup-code overflow-y-auto">
+    <div class="mockup-code overflow-y-auto text-xs">
         <pre>
             <code>
-    -----------------------------------
+    -------------------------------
     |    A    |    B    |    C    |
-    -----------------------------------
+    -------------------------------
     |  Name   |  Title  |  Email  |
-    -----------------------------------
+    -------------------------------
             </code>
         </pre> 
       </div>
@@ -304,17 +291,17 @@
     <p class="pb-4 text-sm">Now, start entering the contact information for each person in the corresponding columns:</p>
     <ul><li>&#8226;&#8195;In column A, enter the person's name.</li><li>&#8226;&#8195;In column B, enter the person's title or job position.</li><li>&#8226;&#8195;In column C, enter the person's email address.</li></ul>
     <p class="pb-4 text-sm">For example:</p>
-    <div class="mockup-code overflow-y-auto">
+    <div class="mockup-code overflow-y-auto text-xs">
         <pre>
             <code>
     ------------------------------------------------------
-    |    A         |    B         |    C                  |
+    |       A      |       B      |           C          |
     ------------------------------------------------------
-    |  Name        |  Title       |  Email                |
+    |     Name     |     Title    |         Email        |
     ------------------------------------------------------
-    | Cevdet Ozturk|  Manager     |  cevdet@sellervibe.co |
+    | Cevdet Ozturk| Manager      | cevdet@sellervibe.co |
     ------------------------------------------------------
-    |    Yunus H   |  Coordinator |  yunush@sellervibe.co |
+    | Yunus H      | Coordinator  | yunush@sellervibe.co |
     ------------------------------------------------------
             </code>
         </pre> 

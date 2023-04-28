@@ -127,7 +127,7 @@ def get_emails(request):
 
 def upload_file_to_elasticemail(file_path):
     with ApiClient(configuration) as api_client:
-        # api_client.rest_client.pool_manager.connection_pool_kw['cert_reqs'] = ssl.CERT_NONE
+        api_client.rest_client.pool_manager.connection_pool_kw['cert_reqs'] = ssl.CERT_NONE
         api_instance = FilesApi(api_client)
 
         with open(file_path, 'rb') as file:
@@ -194,7 +194,7 @@ def upload_attachments(request):
 
 def send_bulk_emails_via_elasticemail(email_data):
     with ApiClient(configuration) as api_client:
-        # api_client.rest_client.pool_manager.connection_pool_kw['cert_reqs'] = ssl.CERT_NONE
+        api_client.rest_client.pool_manager.connection_pool_kw['cert_reqs'] = ssl.CERT_NONE
         api_instance = EmailsApi(api_client)
         email_message_data = EmailMessageData(
             recipients=[EmailRecipient(email=item['email'], fields={'name': item['name'], 'title': item['title']}) for item in email_data['email_list']],

@@ -14,6 +14,8 @@ urlpatterns = [
     path('save_emails/', views.save_emails),
     path('get_email_names/', views.get_email_names, name='get_email_names'),
     path('get_emails/', views.get_emails, name='get_emails'),
+    path('upload_attachments/', views.upload_attachments, name='upload_attachments'),
+    path('send_bulk_emails/', views.send_bulk_emails, name='send_bulk_emails'),
 ]
 
 # serve static files with cache control headers

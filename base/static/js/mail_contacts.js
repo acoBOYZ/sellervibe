@@ -118,6 +118,7 @@ function restart_form(){
   sc_4_1.innerHTML = 0;
   sc_4_2.innerHTML = 0;
   sc_4_3.innerHTML = 0;
+  c_1.scrollIntoView({ behavior: 'smooth' });
 }
 
 cb_1.addEventListener("click", function(){
@@ -133,6 +134,7 @@ cb_1.addEventListener("click", function(){
   c_2.classList.add("collapse-arrow");
   c_2.classList.remove("collapse-close");
   c_2.classList.add("collapse-open");
+  c_2.scrollIntoView({ behavior: 'smooth' });
 });
 
 bb_2.addEventListener("click", function(){
@@ -143,6 +145,7 @@ bb_2.addEventListener("click", function(){
   c_1.classList.remove("collapse-close");
   c_1.classList.add("collapse-arrow");
   c_1.classList.remove("opacity-50");
+  c_1.scrollIntoView({ behavior: 'smooth' });
 
   c_2.classList.add("opacity-50");
   c_2.classList.remove("collapse-arrow");
@@ -163,6 +166,7 @@ cb_2.addEventListener("click", function(){
   c_3.classList.add("collapse-arrow");
   c_3.classList.remove("collapse-close");
   c_3.classList.add("collapse-open");
+  c_3.scrollIntoView({ behavior: 'smooth' });
 
   const inner_r_2_1 = '<div class="rounded-md border-2 border-base-content border-opacity-75 border-dashed flex justify-center items-center flex-col bg-base-100 bg-opacity-30 cursor-pointer space-y-2 h-36" id="dd_3"><div class="rounded-full h-10 w-10 justify-center items-center bg-base-100 border-none inline-flex shadow my-4"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="currentColor" , class="h-6 w-6 text-success opacity-75"><path cd="M0,0H20V20H0Z"></path><path d="M15.833,11.667H11.667v4.167a.833.833,0,0,1-1.667,0V11.667H5.833a.833.833,0,1,1,0-1.667H10V5.833a.833.833,0,1,1,1.667,0V10h4.167a.833.833,0,0,1,0,1.667Z" transform="translate(-0.833 -0.833)"></path></svg></div><span class="m-1 text-sm opacity-75"><a href="#" class="link link-hover link-success opacity-75">Upload a file </a>or drag and drop</span><span class="pb-4 text-xs opacity-50">.xlsx</span></div><div class="space-y-0 opacity-75"><h1 class="text-xs font-bold">İmportant note for file encoding:</h1><p class="text-xs">To ensure smooth upload process, it is recommended to use Unicode (UTF-8) encoding for your files. UTF-8 supports a wide range of characters and symbols from different languages and character sets. To select UTF-8 encoding for your file, you can find the encoding drop down list in your text editor or IDE. From the drop down list, select UTF-8 as the encoding for your file. After saving your file with UTF-8 encoding, you can proceed with the upload process. This will ensure that your file is properly recognized by our system without any syntax errors.</p></div>';
   const inner_r_2_2 = '<label class="label"><span class="label-text">Type or copy and paste contacts</span></label><textarea id="emailList" class="textarea textarea-bordered textarea-sm w-full h-24" placeholder="email1, email2, ..."></textarea>';
@@ -275,7 +279,6 @@ cb_2.addEventListener("click", function(){
     fi_3.accept = '.xlsx';
 
     fi_3.addEventListener('change', async function(event) {
-      console.log('change');
       event.preventDefault();
       const file = event.target.files[0];
       if(file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'){
@@ -284,7 +287,6 @@ cb_2.addEventListener("click", function(){
     });
 
     dropZone.addEventListener('click', function(event) {
-      console.log('click');
       event.preventDefault();
       fi_3.click();
     });
@@ -355,7 +357,7 @@ cb_2.addEventListener("click", function(){
 });
 
 function isValidEmail(email) {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   return emailRegex.test(email);
 }
 
@@ -367,6 +369,7 @@ bb_3.addEventListener("click", function(){
   c_2.classList.remove("collapse-close");
   c_2.classList.add("collapse-arrow");
   c_2.classList.remove("opacity-50");
+  c_2.scrollIntoView({ behavior: 'smooth' });
 
   c_3.classList.add("opacity-50");
   c_3.classList.remove("collapse-arrow");
@@ -388,6 +391,7 @@ cb_3.addEventListener("click", function(){
   c_4.classList.add("collapse-arrow");
   c_4.classList.remove("collapse-close");
   c_4.classList.add("collapse-open");
+  c_4.scrollIntoView({ behavior: 'smooth' });
 
   if (r_2_2.checked) {
     const emailList = document.getElementById('emailList').value;
@@ -411,7 +415,6 @@ cb_3.addEventListener("click", function(){
         }
       }
   
-      console.log(em_d);
       sc_4_1.innerHTML = total_count;
       sc_4_2.innerHTML = valid_count;
       sc_4_3.innerHTML = total_count - valid_count;
@@ -427,6 +430,7 @@ bb_4.addEventListener("click", function(){
   c_3.classList.remove("collapse-close");
   c_3.classList.add("collapse-arrow");
   c_3.classList.remove("opacity-50");
+  c_3.scrollIntoView({ behavior: 'smooth' });
 
   c_4.classList.add("opacity-50");
   c_4.classList.remove("collapse-arrow");
@@ -459,6 +463,7 @@ cb_4.addEventListener("click", function(){
   c_5.classList.add("collapse-arrow");
   c_5.classList.remove("collapse-close");
   c_5.classList.add("collapse-open");
+  c_5.scrollIntoView({ behavior: 'smooth' });
   getEmailFileNames(tb_5_1);
 });
 
@@ -470,6 +475,7 @@ bb_5.addEventListener("click", function(){
   c_4.classList.remove("collapse-close");
   c_4.classList.add("collapse-arrow");
   c_4.classList.remove("opacity-50");
+  c_4.scrollIntoView({ behavior: 'smooth' });
 
   c_5.classList.add("opacity-50");
   c_5.classList.remove("collapse-arrow");
@@ -680,7 +686,6 @@ async function create_table() {
         pageButtonsContainer.classList.add('btn-group', 'btn-group-horizontal');
 
         for (let i = 1; i <= totalPages; i++) {
-          console.log('Creating button for page', i);
           const pageButton = document.createElement('button');
           pageButton.classList.add('btn', 'btn-xs');
           pageButton.innerHTML = i;
@@ -737,6 +742,9 @@ async function create_table() {
       deleteButton.addEventListener('click', function() {
         if (document.querySelectorAll('#mtb_1 input[id="emailCheckboxes"]').length === document.querySelectorAll('#mtb_1 input[id="emailCheckboxes"]:checked').length){
           mt_table.remove();
+          // const ms_1Select = document.querySelector('#ms_1');
+          // const selectedOption = ms_1Select.options[ms_1Select.selectedIndex];
+          // ms_1Select.remove(selectedOption.index);
           emails.length = 0;
           saveButton.classList.add('motion-safe:animate-pulse');
           saveChanges();
@@ -781,7 +789,6 @@ async function create_table() {
             if (response.success) {
               showSuccesToast('Your changes have been saved.');
             } else {
-              console.log(response.error);
               showErrorToast('Your changes can not saved!');
             }
           }
@@ -807,7 +814,7 @@ async function getEmails(name = null) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'X-CSRFToken': getCookie('csrftoken') // add the csrfmiddlewaretoken header here
+      'X-CSRFToken': getEmailsCookie('csrftoken')
     },
     body: JSON.stringify({})
   });
@@ -824,7 +831,7 @@ async function getEmails(name = null) {
   }
 }
 
-function getCookie(name) {
+function getEmailsCookie(name) {
   var cookieValue = null;
   if (document.cookie && document.cookie !== '') {
     var cookies = document.cookie.split(';');
@@ -838,21 +845,3 @@ function getCookie(name) {
   }
   return cookieValue;
 }
-
-/* <tr>
-<td class="px-6 py-4 whitespace-nowrap text-sm">
-  <label class="inline-flex items-center">
-    <input type="checkbox" class="checkbox checkbox-sm" id="mtb_1_select">
-  </label>
-</td>
-<td class="px-6 py-4 whitespace-nowrap text-sm" id="mtb_1_name"></td>
-<td class="px-6 py-4 whitespace-nowrap text-sm" id="mtb_1_title"></td>
-<td class="px-6 py-4 whitespace-nowrap text-sm" id="mtb_1_email"></td>
-<td class="px-6 py-4 whitespace-nowrap text-sm">
-  <label class="swap swap-rotate">
-      <input type="checkbox" id="mtb_1_status" />
-      <div class="swap-on text-success text-xs font-bold">ACTIVE</div>
-      <div class="swap-off text-error text-xs font-bold">PASSIVE</div>
-    </label>
-</td>
-</tr> */

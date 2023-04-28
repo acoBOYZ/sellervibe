@@ -25,7 +25,8 @@ from ElasticEmail.model.email_recipient import EmailRecipient
 from ElasticEmail.model.email_message_data import EmailMessageData
 
 configuration = Configuration(
-    host = "https://api.elasticemail.com/v4"
+    host = "https://api.elasticemail.com/v4",
+    ssl_ca_cert = os.path.join('/etc/letsencrypt/live/sellervibe.co/', 'fullchain.pem')
 )
 configuration.api_key['apikey'] = os.getenv('ELASTIC_EMAIL_API_KEY')
 

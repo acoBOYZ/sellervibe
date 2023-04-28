@@ -20,7 +20,7 @@ const submit_send = document.getElementById('submit_send');
 function openSendModal() {
     const modal_send = document.getElementById('modal_send');
     const modal_box = modal_send.querySelector('.modal-box');
-    modal_box.innerHTML = '<div layz class="sticky inset-x-0 top-0 z-10" id="send-emails-lottie"></div><div class="overflow-y-scroll space-y-0 z-0" id="modal-log"></div><div class="modal-action relative justify-center items-center z-20"></div>';
+    modal_box.innerHTML = '<div layz class="sticky inset-x-0 top-0 z-10" id="send-emails-lottie"></div><div class="space-y-0 z-0" id="modal-log"></div><div class="modal-action relative justify-center items-center z-20"></div>';
 
     lottie.loadAnimation({
         container: document.getElementById('send-emails-lottie'),

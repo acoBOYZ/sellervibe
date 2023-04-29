@@ -37,10 +37,12 @@
         <div class="bg-base-content/10 h-px mx-6"></div>
         <div class="grid">
             <div class="form-control mx-6 my-2">
-                <label class="input-group input-group-vertical">
-                <span>From:</span>
-                <input type="email" class="input input-bordered focus:outline-none focus:animate-pulse" readonly value="info@sellervibe.co" id="input_from" required/>
-                </label>
+                <div class="tooltip" data-tip="You cannot modify this label, as it is automatically assigned to each user. Rest assured, all emails will be delivered to the email address associated with your chosen reply label.">
+                    <label class="input-group input-group-vertical">
+                    <span>From:</span>
+                    <input type="email" class="input input-bordered focus:outline-none focus:animate-pulse" readonly value="info@sellervibe.co" id="input_from" required/>
+                    </label>
+                </div>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 place-items-stretch">
                 <div class="form-control mx-6 my-2">
@@ -50,10 +52,12 @@
                     </label>
                 </div>
                 <div class="form-control mx-6 my-2">
-                    <label class="input-group input-group-vertical">
-                    <span>Cc: <span class="text-xs opacity-75">(not required)</span></span>
-                    <input type="text" class="input input-bordered focus:outline-none focus:placeholder-transparent" placeholder="email1, email2, ..." id="input_cc"/>
-                    </label>
+                    <div class="tooltip" data-tip="This feature does not supported yet">
+                        <label class="input-group input-group-vertical">
+                        <span>Cc: <span class="text-xs opacity-75">(not required)</span></span>
+                        <input type="text" class="input input-bordered focus:outline-none focus:placeholder-transparent" placeholder="email1, email2, ..." id="input_cc" disabled/>
+                        </label>
+                    </div>
                 </div>
             </div>
             <div class="form-control mx-6 my-2">
@@ -73,10 +77,12 @@
                 <span class="flex flex-row justify-between items-center">
                     <div>Message:</div>
                     <div class="form-control flex items-center">
-                    <label class="label cursor-pointer">
-                        <span class="label-text text-xs">Use template:</span> 
-                        <input type="checkbox" class="toggle toggle-xs toggle-primary" style="border-radius: 10% 10% 10% 10%" disabled/>
-                    </label>
+                    <div class="tooltip" data-tip="comming soon">
+                        <label class="label cursor-pointer">
+                            <span class="label-text text-xs">Use template:</span> 
+                            <input type="checkbox" class="toggle toggle-xs toggle-primary" style="border-radius: 10% 10% 10% 10%" disabled/>
+                        </label>
+                    </div>
                     </div>
                 </span>
                 <textarea type="text" class="input input-bordered focus:outline-none focus:placeholder-transparent h-36" placeholder="Message here..." id="textarea_message" required></textarea>

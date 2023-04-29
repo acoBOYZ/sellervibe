@@ -200,13 +200,11 @@ def send_bulk_emails_via_elasticemail(email_data):
             recipients=[
                 EmailRecipient(email=item['email'], fields={'name': item['name'], 'title': item['title']}) for item in email_data['email_list']
             ],
+            # cc=[
+            #     EmailRecipient(email=email) for email in email_data['cc_list']
+            # ],
             content=EmailContent(
                 body=[
-                    # BodyPart(
-                    #     content_type=BodyContentType("HTML"),
-                    #     content="<strong>Hi {name} - {title}!<strong>",
-                    #     charset="utf-8",
-                    # ),
                     BodyPart(
                         content_type=BodyContentType("PlainText"),
                         content=f"{email_data['message']}",

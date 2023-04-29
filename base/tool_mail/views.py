@@ -197,17 +197,19 @@ def send_bulk_emails_via_elasticemail(email_data):
         api_client.rest_client.pool_manager.connection_pool_kw['cert_reqs'] = ssl.CERT_NONE
         api_instance = EmailsApi(api_client)
         email_message_data = EmailMessageData(
-            recipients=[EmailRecipient(email=item['email'], fields={'name': item['name'], 'title': item['title']}) for item in email_data['email_list']],
+            recipients=[
+                EmailRecipient(email=item['email'], fields={'name': item['name'], 'title': item['title']}) for item in email_data['email_list']
+            ],
             content=EmailContent(
                 body=[
-                    BodyPart(
-                        content_type=BodyContentType("HTML"),
-                        content="<strong>Hi {name} - {title}!<strong>",
-                        charset="utf-8",
-                    ),
+                    # BodyPart(
+                    #     content_type=BodyContentType("HTML"),
+                    #     content="<strong>Hi {name} - {title}!<strong>",
+                    #     charset="utf-8",
+                    # ),
                     BodyPart(
                         content_type=BodyContentType("PlainText"),
-                        content="Hi {name} - {title}!",
+                        content=f"{email_data['message']}",
                         charset="utf-8",
                     ),
                 ],

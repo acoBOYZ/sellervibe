@@ -20,7 +20,7 @@ const submit_send = document.getElementById('submit_send');
 function openSendModal() {
     const modal_send = document.getElementById('modal_send');
     const modal_box = modal_send.querySelector('.modal-box');
-    modal_box.innerHTML = '<div layz class="sticky inset-x-0 top-0 z-10" id="send-emails-lottie"></div><div class="space-y-0 z-0" id="modal-log"></div><div class="modal-action relative justify-center items-center z-20"></div>';
+    modal_box.innerHTML = '<div layz class="sticky inset-x-0 top-0 z-20" id="send-emails-lottie"></div><svg xmlns="http://www.w3.org/2000/svg" class="h-64 w-full sticky inset-x-0 top-0 z-0 hidden" id="send-email-error" viewBox="0 0 2000 2000"><circle cx="1000" cy="1000" r="814.301" fill="#f8fcfe"/><circle cx="1000" cy="1000" r="675.841" fill="#dfecfa"/><path fill="#262f5f" d="M1487.255,872.453l-23.9679,148.6617-4.6007,28.5326c0,22.0918-47.1963,313.1188-71.6426,313.1188l-386.5747-267.113L571.4339,1393.3283c-24.4373,0-50.1374-313.173-50.1374-335.2647l-1.705-36.9489L512.7448,872.886l68.9726-59.6001L972.8926,475.2518a47.9913,47.9913,0,0,1,55.1529,0l390.8054,338.0341Z"/><rect width="758.383" height="714.943" x="622.838" y="645.707" fill="#fff"/><polygon fill="#749dd3" points="1000.525 1261.454 512.745 872.886 512.745 1533.462 1487.255 1533.462 1487.255 872.886 1000.525 1261.454"/><polygon fill="#9ebee5" points="512.745 872.886 512.745 1533.462 927.364 1203.174 512.745 872.886"/><polygon fill="#9ebee5" points="1487.255 872.886 1487.255 1533.462 1072.635 1203.174 1487.255 872.886"/><circle cx="1002.029" cy="936.227" r="137.366" fill="#749dd3"/><path fill="#262f5f" d="M1002.0291,1116.1639c-99.2179,0-179.9369-80.7195-179.9369-179.9374s80.719-179.9372,179.9369-179.9372,179.9377,80.7194,179.9377,179.9372S1101.2469,1116.1639,1002.0291,1116.1639Zm0-339.5797c-88.0267,0-159.642,71.6153-159.642,159.6423,0,88.0272,71.6153,159.6425,159.642,159.6425,88.0275,0,159.6429-71.6153,159.6429-159.6425C1161.672,848.1995,1090.0566,776.5842,1002.0291,776.5842Z"/><path fill="#fff" d="M1001.9377,975.9062a16.18032,16.18032,0,0,0-16.3145,16.2227c0,5.0972,1.7002,9.1563,5.0518,12.0645a16.98809,16.98809,0,0,0,11.4472,4.25,16.59159,16.59159,0,0,0,11.3291-4.3145c3.3076-2.9385,4.9844-6.9756,4.9844-12a15.55841,15.55841,0,0,0-4.8496-11.5034A16.12723,16.12723,0,0,0,1001.9377,975.9062Z"/><path fill="#fff" d="M989.4054,945.5103l.0059.0742c.5859,6.0498,1.5605,10.4863,2.9805,13.5625,1.7041,3.6919,4.8769,5.643,9.1777,5.643a9.7192,9.7192,0,0,0,9.2461-5.7304c1.5644-3.1997,2.5488-7.5611,3.0058-13.314l3.958-45.3657a124.15254,124.15254,0,0,0,.6563-12.5962c0-7.3296-.9561-12.8545-2.9238-16.8906-1.5303-3.1402-5.001-6.8833-12.8379-6.8833a16.22791,16.22791,0,0,0-12.3701,5.0742c-3.1065,3.3198-4.6807,7.9067-4.6807,13.6343,0,3.7817.2803,10.0639.835,18.6777Z"/></svg><div class="space-y-0 z-10" id="modal-log"></div><div class="modal-action relative justify-center items-center z-30"></div>';
 
     lottie.loadAnimation({
         container: document.getElementById('send-emails-lottie'),
@@ -77,7 +77,15 @@ function updateSendModal(command, color, animate=false){
     }
 }
 
-function finishSendModal(success=true){
+function showErrorOnSendModal(){
+    const modal_send = document.getElementById('modal_send');
+    const send_emails_lottie = modal_send.querySelector('#send-emails-lottie');
+    const send_email_error = modal_send.querySelector('#send-email-error');
+    send_emails_lottie.remove();
+    send_email_error.classList.remove('hidden');
+}
+
+function finishSendModal(){
     const modal_send = document.getElementById('modal_send');
     const modal_box = modal_send.querySelector('.modal-box');
     modal_box.innerHTML = '<div layz class="z-10 w-auto h-36 relative justify-center items-center" id="send-emails-success-lottie"></div><div class="space-y-0 z-0 text-success flex justify-center items-center" id="modal-log">All emails sent successfully</div><div class="modal-action flex justify-center items-center z-20"></div>';
@@ -305,6 +313,7 @@ function sendFilesToServer() {
                 sendEmailsToServer();
             } else {
                 updateSendModal(`you got some errors while uploading files. Please check your network connection. ${response.error}`, 'error');
+                showErrorOnSendModal();
                 addSendModalToButton('Try Again', 'error');
                 showErrorToast(response.error);
             }
@@ -333,6 +342,7 @@ async function sendEmailsToServer() {
     if(!emails){
         updateSendModal(`in '${pick_list_value}' emails not found!`, 'error');
         updateSendModal(`you got some errors while downloading emails. Please check your network connection and contact list!`, 'error');
+        showErrorOnSendModal();
         addSendModalToButton('Try Again', 'error');
         return;
     }
@@ -388,6 +398,7 @@ async function sendEmailsToServer() {
                 addSendModalToButton('Send New Emails', 'primary');
             } else {
                 updateSendModal(`you got some errors while sending emails. Please check your network connection. ${response.error}`, 'error');
+                showErrorOnSendModal();
                 addSendModalToButton('Try Again', 'error');
                 showErrorToast(response.error);
             }

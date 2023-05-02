@@ -18,46 +18,53 @@
         </div>
         <div class="card flex-shrink-0 w-full max-w-sm">
           <div class="card-body">
-                <!-- Social sign up buttons -->
-                <div class="mb-4">
-                    <a href="{{ google_auth_url }}" class="btn btn-outline w-full mb-2 normal-case flex-nowrap text-primary-content bg-base-content bg-opacity-80 border-none">
-                      <div loading="lazy" class="" id="google-lottie" style="width: 38px; height: 38px;"></div>
-                      Use Google account
-                    </a>
-                    <a href="{{ facebook_auth_url }}" class="btn btn-outline w-full mb-2 normal-case flex-nowrap text-primary-content bg-base-content bg-opacity-80 border-none">
-                      <div loading="lazy" class="mr-2" id="facebook-lottie" style="width: 26px; height: 26px;"></div>
-                        Use Facebook account
-                    </a>
-                    <a href="{{ office365_auth_url }}" class="btn btn-outline w-full mb-2 normal-case flex-nowrap text-primary-content bg-base-content bg-opacity-80 border-none">
-                      <div loading="lazy" class="" id="microsoft-office-lottie" style="width: 36px; height: 36px;"></div>
-                        Use Office365 account
-                    </a>
-                </div>
-    
-                <!-- Separator -->
-                <div class="divider font-bold">OR</div> 
-    
-                <!-- Sign up form -->
-                <form method="POST">
-                    {% csrf_token %}
-                    <div class="form-control mb-2 text-base-content">
-                        <label class="label">
-                          <span class="label-text">Email</span>
-                        </label>
-                        <input type="email" placeholder="email" class="input input-bordered" name="email" required/>
-                      </div>
-                      <div class="form-control mb-2 text-base-content">
-                          <label class="label">
-                            <span class="label-text">Password</span>
-                          </label>
-                          <input type="password" placeholder="password" class="input input-bordered" name="password" required/>
-                        </div>
-                        <button type="submit" class="btn btn-active btn-primary w-full normal-case text-primary-content">Log In</button>
-                </form>
+            <!-- Social login buttons -->
+            <div class="mb-4">
+              <a href="{{ google_auth_url }}" class="btn btn-block bg-opacity-50 border-none shadow-xl normal-case mb-2 flex">
+                <div loading="lazy" class="flex-none w-10" id="google-lottie"></div>
+                <div class="grow text-primary-content flex-nowrap">With Google</div>
+                <div class="flex-none w-10"></div>
+              </a>
+              <a href="{{ office365_auth_url }}" class="btn btn-block bg-opacity-50 border-none shadow-xl normal-case mb-2 flex">
+                <div loading="lazy" class="flex-none w-10" id="microsoft-office-lottie"></div>
+                <div class="grow text-primary-content flex-nowrap">With Office365</div>
+                <div class="flex-none w-10"></div>
+              </a>
+            </div>
 
+            <!-- Separator -->
+            <div class="divider font-bold">OR</div> 
+
+            <!-- Login form -->
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-control mb-2 text-base-content">
+                  <label class="label">
+                    <span class="label-text text-primary-content">Email</span>
+                  </label>
+                  <input type="email" placeholder="email" class="input border-none focus:outline-none focus:placeholder-transparent" name="email" required/>
+                </div>
+                <div class="form-control mb-4 text-base-content">
+                  <label class="label">
+                    <span class="label-text text-primary-content">Password</span>
+                  </label>
+                  <input type="password" placeholder="password" class="input border-none focus:outline-none focus:placeholder-transparent" name="password" required/>
+                </div>
+                <button class="btn btn-primary border-none btn-block normal-case shadow-xl">Log In</button>
+                <div class="flex justify-between mt-4">
+                  <div class="link text-xs flex flex-nowrap"><a href="">Forgot your password?</a></div>
+                  <div class="link text-xs flex flex-nowrap"><a  href="/signup">Don't have an account?</a></div>
+                </div>
+            </form>
           </div>
         </div>
       </div>
+  </div>
+{% endblock %}
+
+{% block content-outside %}
+  <div class="flex justify-center items-center w-full bg-primary bg-opacity-25">
+    <span class="text-xs flex-wrap">© 2023 SellerVibe. All rights reserved. Empowering online sellers with cutting-edge tools and insights to maximize their potential. Discover your vibe with SellerVibe.</span>
   </div>
 {% endblock %}
 
@@ -70,19 +77,6 @@
     loop: true,
     autoplay: true,
     path: '{% static "img/google-lottie.json" %}',
-    rendererSettings: {
-    preserveAspectRatio: 'xMidYMid meet',
-    progressiveLoad: false,
-    scaleMode: 'noScale',
-    hideOnTransparent: true
-  }
-  });
-  lottie.loadAnimation({
-    container: document.getElementById('facebook-lottie'),
-    renderer: 'svg',
-    loop: true,
-    autoplay: true,
-    path: '{% static "img/facebook-lottie.json" %}',
     rendererSettings: {
     preserveAspectRatio: 'xMidYMid meet',
     progressiveLoad: false,

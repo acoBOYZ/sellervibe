@@ -6,10 +6,8 @@ window.addEventListener('scroll', function () {
   
   if (currentScrollTop >= 15) {
     header.classList.add('bg-base-100', 'shadow-xl');
-    // logo.classList.add('text-secondary-content')
   } else {
     header.classList.remove('bg-base-100', 'shadow-xl');
-    // logo.classList.remove('text-secondary-content')
   }
 });
 

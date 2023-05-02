@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -61,7 +62,16 @@ MIDDLEWARE = [
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'base.backends.EmailBackend',
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.microsoft.MicrosoftOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
 ]
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '<your_google_client_id>'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '<your_google_client_secret>'
+
+SOCIAL_AUTH_MICROSOFT_OAUTH2_KEY = '<your_office365_client_id>'
+SOCIAL_AUTH_MICROSOFT_OAUTH2_SECRET = '<your_office365_client_secret>'
 
 ROOT_URLCONF = 'base.urls'
 

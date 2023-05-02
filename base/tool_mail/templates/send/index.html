@@ -5,8 +5,6 @@
 
 {% block stylesheet %}{% endblock %}
 
-{% block contacts_active %}{% endblock %}
-{% block templates_active %}{% endblock %}
 {% block send_active %}active{% endblock %}
 
 {% block content %}
@@ -35,8 +33,8 @@
             </div>
         </div>
         <div class="bg-base-content/10 h-px mx-6"></div>
-        <div class="grid">
-            <div class="form-control mx-6 my-2">
+        <div class="grid m-0 p-0 mx-3 sm:mx-6">
+            <div class="form-control mx-1 my-2">
                 <div class="tooltip" data-tip="You cannot modify this label, as it is automatically assigned to each user. Rest assured, all emails will be delivered to the email address associated with your chosen reply label.">
                     <label class="input-group input-group-vertical">
                     <span>From:</span>
@@ -45,13 +43,13 @@
                 </div>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 place-items-stretch">
-                <div class="form-control mx-6 my-2">
+                <div class="form-control mx-1 my-2">
                     <label class="input-group input-group-vertical">
                     <span>Reply to:</span>
                     <input type="email" class="input input-bordered focus:outline-none focus:placeholder-transparent" placeholder="your email" id="input_replyTo" required/>
                     </label>
                 </div>
-                <div class="form-control mx-6 my-2">
+                <div class="form-control mx-1 my-2">
                     <div class="tooltip" data-tip="This feature does not supported yet">
                         <label class="input-group input-group-vertical">
                         <span>Cc: <span class="text-xs opacity-75">(not required)</span></span>
@@ -60,32 +58,42 @@
                     </div>
                 </div>
             </div>
-            <div class="form-control mx-6 my-2">
+            <div class="form-control mx-1 my-2">
                 <label class="input-group input-group-vertical">
                 <span>To:</span>
                 <select class="select select-bordered focus:outline-none" id="pick_list" required><option disabled selected>Select a contact</option></select>
                 </label>
             </div>
-            <div class="form-control mx-6 my-2">
+            <div class="form-control mx-1 my-2">
                 <label class="input-group input-group-vertical">
                 <span>Subject:</span>
                 <input type="text" class="input input-bordered focus:outline-none focus:placeholder-transparent" placeholder="Text here..." id="input_subject" required/>
                 </label>
             </div>
-            <div class="form-control mx-6 my-2">
+            <div class="form-control mx-1 my-2">
                 <label class="input-group input-group-vertical">
-                <span class="flex flex-row justify-between items-center">
-                    <div>Message:</div>
-                    <div class="form-control flex items-center">
-                    <div class="tooltip" data-tip="comming soon">
-                        <label class="label cursor-pointer">
-                            <span class="label-text text-xs">Use template:</span> 
-                            <input type="checkbox" class="toggle toggle-xs toggle-primary" style="border-radius: 10% 10% 10% 10%" disabled/>
-                        </label>
+                <span class="grid">
+                    <div class="flex flex-row justify-between items-center">
+                        <div>Message:</div>
+                        <div class="form-control flex items-center">
+                            <div class="tooltip" data-tip="comming soon">
+                                <label class="label cursor-pointer">
+                                    <span class="label-text text-xs">Use template:</span> 
+                                    <div class="hidden"></div>
+                                    <input type="checkbox" class="toggle toggle-xs toggle-primary" disabled/>
+                                    <div class="hidden"></div>
+                                </label>
+                            </div>
+                        </div>
                     </div>
+                    <div class="hidden" id="badge_container">
+                        <div class="bg-base-100 h-px"></div>
+                        <div class="flex flex-wrap bg-base-300 space-x-3 space-y-3 pb-3" id="badge_div">
+                            
+                        </div>
                     </div>
                 </span>
-                <textarea type="text" class="input input-bordered focus:outline-none focus:placeholder-transparent h-36" placeholder="Message here..." id="textarea_message" required></textarea>
+                <textarea type="text" class="input input-bordered focus:outline-none focus:placeholder-transparent h-80 sm:h-48 text-sm placeholder:italic" placeholder="Hi {name},&#10;&#10;I hope you are doing well. I am interested in your {product} from {company} and would like to inquire about its current price. Could you please provide me with a quote, including any available discounts or offers?&#10;Looking forward to your response.&#10;&#10;Best regards,&#10;A.C.O." id="textarea_message" required></textarea>
                 </label>
             </div>
         </div>
@@ -102,97 +110,19 @@
             </div>
         </div>
     </div>
-    
 
-
-<!-- <div class="card w-full bg-base-100 shadow-xl text-base-content">
-    <div class="relative h-auto overflow-hidden rounded-xl border border-dashed border-gray-400 border-opacity-30">
-        <svg class="absolute inset-0 h-full w-full stroke-gray-900/10 opacity-10" fill="none">
-          <defs>
-            <pattern id="pattern-d09edaee-fc6a-4f25-aca5-bf9f5f77e14a" x="0" y="0" width="10" height="10" patternUnits="userSpaceOnUse">
-              <path d="M-3 13 15-5M-5 5l18-18M-1 21 17 3"></path>
-            </pattern>
-          </defs>
-          <rect stroke="none" fill="url(#pattern-d09edaee-fc6a-4f25-aca5-bf9f5f77e14a)" width="100%" height="100%"></rect>
-        </svg>
-
-        
-
-      </div>
-  </div> -->
-
-
-    <!-- <div class>
-        <div class="from-info to-primary text-primary-content -mt-[4rem] grid place-items-center items-end bg-gradient-to-br pt-20">
-            <section class="_body">
-                <div class="_container">
-
-                    <section class="card-section">
-                        <div class="card text-center" style="max-width: 18rem;">
-                            <div class="card-header">
-                                <div class="container mt-1">
-                                    <div class="drop-zone" id="drop-zone">
-                                        <i class="fas fa-cloud-upload-alt fa-3x mb-1"></i>
-                                        <div>Drag and drop files here or click to select files (max ~7Mb)</div>
-                                    </div>
-                                    <form>
-                                        <input type="file" name="attachment" id="attachment" multiple hidden>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="card-header">
-                                <div class="form-outline">
-                                    <textarea type="text" class="form-control" id="recipient" rows="2" style="font-size: 12px;" required spellcheck="false"></textarea>
-                                    <label class="form-label" style="font-size: 13px;">Recipient email address</label>
-                                </div>
-                            </div>
-                            <div class="card-header">
-                                <div class="form-outline">
-                                    <input type="text" id="name" class="form-control" required style="margin-bottom: 10px; font-size: 12px;">
-                                    <label class="form-label" style="font-size: 13px;">Your name</label>
-                                </div>
-                                <div class="form-outline">
-                                    <input type="email" id="email" class="form-control" required style="margin-bottom: 10px; font-size: 12px;">
-                                    <label class="form-label" style="font-size: 13px;">Your email</label>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="form-outline">
-                                    <input type="text" id="subject" class="form-control" required style="margin-bottom: 10px; font-size: 12px;">
-                                    <label class="form-label" style="font-size: 13px;">Subject</label>
-                                </div>
-                                <div class="form-outline">
-                                    <textarea class="form-control" id="message" rows="3" style="font-size: 12px;" required></textarea>
-                                    <label class="form-label" style="font-size: 13px;">Message</label>
-                                </div>
-                            </div>
-                            <div class="card-footer text-muted">
-
-                                <button type="button" id="send-email-button" class="btn btn-outline-primary btn-rounded">Transfer</button>
-                                
-                                <div id="progress-bar" style="display: none; background-color: #ddd; height: 10px; width: 100%;">
-                                    <div id="progress-bar-value" style="background-color: #4CAF50; height: 100%; width: 0%;"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                </div>
-            </section>
-        </div>
-    </div> -->
 {% endblock %}
 {% block content_btn %}
 <div class="bg-base-content/10 my-10 mx-1 h-px"></div>
 <div class="flex justify-between">
     <div>
-        <a href="/tools/mail/templates" class="btn btn-sm md:btn-md btn-ghost gap-2 normal-case lg:gap-3">
+        <a href="/tools/mail/signatures" class="btn btn-sm md:btn-md btn-ghost gap-2 normal-case lg:gap-3">
         <svg class="h-6 w-6 fill-current md:h-8 md:w-8" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
             <path d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z"></path>
         </svg>
         <div class="flex flex-col items-start">
             <span class="text-base-content/50 hidden text-xs font-normal md:block">Prev</span>
-            <span>Templates</span>
+            <span>Signatures</span>
         </div>
         </a>
     </div>

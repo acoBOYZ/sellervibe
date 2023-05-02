@@ -405,8 +405,6 @@ cb_3.addEventListener("click", function(){
         total_count++;
         if (isValidEmail(email)) {
           const emailObj = {
-            'name': '',
-            'title': '',
             'email': email,
             'status': true
           };
@@ -598,16 +596,32 @@ async function create_table() {
     async function renderTable(){
       mf_1.style.display = 'none';
       mfp_1.style.removeProperty('display');
-      mf_1.innerHTML = '<div class="overflow-x-auto bg-base-200 rounded-lg"><table class="min-w-full" id="mt_table"><thead class="bg-base-300 rounded-t-lg"><tr><th scope="col" class="px-6 py-4 text-left text-xs font-medium uppercase tracking-wider"><label class="inline-flex items-center"><input type="checkbox" class="checkbox checkbox-xs" id="checkbox_all"></label></th><th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Name</th><th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Title</th><th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Email</th><th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Status</th></tr></thead><tbody class="divide-y divide-gray-700" id="mtb_1"></tbody><tfoot><tr><td colspan="5" class="bg-base-300 px-6 py-4 rounded-b-lg text-sm" id="mtf_1">Showing _ to _ of _ entries</td></tr></tfoot></table></div><div class="flex items-center justify-end gap-x-4 pr-2"><button class="btn btn-sm btn-outline text-xs btn-error" id="mdelb_1" disabled="disabled">Delete</button><button class="btn btn-sm btn-outline text-xs" id="msaveb_1">Save</button></div>';
+      mf_1.innerHTML = '<div class="overflow-auto bg-base-200 rounded-lg"><table class="min-w-full" id="mt_table"><thead class="bg-base-300 rounded-t-lg"></thead><tbody class="divide-y divide-gray-700" id="mtb_1"></tbody><tfoot><tr><td colspan="5" class="bg-base-300 px-6 py-4 rounded-b-lg text-sm" id="mtf_1">Showing _ to _ of _ entries</td></tr></tfoot></table></div><div class="flex items-center justify-end gap-x-4 pr-2"><button class="btn btn-sm btn-outline text-xs btn-error" id="mdelb_1" disabled="disabled">Delete</button><button class="btn btn-sm btn-outline text-xs" id="msaveb_1">Save</button></div>';
 
       const mt_table = document.getElementById('mt_table');
       const mtb_1 = document.getElementById('mtb_1');
-      const selectAllCheckbox = document.getElementById('checkbox_all');
       const deleteButton = document.getElementById('mdelb_1');
       const saveButton = document.getElementById('msaveb_1');
+      let headerCount;
 
 
       if (emails != []) {
+        // Create table header dynamically
+        const headerRow = document.createElement("tr");
+        headerRow.innerHTML = `<th scope="col" class="px-6 py-4 text-left text-xs font-medium uppercase tracking-wider"><label class="inline-flex items-center"><input type="checkbox" class="checkbox checkbox-xs" id="checkbox_all"></label></th>`;
+        const headerKeys = Object.keys(emails[0]);
+        headerCount = headerKeys.length + 1;
+
+        for (let key of headerKeys) {
+          const th = document.createElement("th");
+          th.scope = "col";
+          th.className = "px-6 py-3 text-left text-xs font-medium uppercase tracking-wider";
+          th.textContent = key.replace(/_/g, ' ');
+          headerRow.appendChild(th);
+        }
+
+        mt_table.querySelector("thead").appendChild(headerRow);
+
         const startIndex = (currentPage - 1) * itemsPerPage;
         const endIndex = startIndex + itemsPerPage;
 
@@ -631,47 +645,38 @@ async function create_table() {
           tdCheckbox.appendChild(label);
           tr.appendChild(tdCheckbox);
       
-          // Create the name cell
-          const tdName = document.createElement('td');
-          tdName.classList.add('px-6', 'py-3', 'whitespace-nowrap', 'text-sm');
-          tdName.textContent = email.name;
-          tr.appendChild(tdName);
-      
-          // Create the title cell
-          const tdTitle = document.createElement('td');
-          tdTitle.classList.add('px-6', 'py-3', 'whitespace-nowrap', 'text-sm');
-          tdTitle.textContent = email.title;
-          tr.appendChild(tdTitle);
-      
-          // Create the email cell
-          const tdEmail = document.createElement('td');
-          tdEmail.classList.add('px-6', 'py-3', 'whitespace-nowrap', 'text-sm');
-          tdEmail.textContent = email.email;
-          tr.appendChild(tdEmail);
-      
-          // Create the status cell
-          const tdStatus = document.createElement('td');
-          tdStatus.classList.add('px-6', 'py-3', 'whitespace-nowrap', 'text-sm');
-          const labelStatus = document.createElement('label');
-          labelStatus.classList.add('swap', 'swap-rotate');
-          const checkboxStatus = document.createElement('input');
-          checkboxStatus.type = 'checkbox';
-          checkboxStatus.id = 'statusCheckboxes';
-          checkboxStatus.checked = email.status;
-          const divOn = document.createElement('div');
-          divOn.classList.add('swap-on', 'text-success', 'text-xs', 'font-bold');
-          divOn.textContent = 'ACTIVE';
-          const divOff = document.createElement('div');
-          divOff.classList.add('swap-off', 'text-error', 'text-xs', 'font-bold');
-          divOff.textContent = 'PASSIVE';
-          labelStatus.appendChild(checkboxStatus);
-          labelStatus.appendChild(divOn);
-          labelStatus.appendChild(divOff);
-          tdStatus.appendChild(labelStatus);
-          tr.appendChild(tdStatus);
-      
-          checkboxStatus.addEventListener('change', function () {
-            email['status'] = checkboxStatus.checked ? true : false;
+          headerKeys.forEach(key => {
+            if(key !== 'status'){
+              const td = document.createElement("td");
+              td.classList.add("px-6", "py-3", "whitespace-nowrap", "text-sm");
+              td.textContent = email[key];
+              tr.appendChild(td);
+            } else {
+              const tdStatus = document.createElement('td');
+              tdStatus.classList.add('px-6', 'py-3', 'whitespace-nowrap', 'text-sm');
+              const labelStatus = document.createElement('label');
+              labelStatus.classList.add('swap', 'swap-rotate');
+              const checkboxStatus = document.createElement('input');
+              checkboxStatus.type = 'checkbox';
+              checkboxStatus.id = 'statusCheckboxes';
+              checkboxStatus.checked = email.status;
+              const divOn = document.createElement('div');
+              divOn.classList.add('swap-on', 'text-success', 'text-xs', 'font-bold');
+              divOn.textContent = 'ACTIVE';
+              const divOff = document.createElement('div');
+              divOff.classList.add('swap-off', 'text-error', 'text-xs', 'font-bold');
+              divOff.textContent = 'PASSIVE';
+              labelStatus.appendChild(checkboxStatus);
+              labelStatus.appendChild(divOn);
+              labelStatus.appendChild(divOff);
+              tdStatus.appendChild(labelStatus);
+              tr.appendChild(tdStatus);
+
+              checkboxStatus.addEventListener('change', function () {
+                email['status'] = checkboxStatus.checked ? true : false;
+              });
+
+            }
           });
       
           mtb_1.appendChild(tr);
@@ -703,8 +708,10 @@ async function create_table() {
         }
         mtf_1.innerHTML = `<div class="container mx-auto flex items-center justify-between"><div>Showing ${startEntry} to ${endEntry} of ${emails.length} entries</div></div>`;
         mtf_1.querySelector('.container').appendChild(pageButtonsContainer);
+        mtf_1.setAttribute("colspan", headerCount);
       }    
 
+      const selectAllCheckbox = document.getElementById('checkbox_all');
       mf_1.style.removeProperty('display');
       mfp_1.style.display = 'none';
 

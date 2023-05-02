@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from .models import UserEmails
 import json
 from datetime import datetime
+from unidecode import unidecode
 
 import ssl
 from pprint import pprint
@@ -38,8 +39,12 @@ def contacts(request):
 def templates(request):
     return render(request, 'templates/index.html')
 
+def signatures(request):
+    return render(request, 'signatures/index.html')
+
 def send(request):
     return render(request, 'send/index.html')
+
 
 @csrf_exempt
 def upload_file(request):
@@ -51,7 +56,7 @@ def upload_file(request):
 
             def validate_email(email):
                 email_regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
-                return re.match(email_regex, email) is not None
+                return re.match(email_regex, str(email)) is not None
             
             file_path = os.path.join(f'{file.name}')
             with open(file_path, 'wb') as destination:
@@ -60,38 +65,57 @@ def upload_file(request):
             emails = []
             total_count = 0
             validate_count = 0
-            if file.name.endswith('.xlsx'):
-                wb = load_workbook(file_path)
-                ws = wb.active
-                header_row = next(ws.iter_rows(min_row=1, max_row=1, values_only=True))
-                name_column = None
-                title_column = None
-                email_column = None
-                status_column = None
-                for i, header in enumerate(header_row):
-                    _header = str(header).lower()
-                    if name_column is None and _header == 'name':
-                        name_column = i + 1
-                    elif title_column is None and _header == 'title':
-                        title_column = i + 1
-                    elif email_column is None and _header == 'email':
-                        email_column = i + 1
-                    elif status_column is None and _header == 'status':
-                        status_column = i + 1
-                if email_column is None:
-                    return JsonResponse({'success': False, 'error': 'Email column not found'})
-                for row in ws.iter_rows(min_row=2, values_only=True):
-                    email = {'name': row[name_column - 1] if name_column is not None else '',
-                             'title': row[title_column - 1] if title_column is not None else '',
-                             'email': row[email_column - 1],
-                             'status': (row[status_column - 1] == 'true') if status_column is not None else True}
-                    total_count += 1
-                    if email['email'] and validate_email(email['email']):
-                        emails.append(email)
-                        validate_count += 1
-            else:
-                return JsonResponse({'success': False, 'error': 'Unsupported file type'})
-            os.remove(file_path)
+            MAX_EMAIL_COUNT = 100
+            try:
+                if file.name.endswith('.xlsx'):
+                    wb = load_workbook(file_path)
+                    ws = wb.active
+                    header_row = next(ws.iter_rows(min_row=1, max_row=1, values_only=True))
+                    email_column = None
+                    fields = {}
+                    for i, header in enumerate(header_row):
+                        _header = unidecode(str(header)).strip().lower().replace(' ', '_')
+                        if _header == 'none':
+                            continue
+                        if email_column is None and _header == 'email':
+                            email_column = i + 1
+                        else:
+                            fields[_header] = i + 1
+
+                    if email_column is None:
+                        for row in ws.iter_rows(min_row=2, max_row=2, values_only=True):
+                            for i, cell_value in enumerate(row):
+                                if validate_email(cell_value):
+                                    email_column = i + 1
+                                    _header = unidecode(str(header)).strip().lower().replace(' ', '_')
+                                    del fields[_header]
+                                    break
+
+                    if email_column is None:
+                        return JsonResponse({'success': False, 'error': 'Email column not found'})
+
+                    seen_emails = set()
+                    for row in ws.iter_rows(min_row=2, values_only=True):
+                        if len(seen_emails) >= MAX_EMAIL_COUNT:
+                            break
+                        email = row[email_column - 1]
+                        if email is None or email in seen_emails:
+                            continue
+                        seen_emails.add(email)
+                        total_count += 1
+                        if email and validate_email(email):
+                            email_data = {'email': email}
+                            for field, col_index in fields.items():
+                                email_data[field] = row[col_index - 1]
+                            email_data['status'] = True
+                            emails.append(email_data)
+                            validate_count += 1
+                else:
+                    return JsonResponse({'success': False, 'error': 'Unsupported file type'})
+            except Exception as e:
+                return JsonResponse({'success': False, 'error': f'An error occurred: {str(e)}'})
+            finally:
+                os.remove(file_path)
             return JsonResponse({'success': True, 'emails': emails, 'total_count': total_count, 'validate_count': validate_count, 'unknown_count': total_count - validate_count})
     return JsonResponse({'success': False})
 
@@ -192,17 +216,21 @@ def upload_attachments(request):
         return JsonResponse({'success': False})
 
 
+def create_fields_dict(item):
+    fields_dict = {}
+    for field_key, field_value in item.items():
+        if field_key not in ["email", "status"]:
+            fields_dict[field_key] = field_value
+    return fields_dict
+
 def send_bulk_emails_via_elasticemail(email_data):
     with ApiClient(configuration) as api_client:
         api_client.rest_client.pool_manager.connection_pool_kw['cert_reqs'] = ssl.CERT_NONE
         api_instance = EmailsApi(api_client)
         email_message_data = EmailMessageData(
             recipients=[
-                EmailRecipient(email=item['email'], fields={'name': item['name'], 'title': item['title']}) for item in email_data['email_list']
+                EmailRecipient(email=item['email'], fields=create_fields_dict(item)) for item in email_data['email_list']
             ],
-            # cc=[
-            #     EmailRecipient(email=email) for email in email_data['cc_list']
-            # ],
             content=EmailContent(
                 body=[
                     BodyPart(
@@ -224,7 +252,6 @@ def send_bulk_emails_via_elasticemail(email_data):
             return {'success': True, 'response': {'message_id': response.message_id, 'transaction_id': response.transaction_id}}
         except ApiException as e:
             error_message = f"Error: {e.status} - {e.reason}"
-            print(f"Error details: {e.body}")
             return {'success': False, 'error': error_message}
 
 @login_required

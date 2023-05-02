@@ -2,6 +2,8 @@ const dropZone = document.getElementById('dropZone');
 const containerRect = dropZone.getBoundingClientRect();
 let loadLottie = false;
 let dropZone_hasFile = false;
+let emails;
+let hasInvalidFields = false;
 const dropZone_base = document.getElementById('dropZone_base');
 const success_lottie = document.getElementById('success-lottie');
 const dropZone_progress = document.getElementById('dropZone_progress');
@@ -337,8 +339,8 @@ async function sendEmailsToServer() {
       updateSendModal(`${attachment_list[i]} added to email attachments`, 'normal');
     }
     
-    updateSendModal(`downloading email list from:'${pick_list_value}'`, 'secondary', true);
-    let emails = await getEmails(pick_list_value);
+    // updateSendModal(`downloading email list from:'${pick_list_value}'`, 'secondary', true);
+    // let emails = await getEmails(pick_list_value);
     if(!emails){
         updateSendModal(`in '${pick_list_value}' emails not found!`, 'error');
         updateSendModal(`you got some errors while downloading emails. Please check your network connection and contact list!`, 'error');
@@ -346,7 +348,7 @@ async function sendEmailsToServer() {
         addSendModalToButton('Try Again', 'error');
         return;
     }
-    updateSendModal(`'${pick_list_value}' download finished.`, 'success');
+    updateSendModal(`'from ${pick_list_value}' emails download finished.`, 'success');
     for (let i = 0; i < emails.length; i++) {
         formData.append(`email`, JSON.stringify(emails[i]));
     }
@@ -392,6 +394,7 @@ async function sendEmailsToServer() {
                 pick_list.selectedIndex = 0;
                 input_subject.value = '';
                 textarea_message.value = '';
+                resetFieldsContainer();
 
                 updateSendModal(`all emails are sended ${attachment_list.length > 0 ? 'with attachments' : ''}`, 'primary');
                 finishSendModal();
@@ -488,7 +491,6 @@ async function getEmailFileNames(pickList) {
         input_cc.value = '';
         cc_list.forEach(email => {
             const trimmedEmail = email.trim();
-            console.log('email', trimmedEmail);
             if(!isValidEmail(trimmedEmail)){
                 showWarningToast(`${trimmedEmail} does not valid`);
             } else {
@@ -519,9 +521,14 @@ async function getEmailFileNames(pickList) {
     textarea_message_value = textarea_message.value;
 
     // required_area = false;
-    if(required_area){
+    if(required_area || hasInvalidFields){
         required_area = false;
-        showWarningToast('Please fill out all required fields correctly.');
+        if(required_area){
+            showWarningToast('Please fill out all required fields correctly.');
+        } else {
+            showWarningToast('There are unsupported fields in your text.<br>Please update the fields and try again.');
+            textarea_message.classList.add('border-error', 'border-opacity-75');
+        }
         input_from_value = '';
         input_replyTo_value = '';
         input_cc_value_list = [];
@@ -560,3 +567,92 @@ async function getEmailFileNames(pickList) {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return emailRegex.test(email);
   }
+
+  /** BADGES **/
+function resetFieldsContainer(){
+    const badgeContainer = document.getElementById("badge_container");
+    const badgeDiv = badgeContainer.querySelector('#badge_div');
+    badgeContainer.classList.add("hidden");
+    badgeDiv.innerHTML = '';
+}
+
+function checkFieldsAndUpdateStyle() {
+    const badgeContainer = document.getElementById("badge_container");
+    const badgeDiv = badgeContainer.querySelector('#badge_div');
+
+    const allFieldsRegex = /\{([^}]+)\}/g;
+    const foundFields = textarea_message.value.match(allFieldsRegex) || [];
+
+    const newBadgeFields = new Set(
+        Array.from(badgeDiv.querySelectorAll('.badge')).map(
+        (badge) => `${badge.innerText.substring(2)}`
+        )
+    );
+
+    hasInvalidFields = false;
+    foundFields.forEach((field) => {
+        if (!newBadgeFields.has(field)) {
+        hasInvalidFields = true;
+        }
+    });
+
+    if (hasInvalidFields) {
+        textarea_message.classList.add('underline', 'decoration-red-500', 'decoration-double');
+    } else {
+        textarea_message.classList.remove('underline', 'decoration-red-500', 'decoration-double');
+    }
+}
+
+pick_list.addEventListener('change', async function () {
+    emails = await getEmails(pick_list.value);
+  
+    const badgeContainer = document.getElementById("badge_container");
+    const badgeDiv = badgeContainer.querySelector('#badge_div');
+    const badge_fixer = '<div class="hidden"></div>';
+    badgeDiv.innerHTML = badge_fixer;
+  
+    let badge_container_has_badge = false;
+  
+    for (const field of Object.keys(emails[0])) {
+      if (field !== "email" && field !== "status") {
+        badge_container_has_badge = true;
+        const tooltip = document.createElement("div");
+        tooltip.className = "tooltip";
+        tooltip.setAttribute('data-tip', `e.g.: ${emails[0][field]}`);
+
+        const fixer = document.createElement("div");
+        fixer.className = "hidden";
+
+        const badge = document.createElement("div");
+        badge.className = "badge badge-primary cursor-pointer";
+        badge.classList.add('text-xs');
+        badge.innerHTML = `+ {${field}}`;
+
+        tooltip.innerHTML = fixer.outerHTML + badge.outerHTML + fixer.outerHTML;
+        badgeDiv.appendChild(tooltip);
+      }
+    }
+    badgeDiv.innerHTML += badge_fixer;
+
+    checkFieldsAndUpdateStyle();
+  
+    if (badge_container_has_badge) {
+      badgeContainer.classList.remove("hidden");
+    } else {
+        badgeContainer.classList.add("hidden");
+        badgeDiv.innerHTML = '';
+        return;
+    }
+  
+    const badges = document.querySelectorAll('.badge');
+    badges.forEach(badge => {
+      badge.addEventListener('click', () => {
+        textarea_message.value += `${badge.innerText.substring(2)}`;
+      });
+    });
+});
+
+textarea_message.addEventListener('input', () => {
+    checkFieldsAndUpdateStyle();
+});
+  /** END BADGES **/

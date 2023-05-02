@@ -9,6 +9,7 @@ urlpatterns = [
     path('mail/', views.mail),
     path('mail/contacts', views.contacts),
     path('mail/templates', views.templates),
+    path('mail/signatures', views.signatures),
     path('mail/send', views.send),
     path('upload_file/', views.upload_file),
     path('save_emails/', views.save_emails),

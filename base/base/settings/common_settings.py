@@ -147,23 +147,23 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # EMAIL_HOST_PASSWORD = 'your_email_password'  # Replace with your Gmail email password
 # """"""
 
-# EXPIRES_DEFAULT = 'access plus 1 month'
-# EXPIRES_IMAGES = 'access plus 1 year'
-# EXPIRES_CSS = 'access plus 1 year'
-# EXPIRES_JS = 'access plus 1 year'
-# EXPIRES_FONTS = 'access plus 1 year'
+EXPIRES_DEFAULT = 'access plus 1 month'
+EXPIRES_IMAGES = 'access plus 1 year'
+EXPIRES_CSS = 'access plus 1 year'
+EXPIRES_JS = 'access plus 1 year'
+EXPIRES_FONTS = 'access plus 1 year'
 
-# GZIP_COMPRESS_MIN_SIZE = 1024
+GZIP_COMPRESS_MIN_SIZE = 1024
 
-# COMPRESS_ENABLED = False
-# COMPRESS_OFFLINE = False
-# COMPRESS_OUTPUT_DIR = 'compressed'
-# COMPRESS_CSS_FILTERS = [
-#     'compressor.filters.cssmin.CSSMinFilter',
-# ]
-# COMPRESS_JS_FILTERS = [
-#     'compressor.filters.jsmin.JSMinFilter',
-# ]
-# COMPRESS_STORAGE = 'compressor.storage.GzipCompressorFileStorage'
+COMPRESS_ENABLED = False
+COMPRESS_OFFLINE = False
+COMPRESS_OUTPUT_DIR = 'compressed'
+COMPRESS_CSS_FILTERS = [
+    'compressor.filters.cssmin.CSSMinFilter',
+]
+COMPRESS_JS_FILTERS = [
+    'compressor.filters.jsmin.JSMinFilter',
+]
+COMPRESS_STORAGE = 'compressor.storage.GzipCompressorFileStorage'
 
 

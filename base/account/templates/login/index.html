@@ -20,7 +20,7 @@
           <div class="card-body">
             <!-- Social login buttons -->
             <div class="mb-4">
-              <a href="{{ google_auth_url }}" class="btn btn-block bg-opacity-50 border-none shadow-xl normal-case mb-2 flex">
+              <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-block bg-opacity-50 border-none shadow-xl normal-case mb-2 flex">
                 <div loading="lazy" class="flex-none w-10" id="google-lottie"></div>
                 <div class="grow text-primary-content flex-nowrap">With Google</div>
                 <div class="flex-none w-10"></div>

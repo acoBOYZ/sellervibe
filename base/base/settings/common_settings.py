@@ -34,7 +34,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 INSTALLED_APPS = [
     'compressor',
     'django_extensions',
-    'htmlmin',
+    # 'htmlmin',
     'account',
     'tool_mail',
     'django.contrib.admin',
@@ -43,20 +43,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # 'django.contrib.sites',
-    # 'oauth_app',
+    'social_django',
 ]
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'base.backends.EmailBackend',
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.microsoft.MicrosoftOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
 ]
-
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '<your_google_client_id>'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '<your_google_client_secret>'
-
-SOCIAL_AUTH_MICROSOFT_OAUTH2_KEY = '<your_office365_client_id>'
-SOCIAL_AUTH_MICROSOFT_OAUTH2_SECRET = '<your_office365_client_secret>'
 
 ROOT_URLCONF = 'base.urls'
 
@@ -106,11 +102,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
 
 
@@ -136,17 +129,6 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# """
-# EMAIL SERVICES
-# """
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
-# EMAIL_HOST_USER = 'your_email@example.com'  # Replace with your Gmail email address
-# EMAIL_HOST_PASSWORD = 'your_email_password'  # Replace with your Gmail email password
-# """"""
-
 EXPIRES_DEFAULT = 'access plus 1 month'
 EXPIRES_IMAGES = 'access plus 1 year'
 EXPIRES_CSS = 'access plus 1 year'
@@ -167,3 +149,6 @@ COMPRESS_JS_FILTERS = [
 COMPRESS_STORAGE = 'compressor.storage.GzipCompressorFileStorage'
 
 
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.getenv('GOOGLE_CLIENT_ID')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv('GOOGLE_CLIENT_SECRET')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['email', 'profile']

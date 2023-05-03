@@ -15,14 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.views.decorators.cache import cache_control
-from django.conf import settings
-from django.conf.urls.static import static
+from django.views.generic.base import RedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('account.urls')),
     path('tools/', include('tool_mail.urls')),
+    path('accounts/profile/', RedirectView.as_view(url='/tools/mail')),
 ]
 
 # serve static files with cache control headers

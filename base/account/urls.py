@@ -10,7 +10,6 @@ urlpatterns = [
     path('login/', views.login_page),
     path('signup/', views.signup_page, name='signup'),
     path('logout/', views.logout_page),
-    path('social-auth/', include('social_django.urls', namespace='social')),
 ]
 
 # serve static files with cache control headers

@@ -6,6 +6,19 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['sellervibe.co', 'www.sellervibe.co', 'en.sellervibe.co', 'tr.sellerbive.co']
 
+MIDDLEWARE = [
+    # 'django.middleware.cache.UpdateCacheMiddleware',
+    # 'django.middleware.gzip.GZipMiddleware',
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'django.middleware.cache.FetchFromCacheMiddleware',
+]
+
 # Database
 DATABASES = {
     'default': {

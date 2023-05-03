@@ -42,29 +42,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'social_django',
-]
-
-MIDDLEWARE = [
-    'django.middleware.cache.UpdateCacheMiddleware',
-    'django.middleware.gzip.GZipMiddleware',
-    # 'htmlmin.middleware.HtmlMinifyMiddleware',
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.cache.FetchFromCacheMiddleware',
+    'django.contrib.sites',
+    # 'oauth_app',
 ]
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'base.backends.EmailBackend',
-    'social_core.backends.google.GoogleOAuth2',
-    'social_core.backends.microsoft.MicrosoftOAuth2',
-    'django.contrib.auth.backends.ModelBackend',
 ]
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '<your_google_client_id>'

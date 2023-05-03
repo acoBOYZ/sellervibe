@@ -2,7 +2,7 @@ from base.settings.common_settings import *
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['sellervibe.co', 'www.sellervibe.co', 'en.sellervibe.co', 'tr.sellerbive.co']
 
@@ -31,5 +31,5 @@ DATABASES = {
     }
 }
 
-STATICFILES_DIRS = [ os.path.join(BASE_DIR,'static') ]
+# STATICFILES_DIRS = [ os.path.join(BASE_DIR,'static') ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'assets')

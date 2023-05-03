@@ -92,6 +92,7 @@ def upload_file(request):
                                     break
 
                     if email_column is None:
+                        os.remove(file_path)
                         return JsonResponse({'success': False, 'error': 'Email column not found'})
 
                     seen_emails = set()
@@ -111,8 +112,10 @@ def upload_file(request):
                             emails.append(email_data)
                             validate_count += 1
                 else:
+                    os.remove(file_path)
                     return JsonResponse({'success': False, 'error': 'Unsupported file type'})
             except Exception as e:
+                os.remove(file_path)
                 return JsonResponse({'success': False, 'error': f'An error occurred: {str(e)}'})
             finally:
                 os.remove(file_path)

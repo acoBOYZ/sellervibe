@@ -23,4 +23,16 @@ const animationDuration = parseFloat(getComputedStyle(animatedElement).getProper
 
 setInterval(changeTransformOrigin, animationDuration);
 
-
+lottie.loadAnimation({
+  container: document.getElementById('get-started-lottie'),
+  renderer: 'svg',
+  loop: true,
+  autoplay: true,
+  path: '../../static/img/get-started-lottie.json',
+    rendererSettings: {
+    preserveAspectRatio: 'xMidYMid meet',
+    progressiveLoad: false,
+    scaleMode: 'noScale',
+    hideOnTransparent: true
+}
+});

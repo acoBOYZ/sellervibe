@@ -17,16 +17,16 @@
           <div class="card-body">
                 <!-- Social sign up buttons -->
               <div class="mb-4">
-                  <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-block bg-opacity-50 border-none shadow-xl normal-case mb-2 flex">
+                  <a href="{% url 'social:begin' 'google-oauth2' %}?next={% url 'signup' %}" class="btn btn-block bg-opacity-50 border-none shadow-xl normal-case mb-2 flex">
                     <div loading="lazy" class="flex-none w-10" id="google-lottie"></div>
                     <div class="grow text-primary-content flex-nowrap">With Google</div>
                     <div class="flex-none w-10"></div>
                   </a>
-                  <a href="{{ office365_auth_url }}" class="btn btn-block bg-opacity-50 border-none shadow-xl normal-case mb-2 flex">
+                  <a href="#" class="btn btn-block bg-opacity-50 border-none shadow-xl normal-case mb-2 flex" disabled>
                     <div loading="lazy" class="flex-none w-10" id="microsoft-office-lottie"></div>
                     <div class="grow text-primary-content flex-nowrap">With Office365</div>
                     <div class="flex-none w-10"></div>
-                  </a>
+                </a>
               </div>
     
                 <!-- Separator -->
@@ -35,6 +35,12 @@
                 <!-- Sign up form -->
                 <form method="post">
                     {% csrf_token %}
+                    <div class="form-control mb-2 text-base-content">
+                      <label class="label">
+                        <span class="label-text text-primary-content">User Name</span>
+                      </label>
+                      <input type="text" placeholder="username" class="input border-none focus:outline-none focus:placeholder-transparent" name="username" required/>
+                    </div>
                     <div class="form-control mb-2 text-base-content">
                       <label class="label">
                         <span class="label-text text-primary-content">Email</span>

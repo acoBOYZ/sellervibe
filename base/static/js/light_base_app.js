@@ -12,3 +12,17 @@ window.addEventListener('scroll', function () {
     logo.classList.remove('text-primary')
   }
 });
+
+lottie.loadAnimation({
+  container: document.getElementById('profile-icon-lottie'),
+  renderer: 'svg',
+  loop: true,
+  autoplay: true,
+  path: '../../static/img/profile-icon-lottie.json',
+  rendererSettings: {
+  preserveAspectRatio: 'xMidYMid meet',
+  progressiveLoad: false,
+  scaleMode: 'noScale',
+  hideOnTransparent: true
+}
+});

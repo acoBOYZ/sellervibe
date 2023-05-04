@@ -80,7 +80,7 @@
               <path d="M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"></path>
             </svg>
           </div>
-          <div class="dropdown-content bg-base-200 text-base-content rounded-t-box rounded-b-box top-px mt-16 w-56 overflow-y-auto shadow-2xl bg-neutral bg-opacity-90 text-neutral-content">
+          <div class="dropdown-content bg-base-200 text-base-content rounded-t-box rounded-b-box top-px mt-16 w-32 overflow-y-auto shadow-2xl bg-neutral text-neutral-content">
             <ul class="menu menu-compact gap-1 p-3" tabindex="0">
               <li>
                 <button class="flex active">
@@ -97,23 +97,11 @@
             </ul>
           </div>
         </div>
-        <div title="Edit Profile" class="dropdown dropdown-end">
-          <label tabindex="0" class="btn btn-ghost btn-circle avatar">
-            <div class="w-10 rounded-full">
-              <img loading="lazy" src="{% static 'img/me.png' %}" />
-            </div>
-          </label>
-          <ul tabindex="0" class="mt-3 p-2 shadow menu menu-compact dropdown-content rounded-box w-52 bg-neutral bg-opacity-90 text-neutral-content">
-            <li>
-              <a class="justify-between">
-                Profile
-                <span class="badge">New</span>
-              </a>
-            </li>
-            <li><a>Settings</a></li>
-            <li><a>Logout</a></li>
-          </ul>
-        </div>
+        <!-- <div class="items-center flex-none lg:block w-36">
+          <a href="/signup" tabindex="0" class="btn btn-ghost flex justify-center items-center active:bg-transparent hover:bg-transparent">
+            <div loading="lazy" class="h-full" id="get-started-lottie"></div> 
+          </a>
+        </div> -->
       </div>
     </nav>  
   </div>
@@ -125,7 +113,7 @@
             
         </div>
         
-        <svg class="col-start-1 row-start-1 h-auto w-full text-primary transition-all duration-500" viewBox="0 0 1600 595" xmlns="http://www.w3.org/2000/svg">
+        <svg class="col-start-1 row-start-1 h-auto w-full text-primary transition-all duration-500 hover:opacity-75" viewBox="0 0 1600 595" xmlns="http://www.w3.org/2000/svg">
           <path class="animate-scale" fill="currentColor" d="M0 338L53.3 349.2C106.7 360.3 213.3 382.7 320 393.8C426.7 405 533.3 405 640 359.3C746.7 313.7 853.3 222.3 960 189.2C1066.7 156 1173.3 181 1280 159.2C1386.7 137.3 1493.3 68.7 1546.7 34.3L1600 0V595H1546.7C1493.3 595 1386.7 595 1280 595C1173.3 595 1066.7 595 960 595C853.3 595 746.7 595 640 595C533.3 595 426.7 595 320 595C213.3 595 106.7 595 53.3 595H0V338Z"></path>
         </svg>    
       </div>
@@ -152,6 +140,7 @@
 
       {% block script %}{% endblock %}
 
+      <script src="{% static 'lottie/lottie.min.js' %}"></script>
       <!-- {% compress js %} -->
         <script src="{% static 'js/base_app.js' %}"></script>
       <!-- {% endcompress %} -->

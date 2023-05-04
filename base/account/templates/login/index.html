@@ -20,16 +20,16 @@
           <div class="card-body">
             <!-- Social login buttons -->
             <div class="mb-4">
-              <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-block bg-opacity-50 border-none shadow-xl normal-case mb-2 flex">
+              <a href="{% url 'social:begin' 'google-oauth2' %}?next={{ request.GET.next|default:'/' }}" class="btn btn-block bg-opacity-50 border-none shadow-xl normal-case mb-2 flex">
                 <div loading="lazy" class="flex-none w-10" id="google-lottie"></div>
                 <div class="grow text-primary-content flex-nowrap">With Google</div>
                 <div class="flex-none w-10"></div>
               </a>
-              <a href="{{ office365_auth_url }}" class="btn btn-block bg-opacity-50 border-none shadow-xl normal-case mb-2 flex">
+              <a href="#" class="btn btn-block bg-opacity-50 border-none shadow-xl normal-case mb-2 flex" disabled>
                 <div loading="lazy" class="flex-none w-10" id="microsoft-office-lottie"></div>
                 <div class="grow text-primary-content flex-nowrap">With Office365</div>
                 <div class="flex-none w-10"></div>
-              </a>
+            </a>
             </div>
 
             <!-- Separator -->

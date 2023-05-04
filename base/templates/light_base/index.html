@@ -64,7 +64,7 @@
                     <path d="M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"></path>
                   </svg>
                 </div>
-                <div class="dropdown-content bg-base-200 text-base-content rounded-t-box rounded-b-box top-px mt-16 w-56 overflow-y-auto shadow-2xl bg-neutral bg-opacity-90 text-neutral-content">
+                <div class="dropdown-content bg-base-200 text-base-content rounded-t-box rounded-b-box top-px mt-16 w-32 overflow-y-auto shadow-2xl bg-neutral text-neutral-content">
                   <ul class="menu menu-compact gap-1 p-3" tabindex="0">
                     <li>
                       <button class="flex active w-full">
@@ -81,14 +81,19 @@
                   </ul>
                 </div>
               </div>
+              {% if user.is_authenticated %}
               <div title="Edit Profile" class="dropdown dropdown-end">
                 <label tabindex="0" class="btn btn-ghost btn-circle avatar">
                   <div class="w-10 rounded-full">
-                    <img loading="lazy" src="{% static 'img/me.png' %}" />
+                    {% if user.profile_picture_url %}
+                      <img loading="lazy" src="{{ user.profile_picture_url }}" />
+                    {% else %}       
+                      <div loading="lazy" class="" id="profile-icon-lottie"></div> 
+                    {% endif %}
                   </div>
                 </label>
-                <ul tabindex="0" class="mt-3 p-2 shadow menu menu-compact dropdown-content rounded-box w-52 bg-neutral bg-opacity-90 text-neutral-content space-y-2">
-                  <div class="text-sm font-bold flex justify-center items-center">Signed in as:&nbsp;<span class="font-normal text-success"> {{ request.user }}</span></div>
+                <ul tabindex="0" class="mt-3 p-2 shadow menu menu-compact dropdown-content rounded-box w-52 bg-neutral text-neutral-content space-y-2">
+                  <div class="text-sm font-bold flex justify-center items-center">Signed in as:&nbsp;<span class="font-normal text-success">{{ request.user }}</span></div>
                   <div class="bg-base-content/10 my-4 mx-1 h-px"></div>
                   <li>
                     <a class="justify-between">
@@ -100,6 +105,7 @@
                   <li><a href="/logout">Logout</a></li>
                 </ul>
               </div>
+            {% endif %}
             </div>
           </nav>
         </div>
@@ -210,14 +216,14 @@
             <li></li>
             <div class="collapse focus:outline-none">
               <input type="checkbox" data-collapse checked/>
-              <div class="collapse-title flex gap-4">
-                  <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  viewBox="0 0 75.294 75.294" class="h-6 w-6 fill-current">
+              <div class="collapse-title flex gap-4 items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  viewBox="0 0 75.294 75.294" class="h-5 w-5 fill-current">
                     <path d="M66.097,12.089h-56.9C4.126,12.089,0,16.215,0,21.286v32.722c0,5.071,4.126,9.197,9.197,9.197h56.9c5.071,0,9.197-4.126,9.197-9.197V21.287C75.295,16.215,71.169,12.089,66.097,12.089z M61.603,18.089L37.647,33.523L13.691,18.089H61.603z M66.097,57.206h-56.9C7.434,57.206,6,55.771,6,54.009V21.457l29.796,19.16c0.04,0.025,0.083,0.042,0.124,0.065c0.043,0.024,0.087,0.047,0.131,0.069c0.231,0.119,0.469,0.215,0.712,0.278c0.025,0.007,0.05,0.01,0.075,0.016c0.267,0.063,0.537,0.102,0.807,0.102c0.001,0,0.002,0,0.002,0c0.002,0,0.003,0,0.004,0c0.27,0,0.54-0.038,0.807-0.102c0.025-0.006,0.05-0.009,0.075-0.016c0.243-0.063,0.48-0.159,0.712-0.278c0.044-0.022,0.088-0.045,0.131-0.069c0.041-0.023,0.084-0.04,0.124-0.065l29.796-19.16v32.551C69.295,55.771,67.86,57.206,66.097,57.206z"></path>
                   </svg>
-                  <span class="flex-1">Email</span>
+                  <span class="flex-1 text-sm">Email</span>
                   <span class="badge badge-sm flex-none lowercase">updated</span>
               </div>
-              <div class="collapse-content space-y-2">
+              <div class="collapse-content">
                 <p>
                   <li>
                     <a sveltekit:prefetch="" href="/tools/mail/contacts" id="" class="flex gap-4 {% block contacts_active %}{% endblock %}">
@@ -274,8 +280,10 @@
   </body>
 
 
-  {% block script %}{% endblock %}
+  {% block script %}
+  {% endblock %}
 
+  <script src="{% static 'lottie/lottie.min.js' %}"></script>
   <!-- {% compress js %} -->
     <script src="{% static 'js/light_base_app.js' %}"></script>
   <!-- {% endcompress %} -->

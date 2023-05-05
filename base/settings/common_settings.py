@@ -33,7 +33,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 
 INSTALLED_APPS = [
     'account',
-    'tool_mail',
+    'email_tool',
     'users',
     'django.contrib.admin',
     'django.contrib.auth',

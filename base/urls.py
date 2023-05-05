@@ -20,10 +20,6 @@ from django.views.generic.base import RedirectView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('account.urls')),
-    path('tools/', include('tool_mail.urls')),
+    path('tools/', include('email_tool.urls')),
     path('accounts/profile/', RedirectView.as_view(url='/tools/mail')),
 ]
-
-# serve static files with cache control headers
-# if not settings.DEBUG:
-#     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT, view=cache_control(public=True, max_age=settings.STATICFILES_CACHE_CONTROL))

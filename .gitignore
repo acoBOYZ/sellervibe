@@ -177,3 +177,5 @@ cython_debug/
 .ssh
 .user
 commands.txt
+
+tailwind.config.js

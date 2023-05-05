@@ -18,12 +18,12 @@ DATABASES = {
     }
 }
 
-STATICFILES_DIRS = [ 
-    os.path.join(BASE_DIR, 'static'),
-    os.path.join(BASE_DIR, 'assets', 'admin'),
-]
+# STATICFILES_DIRS = [ 
+#     os.path.join(BASE_DIR, 'static'),
+#     os.path.join(BASE_DIR, 'assets', 'admin'),
+# ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
-print('STATICFILES_DIRS:', STATICFILES_DIRS)
+# print('STATICFILES_DIRS:', STATICFILES_DIRS)
 print('STATIC_ROOT:', STATIC_ROOT)
 
 SECURE_HSTS_SECONDS = 31536000  # This sets HSTS to 1 year (recommended value)

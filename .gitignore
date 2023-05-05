@@ -164,7 +164,9 @@ cython_debug/
 # Migrate
 ./manage.py makemigrations --merge
 **/migrations/**
+!**/migrations/__init__.py
 **/**/migrations/**
+!**/**/migrations/__init__.py
 
 # PyCharm
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can

@@ -2,9 +2,9 @@ from base.settings.common_settings import *
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['164.92.254.4', 'sellervibe.co', 'www.sellervibe.co']
+ALLOWED_HOSTS = ['sellervibe.co', 'www.sellervibe.co']
 
 # Database
 DATABASES = {
@@ -18,8 +18,8 @@ DATABASES = {
     }
 }
 
-# STATICFILES_DIRS = [ os.path.join(BASE_DIR, 'static') ]
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [ os.path.join(BASE_DIR, 'static') ]
+STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
 
 SECURE_HSTS_SECONDS = 31536000  # This sets HSTS to 1 year (recommended value)
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True

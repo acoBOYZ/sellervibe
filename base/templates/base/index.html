@@ -48,14 +48,15 @@
         </span>
         <div class="flex items-center gap-2 ">
           <a href="/" aria-current="page" aria-label="Homepage" class="flex-0 btn btn-ghost active:bg-transparent hover:bg-transparent px-2 ">
-            <div class="font-title inline-flex text-lg transition-all duration-200 md:text-3xl">
+            <div class="font-title font-light inline-flex text-lg transition-all duration-200 md:text-3xl">
               <span class="lowercase transition-all duration-33" id="primary-logo">seller</span>
               <span class="uppercase text-primary-content">VIBE</span>
+              <div loading="lazy" class="w-4 h-4" id="warranty-lottie"></div> 
             </div>
           </a>
-          <a href="/" class="link link-hover font-mono text-xs text-opacity-50 ">
+          <!-- <a href="/" class="link link-hover font-mono text-xs text-opacity-50 ">
             <div data-tip="Current version" class="tooltip tooltip-bottom">0.00.4</div>
-          </a>
+          </a> -->
         </div>
       </div>
       <div class="flex-2">
@@ -138,12 +139,12 @@
     </div>
     </main>
 
-      {% block script %}{% endblock %}
+    <script src="{% static 'lottie/lottie.min.js' %}"></script>
+    {% block script %}{% endblock %}
 
-      <script src="{% static 'lottie/lottie.min.js' %}"></script>
-      <!-- {% compress js %} -->
-        <script src="{% static 'js/base_app.js' %}"></script>
-      <!-- {% endcompress %} -->
+    <!-- {% compress js %} -->
+      <script src="{% static 'js/base_app.js' %}"></script>
+    <!-- {% endcompress %} -->
 </body>
 
 </html>

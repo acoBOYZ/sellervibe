@@ -1,15 +1,16 @@
 {% extends "light_base/index.html" %}
 {% load static %}
 
-{% block title %}sellervibe | mail tool{% endblock %}
+{% block title %}sellervibe | email tool | signatures{% endblock %}
 
 {% block stylesheet %}{% endblock %}
 
-{% block signatures_active %}active{% endblock %}
+{% block signatures_active_line %}bg-opacity-100{% endblock %}
+{% block signatures_active %}bg-base-100{% endblock %}
 
 {% block content %}
 
-    <h1 class="text-4xl font-extrabold my-8">Create Templates</h1>
+    <h1 class="text-4xl font-extrabold my-8">Create Signatures</h1>
     <p>This feature is comming soon.</p>
     <div class="bg-base-content/10 my-10 mx-1 h-px"></div>
     <div class="component-preview text-base-content max-w-4xl relative overflow-x-auto transition-all duration-200 space-y-4">
@@ -46,7 +47,6 @@
 {% endblock %}
 
 {% block script %}
-<script src="{% static 'lottie/lottie.min.js' %}"></script>
 <script>
     lottie.loadAnimation({
         container: document.getElementById('working-lottie'),

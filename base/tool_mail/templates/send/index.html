@@ -1,15 +1,16 @@
 {% extends "light_base/index.html" %}
 {% load static %}
 
-{% block title %}sellervibe | mail tool{% endblock %}
+{% block title %}sellervibe | email tool | send emails{% endblock %}
 
 {% block stylesheet %}{% endblock %}
 
-{% block send_active %}active{% endblock %}
+{% block send_active_line %}bg-opacity-100{% endblock %}
+{% block send_active %}bg-base-100{% endblock %}
 
 {% block content %}
 
-    <h1 class="text-4xl font-extrabold my-8">Send Email</h1>
+    <h1 class="text-4xl font-extrabold my-8">Send Emails</h1>
     <p>Sending bulk emails has never been easier! With our intuitive email tool, you can easily select your contacts, upload any necessary attachments, and customize the sender details including the "from" email address and name. Craft your email message with ease using our text editor, and when you're ready, simply click "send" to deliver your message to your entire contact list at once. Streamline your email communication today and start reaching your customers and contacts with ease!</p>    
     <div class="bg-base-content/10 my-10 mx-1 h-px"></div>
     
@@ -151,6 +152,5 @@
 {% endblock %}
 
 {% block script %}
-<script src="{% static 'lottie/lottie.min.js' %}"></script>
 <script src="{% static 'js/mail_send.js' %}"></script>
 {% endblock %}

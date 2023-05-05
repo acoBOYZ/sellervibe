@@ -37,7 +37,7 @@
                     {% csrf_token %}
                     <div class="form-control mb-2 text-base-content">
                       <label class="label">
-                        <span class="label-text text-primary-content">User Name</span>
+                        <span class="label-text text-primary-content">Username</span>
                       </label>
                       <input type="text" placeholder="username" class="input border-none focus:outline-none focus:placeholder-transparent" name="username" required/>
                     </div>
@@ -87,7 +87,6 @@
   </script>
 {% endif %}
 
-<script src="{% static 'lottie/lottie.min.js' %}"></script>
 <script>
   lottie.loadAnimation({
     container: document.getElementById('google-lottie'),

@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseBadRequest
 from django.contrib.auth import authenticate, login, logout, get_user_model
+import urllib.parse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user
@@ -25,6 +26,7 @@ def login_page(request):
     if request.method == 'POST':
         email = request.POST.get('email')
         password = request.POST.get('password')
+        
         user = authenticate(request, username=email, password=password)
         if user is not None:
             login(request, user)
@@ -83,7 +85,11 @@ def signup_page(request):
 
 @login_required(login_url='/signup')
 def logout_page(request):
-    logout(request)
+
+    user = CustomUser.objects.filter(email=request.user).order_by('id').first()
+    if user:
+        logout(request)
+
     return redirect('/')
 
 
@@ -103,12 +109,13 @@ class GoogleAuthCompleteView(View):
         if response and response.get('user'):
             user = authenticate(request=request, uid=response.get('user').get('email'))
             if user is not None:
-                login(request, user)
-                
-                # retrieve profile picture from Google and store in user profile
-                profile_picture_url = response.get('user').get('picture')
-                create_user_with_profile_picture(user, response, profile_picture_url)
-                
+                if user.provider == 'google-oauth2':
+                    login(request, user)
+                    return redirect('/tools/mail')
+                else:
+                    return redirect('/signup', {'error': 'This user has an account. But not registered from google!'})
+            else:
+                create_user_with_profile_picture(user, response)
                 return redirect('/tools/mail')
         messages.warning(request, f'Unable to authenticate with Google.')
         return redirect('/login')

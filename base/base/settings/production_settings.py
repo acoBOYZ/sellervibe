@@ -4,7 +4,7 @@ from base.settings.common_settings import *
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['sellervibe.co', 'www.sellervibe.co', 'en.sellervibe.co', 'tr.sellerbive.co']
+ALLOWED_HOSTS = ['sellervibe.co', 'www.sellervibe.co']
 
 MIDDLEWARE = [
     # 'django.middleware.cache.UpdateCacheMiddleware',

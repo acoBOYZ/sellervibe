@@ -122,12 +122,12 @@ def upload_file(request):
             return JsonResponse({'success': True, 'emails': emails, 'total_count': total_count, 'validate_count': validate_count, 'unknown_count': total_count - validate_count})
     return JsonResponse({'success': False})
 
-@login_required
+@login_required(login_url='/signup')
 def get_email_names(request):
     email_file_names = UserEmails.objects.filter(user=request.user).values_list('name', flat=True).distinct()
     return JsonResponse({'names': list(email_file_names)})
 
-@login_required
+@login_required(login_url='/signup')
 @csrf_exempt
 def save_emails(request):
     if request.method == 'POST':
@@ -142,7 +142,7 @@ def save_emails(request):
         return JsonResponse({'success': True})
     return JsonResponse({'success': False})
 
-@login_required
+@login_required(login_url='/signup')
 def get_emails(request):
     name = request.GET.get('name') or request.POST.get('name')
     queryset = UserEmails.objects.filter(user=request.user)
@@ -183,7 +183,7 @@ def upload_file_to_elasticemail(file_path):
             print(f"Error details: {e.body}")
             return {'success': False, 'error': error_message}
 
-@login_required
+@login_required(login_url='/signup')
 @csrf_exempt
 def upload_attachments(request):
     if request.method == 'POST':
@@ -257,7 +257,7 @@ def send_bulk_emails_via_elasticemail(email_data):
             error_message = f"Error: {e.status} - {e.reason}"
             return {'success': False, 'error': error_message}
 
-@login_required
+@login_required(login_url='/signup')
 @csrf_exempt
 def send_bulk_emails(request):
     if request.method == 'POST':

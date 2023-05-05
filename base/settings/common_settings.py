@@ -44,6 +44,17 @@ INSTALLED_APPS = [
     'social_django',
 ]
 
+
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'social_core.backends.google.GoogleOAuth2',
@@ -113,8 +124,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # EXPIRES_CSS = 'access plus 1 year'
 # EXPIRES_JS = 'access plus 1 year'
 # EXPIRES_FONTS = 'access plus 1 year'
-
-GZIP_COMPRESS_MIN_SIZE = 1024
 
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.getenv('GOOGLE_CLIENT_ID')

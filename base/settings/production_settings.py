@@ -6,19 +6,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['164.92.254.4', 'sellervibe.co', 'www.sellervibe.co']
 
-MIDDLEWARE = [
-    # 'django.middleware.cache.UpdateCacheMiddleware',
-    'django.middleware.gzip.GZipMiddleware',
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # 'django.middleware.cache.FetchFromCacheMiddleware',
-]
-
 # Database
 DATABASES = {
     'default': {
@@ -31,8 +18,8 @@ DATABASES = {
     }
 }
 
-STATICFILES_DIRS = [ os.path.join(BASE_DIR, 'static') ]
-STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
+# STATICFILES_DIRS = [ os.path.join(BASE_DIR, 'static') ]
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 SECURE_HSTS_SECONDS = 31536000  # This sets HSTS to 1 year (recommended value)
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True

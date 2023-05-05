@@ -1,5 +1,4 @@
 {% load static %}
-<!-- {% load compress %} -->
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
@@ -11,7 +10,6 @@
     <script src="{% static 'js/preload_base_app.js' %}"></script>
     <script src="{% static 'daisyui/daisyui.min.js' %}"></script>
     {% block stylesheet %}{% endblock %}
-    <!-- {% compress css %} -->
       <link href="{% static 'daisyui/daisyui.min.css' %}" rel="stylesheet" type="text/css" defer/>
       <style>
         body {
@@ -31,7 +29,6 @@
           transition: all 100ms ease;
         }
       </style>
-    <!-- {% endcompress %} -->
 </head>
 
 <body>
@@ -142,9 +139,7 @@
     <script src="{% static 'lottie/lottie.min.js' %}"></script>
     {% block script %}{% endblock %}
 
-    <!-- {% compress js %} -->
       <script src="{% static 'js/base_app.js' %}"></script>
-    <!-- {% endcompress %} -->
 </body>
 
 </html>

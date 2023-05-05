@@ -1,5 +1,4 @@
 {% load static %}
-<!-- {% load compress %} -->
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
@@ -13,7 +12,6 @@
     <link rel="stylesheet" href="{% static 'daisyui/daisyui.css' %}"> -->
     <script src="{% static 'daisyui/daisyui.min.js' %}"></script>
     {% block stylesheet %}{% endblock %}
-    <!-- {% compress css %} -->
       <link href="{% static 'daisyui/daisyui.min.css' %}" rel="stylesheet" type="text/css" defer/>
       <style>
         body {
@@ -22,7 +20,6 @@
           min-height: 100vh;
         }
       </style>
-    <!-- {% endcompress %} -->
 </head>
 
 <body>
@@ -282,9 +279,7 @@
   <script src="{% static 'lottie/lottie.min.js' %}"></script>
   {% block script %}{% endblock %}
 
-  <!-- {% compress js %} -->
     <script src="{% static 'js/light_base_app.js' %}"></script>
-  <!-- {% endcompress %} -->
 </body>
 
 </html>

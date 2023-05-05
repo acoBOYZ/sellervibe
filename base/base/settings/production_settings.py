@@ -2,7 +2,7 @@ from base.settings.common_settings import *
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['164.92.254.4', 'sellervibe.co', 'www.sellervibe.co']
 

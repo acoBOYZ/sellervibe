@@ -69,7 +69,7 @@ function showSuccesToast(message=''){
 }
 
 function showErrorToast(message=''){
-  errorToast.innerHTML = message;
+  errorToast.querySelector('span').innerHTML = message;
   errorToast.classList.remove('hidden');
 
   setTimeout(() => {
@@ -541,11 +541,11 @@ function save_form(){
         setTimeout(tab_2_func, 200, name);
         setTimeout(restart_form, 250);
       } else {
-        showSuccesToast('Error! Task failed.');
+        showErrorToast('Error! Task failed.');
       }
     }
     else{
-      showSuccesToast('Error! Task failed for unsported reason! ERR_003');
+      showErrorToast('Error! Task failed for unsported reason! ERR_003');
     }
     setTimeout(function(){
       cpr_5.style.display = 'none';

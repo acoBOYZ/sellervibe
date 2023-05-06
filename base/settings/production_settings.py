@@ -24,7 +24,7 @@ DATABASES = {
 # ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
 # print('STATICFILES_DIRS:', STATICFILES_DIRS)
-print('STATIC_ROOT:', STATIC_ROOT)
+# print('STATIC_ROOT:', STATIC_ROOT)
 
 SECURE_HSTS_SECONDS = 31536000  # This sets HSTS to 1 year (recommended value)
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True

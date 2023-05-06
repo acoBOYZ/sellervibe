@@ -117,7 +117,7 @@
   
   function showErrorToast(message=''){
     const errorToast = document.getElementById('errorToast');
-    errorToast.innerHTML = message;
+    errorToast.querySelector('span').innerHTML = message;
     errorToast.classList.remove('hidden');
 
     setTimeout(() => {

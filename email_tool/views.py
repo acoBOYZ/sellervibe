@@ -53,7 +53,6 @@ def upload_file(request):
             return JsonResponse({'success': False, 'error': 'Authentication required'})
         file = request.FILES.get('file')
         if file:
-
             def validate_email(email):
                 email_regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
                 return re.match(email_regex, str(email)) is not None
@@ -92,7 +91,8 @@ def upload_file(request):
                                     break
 
                     if email_column is None:
-                        os.remove(file_path)
+                        if os.path.exists(file_path):
+                            os.remove(file_path)
                         return JsonResponse({'success': False, 'error': 'Email column not found'})
 
                     seen_emails = set()
@@ -112,25 +112,28 @@ def upload_file(request):
                             emails.append(email_data)
                             validate_count += 1
                 else:
-                    os.remove(file_path)
+                    if os.path.exists(file_path):
+                        os.remove(file_path)
                     return JsonResponse({'success': False, 'error': 'Unsupported file type'})
             except Exception as e:
-                os.remove(file_path)
+                if os.path.exists(file_path):
+                    os.remove(file_path)
                 return JsonResponse({'success': False, 'error': f'An error occurred: {str(e)}'})
             finally:
-                os.remove(file_path)
+                if os.path.exists(file_path):
+                    os.remove(file_path)
             return JsonResponse({'success': True, 'emails': emails, 'total_count': total_count, 'validate_count': validate_count, 'unknown_count': total_count - validate_count})
     return JsonResponse({'success': False})
 
-@login_required(login_url='/signup')
 def get_email_names(request):
+    if not request.user.is_authenticated:
+        return JsonResponse({'names': []})
     email_file_names = UserEmails.objects.filter(user=request.user).values_list('name', flat=True).distinct()
     return JsonResponse({'names': list(email_file_names)})
 
-@login_required(login_url='/signup')
 @csrf_exempt
 def save_emails(request):
-    if request.method == 'POST':
+    if request.method == 'POST' and request.user.is_authenticated:
         emails = json.loads(request.POST.get('emails'))
         delete_all = len(emails) == 0
         name = request.POST.get('name')
@@ -142,8 +145,9 @@ def save_emails(request):
         return JsonResponse({'success': True})
     return JsonResponse({'success': False})
 
-@login_required(login_url='/signup')
 def get_emails(request):
+    if not request.user.is_authenticated:
+        return JsonResponse({'success': False})
     name = request.GET.get('name') or request.POST.get('name')
     queryset = UserEmails.objects.filter(user=request.user)
     if name:
@@ -183,10 +187,9 @@ def upload_file_to_elasticemail(file_path):
             print(f"Error details: {e.body}")
             return {'success': False, 'error': error_message}
 
-@login_required(login_url='/signup')
 @csrf_exempt
 def upload_attachments(request):
-    if request.method == 'POST':
+    if request.method == 'POST' and request.user.is_authenticated:
         if not request.user.is_authenticated:
             return JsonResponse({'success': False, 'error': 'Authentication required'})
         tasks = []
@@ -197,7 +200,8 @@ def upload_attachments(request):
                     destination.write(chunk)
             task = upload_file_to_elasticemail(file_path)
             tasks.append(task)
-            os.remove(file_path)
+            if os.path.exists(file_path):
+                os.remove(file_path)
 
         success_responses = []
         error_responses = []
@@ -257,7 +261,6 @@ def send_bulk_emails_via_elasticemail(email_data):
             error_message = f"Error: {e.status} - {e.reason}"
             return {'success': False, 'error': error_message}
 
-@login_required(login_url='/signup')
 @csrf_exempt
 def send_bulk_emails(request):
     if request.method == 'POST':

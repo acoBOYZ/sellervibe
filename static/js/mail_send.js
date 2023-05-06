@@ -135,7 +135,7 @@ function showSuccesToast(message=''){
 }
   
 function showErrorToast(message=''){
-    errorToast.innerHTML = message;
+    errorToast.querySelector('span').innerHTML = message;
     errorToast.classList.remove('hidden');
 
     setTimeout(() => {
@@ -144,7 +144,7 @@ function showErrorToast(message=''){
 }
   
 function showWarningToast(message=''){
-    warningToast.innerHTML = message;
+    warningToast.querySelector('span').innerHTML = message;
     warningToast.classList.remove('hidden');
 
     setTimeout(() => {
@@ -323,7 +323,7 @@ function sendFilesToServer() {
     };
   
     xhr.send(formData);
-    updateSendModal(`uploading all attachments`, 'secondary', true);
+    updateSendModal(`uploading all attachments`, 'accent', true);
 }
   
 function getAttachmentsCookie(name) {
@@ -339,7 +339,7 @@ async function sendEmailsToServer() {
       updateSendModal(`${attachment_list[i]} added to email attachments`, 'normal');
     }
     
-    // updateSendModal(`downloading email list from:'${pick_list_value}'`, 'secondary', true);
+    // updateSendModal(`downloading email list from:'${pick_list_value}'`, 'accent', true);
     // let emails = await getEmails(pick_list_value);
     if(!emails){
         updateSendModal(`in '${pick_list_value}' emails not found!`, 'error');
@@ -354,7 +354,7 @@ async function sendEmailsToServer() {
     }
     updateSendModal(`your email is ready to send all email address`, 'normal');
 
-    updateSendModal(`uploading your email contexts`, 'primary', true);
+    updateSendModal(`uploading your email contexts`, 'info', true);
     formData.append('from', input_from_value);
     formData.append('replyTo', input_replyTo_value);
     formData.append('cc', input_cc_value_list);
@@ -396,9 +396,9 @@ async function sendEmailsToServer() {
                 textarea_message.value = '';
                 resetFieldsContainer();
 
-                updateSendModal(`all emails are sended ${attachment_list.length > 0 ? 'with attachments' : ''}`, 'primary');
+                updateSendModal(`all emails are sended ${attachment_list.length > 0 ? 'with attachments' : ''}`, 'info');
                 finishSendModal();
-                addSendModalToButton('Send New Emails', 'primary');
+                addSendModalToButton('Send New Emails', 'info');
             } else {
                 updateSendModal(`you got some errors while sending emails. Please check your network connection. ${response.error}`, 'error');
                 showErrorOnSendModal();
@@ -409,7 +409,7 @@ async function sendEmailsToServer() {
     };
   
     xhr.send(formData);
-    updateSendModal(`sending all emails ${attachment_list.length > 0 ? 'with attachments' : ''}`, 'secondary', true);
+    updateSendModal(`sending all emails ${attachment_list.length > 0 ? 'with attachments' : ''}`, 'accent', true);
 }
 
 async function getEmails(name = null) {
@@ -451,22 +451,25 @@ async function getEmails(name = null) {
     return cookieValue;
   }
 
-async function getEmailFileNames(pickList) {
+  async function getEmailFileNames(pickList) {
     try {
       const response = await fetch('/tools/get_email_names/?' + new Date().getTime());
-      response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate';
-      response.headers['Pragma'] = 'no-cache';
-      response.headers['Expires'] = '0';
-      const data = await response.json();
-  
-      data.names.forEach(name => {
-        if(name != 'Pick one'){
-          const optionEl = document.createElement('option');
-          optionEl.value = name;
-          optionEl.textContent = name;
-          pickList.appendChild(optionEl);
-        }
-      });
+      if (response.ok) {
+        const data = await response.json();
+
+        data.names.forEach(name => {
+          if(name != 'Pick one'){
+            const optionEl = document.createElement('option');
+            optionEl.value = name;
+            optionEl.textContent = name;
+            pickList.appendChild(optionEl);
+          }
+        });
+      } else if (response.status === 401) {
+        showErrorToast('You need to be logged in to access this page.');
+      } else {
+        showErrorToast('There was an error while getting email file names.');
+      }
     } catch (error) {
       showErrorToast(error.toString());
     }
@@ -522,13 +525,13 @@ async function getEmailFileNames(pickList) {
 
     // required_area = false;
     if(required_area || hasInvalidFields){
-        required_area = false;
         if(required_area){
             showWarningToast('Please fill out all required fields correctly.');
         } else {
             showWarningToast('There are unsupported fields in your text.<br>Please update the fields and try again.');
             textarea_message.classList.add('border-error', 'border-opacity-75');
         }
+        required_area = false;
         input_from_value = '';
         input_replyTo_value = '';
         input_cc_value_list = [];

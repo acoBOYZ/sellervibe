@@ -83,9 +83,9 @@
                 <label tabindex="0" class="btn btn-ghost btn-circle avatar">
                   <div class="w-10 rounded-full">
                     {% if user.profile_picture_url %}
-                      <img loading="lazy" src="{{ user.profile_picture_url }}" />
+                      <img src="{{ user.profile_picture_url }}" />
                     {% else %}       
-                      <div loading="lazy" class="" id="profile-icon-lottie"></div> 
+                      <div class="" id="profile-icon-lottie"></div> 
                     {% endif %}
                   </div>
                 </label>
@@ -212,13 +212,15 @@
           <ul class="menu menu-compact flex flex-col p-0 px-4">
             <li></li>
             <div class="collapse collapse-arrow">
-              <input type="checkbox" class="peer" data-collapse checked/>
+              <input type="checkbox" class="peer" checked/>
+
               <div class="collapse-title flex gap-2 items-center px-4 h-8 min-h-0 peer-checked:bg-neutral-700 peer-checked:bg-opacity-25 rounded-lg">
                   <svg aria-hidden="true" viewBox="0 0 16 16" version="1.1" data-view-component="true" class="h-4 w-4 fill-current text-primary-content opacity-50">
                     <path d="M1.75 2h12.5c.966 0 1.75.784 1.75 1.75v8.5A1.75 1.75 0 0 1 14.25 14H1.75A1.75 1.75 0 0 1 0 12.25v-8.5C0 2.784.784 2 1.75 2ZM1.5 12.251c0 .138.112.25.25.25h12.5a.25.25 0 0 0 .25-.25V5.809L8.38 9.397a.75.75 0 0 1-.76 0L1.5 5.809v6.442Zm13-8.181v-.32a.25.25 0 0 0-.25-.25H1.75a.25.25 0 0 0-.25.25v.32L8 7.88Z"></path>
                   </svg>
                   <span class="flex-1 text-sm">Email tool</span>
               </div>
+
               <div class="collapse-content space-y-0.5">
                 <p>
                   <li class="flex gap-1.5 items-center">
@@ -259,17 +261,20 @@
     <div class="toast">
       <div id="successToast"  class="alert alert-success shadow-lg hidden">
           <div>
-              <span>Success.</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <span>Success.</span>
           </div>
       </div>
       <div id="errorToast"  class="alert alert-error shadow-lg hidden">
           <div>
-              <span>Error.</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <span>Error.</span>
           </div>
       </div>
       <div id="warningToast"  class="alert alert-warning shadow-lg hidden">
           <div>
-              <span>Warning.</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            <span>Warning.</span>
           </div>
       </div>
     </div>

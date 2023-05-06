@@ -18,10 +18,7 @@ DATABASES = {
     }
 }
 
-# STATICFILES_DIRS = [ 
-#     os.path.join(BASE_DIR, 'static'),
-#     os.path.join(BASE_DIR, 'assets', 'admin'),
-# ]
+STATICFILES_DIRS = [  os.path.join(BASE_DIR, 'static'), ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
 # print('STATICFILES_DIRS:', STATICFILES_DIRS)
 # print('STATIC_ROOT:', STATIC_ROOT)

@@ -13,6 +13,9 @@ Disallow: /tools/get_email_names*
 Disallow: /tools/get_emails/
 Disallow: /tools/upload_attachments/
 Disallow: /tools/send_bulk_emails/
+Allow: /home
+Allow: /accounts/profile
+Allow: /tools/mail
 
 User-agent: EtaoSpider
 Disallow: /

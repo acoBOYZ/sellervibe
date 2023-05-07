@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+import certifi
 # from django.contrib.staticfiles.storage import ManifestStaticFilesStorage
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -54,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'base.middlewares.ReCaptchaMiddleware',
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -149,6 +151,6 @@ SOCIAL_AUTH_PIPELINE = (
 
 AUTH_USER_MODEL = 'users.CustomUser'
 
-# RECAPTCHA_PUBLIC_KEY = os.getenv('GOOGLE_RECAPTCHA_PUBLIC_KEY')
-# RECAPTCHA_PRIVATE_KEY = os.getenv('GOOGLE_RECAPTCHA_PRIVATE_KEY')
 SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']
+
+os.environ["SSL_CERT_FILE"] = certifi.where()

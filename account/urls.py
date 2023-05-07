@@ -2,11 +2,11 @@ from django.urls import path, include
 from . import views
 
 urlpatterns = [
-    path('', views.get_started),
-    path('home/', views.get_started),
-    path('login/', views.login_page),
-    path('signup/', views.signup_page, name='signup'),
-    path('logout/', views.logout_page),
+    path('', views.getStarted),
+    path('home/', views.getStarted),
+    path('login/', views.loginPage),
+    path('signup/', views.signupPage, name='signup'),
+    path('logout/', views.logoutPage),
     path('social/', include('social_django.urls', namespace='social')),
 
     path('social/google/', views.GoogleLoginView.as_view(), name='google-auth'),

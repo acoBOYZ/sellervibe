@@ -1,0 +1,18 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slow Down</title>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script>
+        function onRecaptchaCompleted(token) {
+            // Redirect the user to the specified view_name
+            window.location.href = "{% url view_name %}";
+        }
+    </script>
+</head>
+<body>
+    <h1>Please verify that you are human</h1>
+    <div class="g-recaptcha" data-sitekey="{{ recaptcha_site_key }}" data-callback="onRecaptchaCompleted"></div>
+</body>
+</html>

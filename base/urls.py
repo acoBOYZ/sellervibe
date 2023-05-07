@@ -22,6 +22,7 @@ from django.conf import settings
 urlpatterns = [
     path('robots.txt', serve, {'document_root': settings.STATIC_ROOT, 'path': 'robots.txt'}),
     path('admin/', admin.site.urls),
+    # path('admin/logout/', RedirectView.as_view(url='/')),
     path('', include('account.urls')),
     path('tools/', include('email_tool.urls')),
     path('accounts/profile/', RedirectView.as_view(url='/tools/mail')),

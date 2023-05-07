@@ -25,25 +25,29 @@ from ElasticEmail.model.body_content_type import BodyContentType
 from ElasticEmail.model.email_recipient import EmailRecipient
 from ElasticEmail.model.email_message_data import EmailMessageData
 
+
+def getIndexHtml(index):
+    return f'../templates/email-tool/{index}/index.html'
+
 configuration = Configuration(
     host = "https://api.elasticemail.com/v4"
 )
 configuration.api_key['apikey'] = os.getenv('ELASTIC_EMAIL_API_KEY')
 
 def start(request):
-    return render(request, 'start/index.html')
+    return render(request, getIndexHtml('start'))
 
 def contacts(request):
-    return render(request, 'contacts/index.html')
+    return render(request, getIndexHtml('contacts'))
 
 def templates(request):
-    return render(request, 'templates/index.html')
+    return render(request, getIndexHtml('templates'))
 
 def signatures(request):
-    return render(request, 'signatures/index.html')
+    return render(request, getIndexHtml('signatures'))
 
 def send(request):
-    return render(request, 'send/index.html')
+    return render(request, getIndexHtml('send'))
 
 
 @csrf_exempt
@@ -158,7 +162,7 @@ def get_emails(request):
 
 def upload_file_to_elasticemail(file_path):
     with ApiClient(configuration) as api_client:
-        api_client.rest_client.pool_manager.connection_pool_kw['cert_reqs'] = ssl.CERT_NONE
+        # api_client.rest_client.pool_manager.connection_pool_kw['cert_reqs'] = ssl.CERT_NONE
         api_instance = FilesApi(api_client)
 
         with open(file_path, 'rb') as file:
@@ -232,7 +236,7 @@ def create_fields_dict(item):
 
 def send_bulk_emails_via_elasticemail(email_data):
     with ApiClient(configuration) as api_client:
-        api_client.rest_client.pool_manager.connection_pool_kw['cert_reqs'] = ssl.CERT_NONE
+        # api_client.rest_client.pool_manager.connection_pool_kw['cert_reqs'] = ssl.CERT_NONE
         api_instance = EmailsApi(api_client)
         email_message_data = EmailMessageData(
             recipients=[

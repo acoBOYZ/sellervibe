@@ -30,8 +30,8 @@ configuration = Configuration(
 )
 configuration.api_key['apikey'] = os.getenv('ELASTIC_EMAIL_API_KEY')
 
-def mail(request):
-    return render(request, 'mail/index.html')
+def start(request):
+    return render(request, 'start/index.html')
 
 def contacts(request):
     return render(request, 'contacts/index.html')

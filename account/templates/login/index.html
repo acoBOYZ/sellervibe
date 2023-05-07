@@ -69,32 +69,5 @@
 {% endblock %}
 
 {% block script %}
-<script>
-  lottie.loadAnimation({
-    container: document.getElementById('google-lottie'),
-    renderer: 'svg',
-    loop: true,
-    autoplay: true,
-    path: '{% static "img/google-lottie.json" %}',
-    rendererSettings: {
-    preserveAspectRatio: 'xMidYMid meet',
-    progressiveLoad: false,
-    scaleMode: 'noScale',
-    hideOnTransparent: true
-  }
-  });
-  lottie.loadAnimation({
-    container: document.getElementById('microsoft-office-lottie'),
-    renderer: 'svg',
-    loop: true,
-    autoplay: true,
-    path: '{% static "img/microsoft-office-lottie.json" %}',
-    rendererSettings: {
-    preserveAspectRatio: 'xMidYMid meet',
-    progressiveLoad: false,
-    scaleMode: 'noScale',
-    hideOnTransparent: true
-  }
-  });
-</script>
+<script src="{% static 'js/account/login.min.js' %}"></script>
 {% endblock %}

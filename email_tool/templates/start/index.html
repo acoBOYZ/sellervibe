@@ -11,7 +11,7 @@
     <p>We're excited to announce a new feature that will make it even easier for you to manage your contacts and send bulk emails.<br><br>With this new feature, you can now import contacts from a file or text and send emails to them in bulk. To get started, simply log in to your account and navigate to the contact management section. From there, you can easily upload your contact list and start sending emails right away. We hope this new feature will make your email marketing efforts even more effective and efficient.<br><br>As always, if you have any questions or need assistance, please don't hesitate to reach out to our support team.</p>
     <div class="bg-base-content/10 my-10 mx-1 h-px"></div>
     <div class="component-preview text-base-content max-w-4xl relative overflow-x-auto transition-all duration-200 space-y-4">
-        <div class="w-auto max-w-lg" id="start-mailing-lottie"></div>
+        <div class="w-auto max-w-lg" id="start-mailing-lottie" style="cursor: pointer;"></div>
     </div>
 
 {% endblock %}
@@ -44,19 +44,5 @@
 {% endblock %}
 
 {% block script %}
-<script>
-    lottie.loadAnimation({
-        container: document.getElementById('start-mailing-lottie'),
-        renderer: 'svg',
-        loop: true,
-        autoplay: true,
-        path: '{% static "img/start-mailing-lottie.json" %}',
-        rendererSettings: {
-        preserveAspectRatio: 'xMidYMid meet',
-        progressiveLoad: false,
-        scaleMode: 'noScale',
-        hideOnTransparent: true
-    }
-    });
-</script>
+    <script src="{% static 'js/email_tool/start.min.js' %}"></script>
 {% endblock %}

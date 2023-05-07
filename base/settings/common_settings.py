@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'social_django',
+    'captcha',
 ]
 
 
@@ -117,6 +118,8 @@ USE_TZ = True
 ####################################################################################
 STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+STATICFILES_DIRS = [  os.path.join(BASE_DIR, 'static'), ]
+STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
 
 
 # EXPIRES_DEFAULT = 'access plus 1 month'
@@ -142,3 +145,7 @@ SOCIAL_AUTH_PIPELINE = (
 )
 
 AUTH_USER_MODEL = 'users.CustomUser'
+
+# RECAPTCHA_PUBLIC_KEY = os.getenv('GOOGLE_RECAPTCHA_PUBLIC_KEY')
+# RECAPTCHA_PRIVATE_KEY = os.getenv('GOOGLE_RECAPTCHA_PRIVATE_KEY')
+SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']

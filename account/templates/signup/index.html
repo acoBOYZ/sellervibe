@@ -39,27 +39,22 @@
                       <label class="label">
                         <span class="label-text text-primary-content">Username</span>
                       </label>
-                      <input type="text" placeholder="username" class="input border-none focus:outline-none focus:placeholder-transparent" name="username" required/>
+                      <input type="text" placeholder="username" class="input border-none focus:outline-none focus:placeholder-transparent" name="username"/>
                     </div>
                     <div class="form-control mb-2 text-base-content">
                       <label class="label">
                         <span class="label-text text-primary-content">Email</span>
                       </label>
-                      <input type="email" placeholder="email" class="input border-none focus:outline-none focus:placeholder-transparent" name="email" required/>
+                      <input type="email" placeholder="email" class="input border-none focus:outline-none focus:placeholder-transparent" name="email"/>
                     </div>
                     <div class="form-control mb-2 text-base-content">
                       <label class="label">
                         <span class="label-text text-primary-content">Password</span>
                       </label>
-                      <input type="password" placeholder="password" class="input border-none focus:outline-none focus:placeholder-transparent" name="password1" required/>
+                      <input type="password" placeholder="password" class="input border-none focus:outline-none focus:placeholder-transparent" name="password"/>
                     </div>
-                    <div class="form-control mb-4 text-base-content">
-                      <label class="label">
-                        <span class="label-text text-primary-content">Confirm Password</span>
-                      </label>
-                      <input type="password" placeholder="password" class="input border-none focus:outline-none focus:placeholder-transparent" name="password2" required/>
-                    </div>
-                    <button class="btn btn-primary border-none btn-block normal-case shadow-xl">Sign Up</button>
+                    {{ form.captcha }}
+                    <button class="btn btn-primary border-none btn-block normal-case shadow-xl mt-2">Sign Up</button>
                     <div class="flex justify-between mt-4">
                       <div class="link text-xs flex flex-nowrap"></div>
                       <div class="link text-xs flex flex-nowrap"><a  href="/login">Already have an account?</a></div>
@@ -78,52 +73,12 @@
 {% endblock %}
 
 {% block script %}
-
+<script src="{% static 'js/account/signup.min.js' %}"></script>
 {% if error %}
   <script>
     window.addEventListener('DOMContentLoaded', (event) => {
-      showErrorToast('{{ error }}');
+      showToast('error', '{{ error }}');
     });
   </script>
 {% endif %}
-
-<script>
-  lottie.loadAnimation({
-    container: document.getElementById('google-lottie'),
-    renderer: 'svg',
-    loop: true,
-    autoplay: true,
-    path: '{% static "img/google-lottie.json" %}',
-    rendererSettings: {
-    preserveAspectRatio: 'xMidYMid meet',
-    progressiveLoad: false,
-    scaleMode: 'noScale',
-    hideOnTransparent: true
-  }
-  });
-  lottie.loadAnimation({
-    container: document.getElementById('microsoft-office-lottie'),
-    renderer: 'svg',
-    loop: true,
-    autoplay: true,
-    path: '{% static "img/microsoft-office-lottie.json" %}',
-    rendererSettings: {
-    preserveAspectRatio: 'xMidYMid meet',
-    progressiveLoad: false,
-    scaleMode: 'noScale',
-    hideOnTransparent: true
-  }
-  });
-  
-  function showErrorToast(message=''){
-    const errorToast = document.getElementById('errorToast');
-    errorToast.querySelector('span').innerHTML = message;
-    errorToast.classList.remove('hidden');
-
-    setTimeout(() => {
-        errorToast.classList.add('hidden');
-    }, 3000);
-}
-  
-</script>
 {% endblock %}

@@ -79,19 +79,5 @@
 {% endblock %}
 
 {% block script %}
-<script>
-    lottie.loadAnimation({
-        container: document.getElementById('working-lottie'),
-        renderer: 'svg',
-        loop: true,
-        autoplay: true,
-        path: '{% static "img/working-lottie.json" %}',
-        rendererSettings: {
-        preserveAspectRatio: 'xMidYMid meet',
-        progressiveLoad: false,
-        scaleMode: 'noScale',
-        hideOnTransparent: true
-    }
-    });
-</script>
+  <script src="{% static 'js/email_tool/signatures.min.js' %}"></script>
 {% endblock %}

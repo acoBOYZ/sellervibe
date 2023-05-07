@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>{% block title %}{% endblock %}</title>
     <link rel="icon" href="{%static 'img/logo.svg'%}" type="image/x-icon">
-    <script src="{% static 'js/preload_light_base_app.js' %}"></script>
+    <script src="{% static 'js/light_base/preload-app.min.js' %}"></script>
     <!-- <link rel="stylesheet" href="{% static 'tailwind/dist/styles.css' %}">
     <link rel="stylesheet" href="{% static 'daisyui/daisyui.css' %}"> -->
     <script src="{% static 'daisyui/daisyui.min.js' %}"></script>
@@ -43,6 +43,7 @@
                   <div class="font-title font-light text-primary inline-flex text-lg transition-all duration-200 md:text-3xl">
                     <span class="lowercase text-primary" id="primary-logo">seller</span>
                     <span class="uppercase text-base-content">VIBE</span>
+                    <span class="text-base-content text-sm">&nbsp;®</span>
                   </div>
                 </a>
                 <a href="/" class="link link-hover font-mono text-xs text-opacity-50 ">
@@ -184,6 +185,7 @@
               <div class="font-title font-light text-primary inline-flex text-lg transition-all duration-200 md:text-3xl">
                 <span class="lowercase" id="primary-logo">seller</span>
                 <span class="text-base-content uppercase">VIBE</span>
+                <span class="text-base-content text-sm">&nbsp;®</span>
               </div>
             </a>
             <a href="/" class="link link-hover font-mono text-xs text-opacity-50">
@@ -195,8 +197,8 @@
             <li>
               <a sveltekit:prefetch="" href="#" id="" class="flex gap-2">
                 <span class="flex-none">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"  class="w-4 h-4 stroke-current text-primary-content opacity-50">
-                    <path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6.65721519,18.7714023 L6.65721519,15.70467 C6.65719744,14.9246392 7.29311743,14.2908272 8.08101266,14.2855921 L10.9670886,14.2855921 C11.7587434,14.2855921 12.4005063,14.9209349 12.4005063,15.70467 L12.4005063,15.70467 L12.4005063,18.7809263 C12.4003226,19.4432001 12.9342557,19.984478 13.603038,20 L15.5270886,20 C17.4451246,20 19,18.4606794 19,16.5618312 L19,16.5618312 L19,7.8378351 C18.9897577,7.09082692 18.6354747,6.38934919 18.0379747,5.93303245 L11.4577215,0.685301154 C10.3049347,-0.228433718 8.66620456,-0.228433718 7.51341772,0.685301154 L0.962025316,5.94255646 C0.362258604,6.39702249 0.00738668938,7.09966612 0,7.84735911 L0,16.5618312 C0,18.4606794 1.55487539,20 3.47291139,20 L5.39696203,20 C6.08235439,20 6.63797468,19.4499381 6.63797468,18.7714023 L6.63797468,18.7714023" transform="translate(2.5 2)"></path>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"  class="w-4 h-4 stroke-current text-base-content opacity-50">
+                    <path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6.65721519,18.7714023 L6.65721519,15.70467 C6.65719744,14.9246392 7.29311743,14.2908272 8.08101266,14.2855921 L10.9670886,14.2855921 C11.7587434,14.2855921 12.4005063,14.9209349 12.4005063,15.70467 L12.4005063,15.70467 L12.4005063,18.7809263 C12.4003226,19.4432001 12.9342557,19.984478 13.603038,20 L15.5270886,20 C17.4451246,20 19,18.4606794 19,16.5618312 L19,16.5618312 L19,7.8378351 C18.9897577,7.09082692 18.6354747,6.38934919 18.0379747,5.93303245 L11.4577215,0.685301154 C10.3049347,-0.228433718 8.66620456,-0.228433718 7.51341772,0.685301154 L0.962025316,5.94255646 C0.362258604,6.39702249 0.00738668938,7.09966612 0,7.84735911 L0,16.5618312 C0,18.4606794 1.55487539,20 3.47291139,20 L5.39696203,20 C6.08235439,20 6.63797468,19.4499381 6.63797468,18.7714023 L6.63797468,18.7714023" transform="translate(2.5 2)"></path>
                   </svg>                
                 </span>
                 <span class="flex-1">Home</span>
@@ -215,7 +217,7 @@
               <input type="checkbox" class="peer" checked/>
 
               <div class="collapse-title flex gap-2 items-center px-4 h-8 min-h-0 peer-checked:bg-neutral-700 peer-checked:bg-opacity-25 rounded-lg">
-                  <svg aria-hidden="true" viewBox="0 0 16 16" version="1.1" data-view-component="true" class="h-4 w-4 fill-current text-primary-content opacity-50">
+                  <svg aria-hidden="true" viewBox="0 0 16 16" version="1.1" data-view-component="true" class="h-4 w-4 fill-current text-base-content opacity-50">
                     <path d="M1.75 2h12.5c.966 0 1.75.784 1.75 1.75v8.5A1.75 1.75 0 0 1 14.25 14H1.75A1.75 1.75 0 0 1 0 12.25v-8.5C0 2.784.784 2 1.75 2ZM1.5 12.251c0 .138.112.25.25.25h12.5a.25.25 0 0 0 .25-.25V5.809L8.38 9.397a.75.75 0 0 1-.76 0L1.5 5.809v6.442Zm13-8.181v-.32a.25.25 0 0 0-.25-.25H1.75a.25.25 0 0 0-.25.25v.32L8 7.88Z"></path>
                   </svg>
                   <span class="flex-1 text-sm">Email tool</span>
@@ -258,33 +260,16 @@
     </div>
     {% block before_body %}{% endblock %}
 
-    <div class="toast">
-      <div id="successToast"  class="alert alert-success shadow-lg hidden">
-          <div>
-            <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            <span>Success.</span>
-          </div>
-      </div>
-      <div id="errorToast"  class="alert alert-error shadow-lg hidden">
-          <div>
-            <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            <span>Error.</span>
-          </div>
-      </div>
-      <div id="warningToast"  class="alert alert-warning shadow-lg hidden">
-          <div>
-            <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-            <span>Warning.</span>
-          </div>
-      </div>
-    </div>
+    <div class="toast toast-start toast-bottom z-50 ml-4 mb-4" id="toast_body"></div>
   </body>
 
 
   <script src="{% static 'lottie/lottie-light.min.js' %}"></script>
+  <script src="{% static 'lottie/lottie-anim.min.js' %}"></script>
+  <script src="{% static 'js/alert-toast.min.js' %}"></script>
   {% block script %}{% endblock %}
 
-    <script src="{% static 'js/light_base_app.js' %}"></script>
+    <script src="{% static 'js/light_base/app.min.js' %}"></script>
 </body>
 
 </html>

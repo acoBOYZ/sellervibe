@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>{% block title %}{% endblock %}</title>
     <link rel="icon" href="{%static 'img/logo.svg'%}" type="image/x-icon">
-    <script src="{% static 'js/preload_base_app.js' %}"></script>
+    <script src="{% static 'js/base/preload-app.min.js' %}"></script>
     <script src="{% static 'daisyui/daisyui.min.js' %}"></script>
     {% block stylesheet %}{% endblock %}
       <link href="{% static 'daisyui/daisyui.min.css' %}" rel="stylesheet" type="text/css" defer/>
@@ -48,7 +48,8 @@
             <div class="font-title font-light inline-flex text-lg transition-all duration-200 md:text-3xl">
               <span class="lowercase transition-all duration-33" id="primary-logo">seller</span>
               <span class="uppercase text-primary-content">VIBE</span>
-              <div loading="lazy" class="w-4 h-4" id="warranty-lottie"></div> 
+              <span class="text-sm">&nbsp;®</span>
+              <!-- <div loading="lazy" class="w-4 h-4" id="warranty-lottie"></div>  -->
             </div>
           </a>
           <!-- <a href="/" class="link link-hover font-mono text-xs text-opacity-50 ">
@@ -117,32 +118,14 @@
       </div>
       {% block content-outside %}{% endblock %}
 
-      <div class="toast">
-        <div id="successToast"  class="alert alert-success shadow-lg hidden">
-            <div>
-              <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-              <span>Success.</span>
-            </div>
-        </div>
-        <div id="errorToast"  class="alert alert-error shadow-lg hidden">
-            <div>
-              <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-              <span>Error.</span>
-            </div>
-        </div>
-        <div id="warningToast"  class="alert alert-warning shadow-lg hidden">
-            <div>
-              <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-              <span>Warning.</span>
-            </div>
-        </div>
-      </div>
+      <div class="toast toast-start toast-bottom z-50 ml-4 mb-4" id="toast_body"></div>
     </main>
 
     <script src="{% static 'lottie/lottie-light.min.js' %}"></script>
+    <script src="{% static 'lottie/lottie-anim.min.js' %}"></script>
+    <script src="{% static 'js/alert-toast.min.js' %}"></script>
     {% block script %}{% endblock %}
-
-      <script src="{% static 'js/base_app.js' %}"></script>
+    <script src="{% static 'js/base/app.min.js' %}"></script>
 </body>
 
 </html>

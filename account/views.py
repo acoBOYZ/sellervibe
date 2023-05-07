@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseBadRequest
 from django.contrib.auth import authenticate, login, logout, get_user_model
-import urllib.parse
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user
@@ -37,50 +37,48 @@ def login_page(request):
     return render(request, 'login/index.html')
 
 
+from .forms import V3CaptchaForm
 @unauthenticated_user
 def signup_page(request):
+    def return_context(context={}):
+        return render(request, 'signup/index.html', context)
+    
     if request.method == 'POST':
-        username = request.POST.get('username')
-        email = request.POST.get('email')
-        password1 = request.POST.get('password1')
-        password2 = request.POST.get('password2')
+        form = V3CaptchaForm(request.POST)
+        if form.is_valid():
+            recaptcha_score = form.cleaned_data['captcha']
+            print('recaptcha_score:', recaptcha_score)
 
-        context = {}
+            username = request.POST.get('username')
+            email = request.POST.get('email')
+            password = request.POST.get('password')
 
-        try:
-            validate_email(email)
-        except ValidationError:
-            context['error'] = 'Invalid email format'
-            return render(request, 'signup/index.html', context)
+            try:
+                validate_email(email)
+            except ValidationError:
+                return return_context({'error': 'Invalid email format', 'form': form})
 
-        try:
-            user = CustomUser.objects.get(email=email)
-            user = authenticate(request, email=email, password=password1)
+            try:
+                user = CustomUser.objects.get(email=email)
+                if user is not None:
+                    return return_context({'error': 'This email already in use.', 'form': form})
+            except CustomUser.MultipleObjectsReturned:
+                return return_context({'error': 'This email used twice. Please contact use from support', 'form': form})
+
+            user = CustomUser.objects.create_user(username=username, email=email, password=password)
+            user = authenticate(request, email=email, password=password)
+
             if user is not None:
                 login(request, user)
                 return redirect('/tools/mail')
             else:
-                context['error'] = 'Unable to log in'
-                return render(request, 'signup/index.html', context)
-        except CustomUser.DoesNotExist:
-            if password1 != password2:
-                context['error'] = 'Passwords do not match'
-                return render(request, 'signup/index.html', context)
-        except CustomUser.MultipleObjectsReturned:
-            context['error'] = 'This email used twice. Please contact use from support'
-            return render(request, 'signup/index.html', context)
-
-        user = CustomUser.objects.create_user(username=username, email=email, password=password1)
-        user = authenticate(request, email=email, password=password1)
-
-        if user is not None:
-            login(request, user)
-            return redirect('/tools/mail')
+                return return_context({'error': 'Unable to create user account', 'form': form})
         else:
-            context['error'] = 'Unable to create user account'
-            return render(request, 'signup/index.html', context)
+            print('form.errors', form.errors)
+            return return_context({'error': form.errors, 'form': form})
 
-    return render(request, 'signup/index.html')
+    form = V3CaptchaForm()
+    return return_context({'form': form})
 
 
 @login_required(login_url='/signup')

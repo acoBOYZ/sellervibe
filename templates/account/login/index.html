@@ -50,6 +50,7 @@
                   </label>
                   <input type="password" placeholder="password" class="input border-none focus:outline-none focus:placeholder-transparent" name="password" required/>
                 </div>
+                {{ form.captcha }}
                 <button class="btn btn-primary border-none btn-block normal-case shadow-xl">Log In</button>
                 <div class="flex justify-between mt-4">
                   <div class="link text-xs flex flex-nowrap"><a href="">Forgot your password?</a></div>
@@ -70,4 +71,11 @@
 
 {% block script %}
 <script src="{% static 'js/account/login.min.js' %}"></script>
+{% if error %}
+  <script>
+    window.addEventListener('DOMContentLoaded', (event) => {
+      showToast('error', '{{ error }}');
+    });
+  </script>
+{% endif %}
 {% endblock %}

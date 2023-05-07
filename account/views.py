@@ -21,26 +21,32 @@ CustomUser = get_user_model()
 def getIndexHtml(index):
     return f'../templates/account/{index}/index.html'
 
-
 @unauthenticated_user
 def getStarted(request):
     return render(request, getIndexHtml('get-started'))
 
 
 @unauthenticated_user
+@limit_functionality_if_low_score
 def loginPage(request):
-    if request.method == 'POST':
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-        
-        user = authenticate(request, username=email, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect('/tools/mail')
-        else:
-            messages.warning(request, f'SALAK {email}')
+    def return_context(context={}):
+        return render(request, getIndexHtml('login'), context)
 
-    return render(request, getIndexHtml('login'))
+    if request.method == 'POST':
+        if request.recaptcha_score_is_valid:
+            email = request.POST.get('email')
+            password = request.POST.get('password')
+            
+            user = authenticate(request, username=email, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('/tools/mail')
+            else:
+                return return_context({'error': 'Email or password is incorrect.', 'form': request.form})
+        else:
+            return return_context({'error': request.form.errors, 'form': request.form})
+
+    return return_context({'form': request.form})
 
 
 @unauthenticated_user
@@ -72,7 +78,6 @@ def signupPage(request):
             else:
                 return return_context({'error': 'Unable to create user account', 'form': request.form})
         else:
-            print('form.errors', request.form.errors)
             return return_context({'error': request.form.errors, 'form': request.form})
 
     return return_context({'form': request.form})

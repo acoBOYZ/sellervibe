@@ -3,10 +3,10 @@ from . import views
 
 urlpatterns = [
     path('', views.getStarted),
-    path('home/', views.getStarted),
-    path('login/', views.loginPage),
+    path('home/', views.getStarted, name='get_started'),
+    path('login/', views.loginPage, name='login'),
     path('signup/', views.signupPage, name='signup'),
-    path('logout/', views.logoutPage),
+    path('logout/', views.logoutPage, name='logout'),
     path('social/', include('social_django.urls', namespace='social')),
 
     path('social/google/', views.GoogleLoginView.as_view(), name='google-auth'),

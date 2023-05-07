@@ -16,8 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic.base import RedirectView
+from django.views.static import serve
+from django.conf import settings
 
 urlpatterns = [
+    path('robots.txt', serve, {'document_root': settings.STATIC_ROOT, 'path': 'robots.txt'}),
     path('admin/', admin.site.urls),
     path('', include('account.urls')),
     path('tools/', include('email_tool.urls')),

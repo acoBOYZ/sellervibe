@@ -1,5 +1,18 @@
 User-agent: *
-Disallow: /
+Disallow: /admin/
+Disallow: /login/
+Disallow: /signup/
+Disallow: /social/
+Disallow: /tools/mail/contacts/
+Disallow: /tools/mail/templates/
+Disallow: /tools/mail/signatures/
+Disallow: /tools/mail/send/
+Disallow: /tools/upload_file/
+Disallow: /tools/save_emails/
+Disallow: /tools/get_email_names*
+Disallow: /tools/get_emails/
+Disallow: /tools/upload_attachments/
+Disallow: /tools/send_bulk_emails/
 
 User-agent: EtaoSpider
 Disallow: /

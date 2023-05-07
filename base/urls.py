@@ -26,3 +26,10 @@ urlpatterns = [
     path('tools/', include('email_tool.urls')),
     path('accounts/profile/', RedirectView.as_view(url='/tools/mail')),
 ]
+
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.conf.urls.static import static
+
+if settings.DEBUG:
+    urlpatterns += staticfiles_urlpatterns()
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

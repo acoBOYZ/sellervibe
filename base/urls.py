@@ -18,14 +18,20 @@ from django.urls import path, include
 from django.views.generic.base import RedirectView
 from django.views.static import serve
 from django.conf import settings
+from .forms import V2CaptchaFormAdmin
+from . import views
+
+admin.autodiscover()
+admin.site.login_form = V2CaptchaFormAdmin
+admin.site.login_template = '../templates/account/admin/login.html'
 
 urlpatterns = [
     path('robots.txt', serve, {'document_root': settings.STATIC_ROOT, 'path': 'robots.txt'}),
     path('admin/', admin.site.urls),
-    # path('admin/logout/', RedirectView.as_view(url='/')),
     path('', include('account.urls')),
     path('tools/', include('email_tool.urls')),
     path('accounts/profile/', RedirectView.as_view(url='/tools/mail')),
+    # path('slow-down/', views.slowDown, name='slow-down'),
 ]
 
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns

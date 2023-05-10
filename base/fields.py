@@ -1,6 +1,7 @@
 from captcha.fields import ReCaptchaField
 from captcha.widgets import ReCaptchaV3, ReCaptchaV2Checkbox
 import os
+from django.conf import settings
 
 class V2CheckboxReCaptchaField(ReCaptchaField):
     def __init__(self, *args, **kwargs):
@@ -8,4 +9,5 @@ class V2CheckboxReCaptchaField(ReCaptchaField):
 
 class V3ReCaptchaField(ReCaptchaField):
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, widget=ReCaptchaV3(attrs={'required_score':0.85}), public_key=os.getenv('V3_RECAPTCHA_PUBLIC_KEY'), private_key=os.getenv('V3_RECAPTCHA_PRIVATE_KEY'), **kwargs)
+        required_score = kwargs.pop('required_score', settings.RECAPTCHA_V3_THRESHOLD)
+        super().__init__(*args, widget=ReCaptchaV3(attrs={'required_score': required_score}), public_key=os.getenv('V3_RECAPTCHA_PUBLIC_KEY'), private_key=os.getenv('V3_RECAPTCHA_PRIVATE_KEY'), **kwargs)

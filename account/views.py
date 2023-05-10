@@ -13,7 +13,6 @@ from django.urls import reverse
 from django.views.generic import View
 from base.social import create_user_with_profile_picture
 
-from base.forms import V3CaptchaForm
 from base.decorators import limit_functionality_if_low_score
 
 CustomUser = get_user_model()
@@ -37,7 +36,7 @@ def loginPage(request):
             email = request.POST.get('email')
             password = request.POST.get('password')
             
-            user = authenticate(request, username=email, password=password)
+            user = CustomUser.objects.authenticate_user(email=email, password=password)
             if user is not None:
                 login(request, user)
                 return redirect('/tools/mail')
@@ -61,16 +60,7 @@ def signupPage(request):
             email = request.POST.get('email')
             password = request.POST.get('password')
 
-            try:
-                validate_email(email)
-            except ValidationError:
-                return return_context({'error': 'Invalid email format', 'form': request.form})
-
-            if CustomUser.objects.filter(email=email).exists():
-                return return_context({'error': 'This email already in use.', 'form': request.form})
-
-            user = CustomUser.objects.create_user(username=username, email=email, password=password)
-            user = authenticate(request, email=email, password=password)
+            user = CustomUser.objects.create_and_authenticate_user(username=username, email=email, password=password)
 
             if user is not None:
                 login(request, user)

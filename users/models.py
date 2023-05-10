@@ -1,6 +1,9 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
+from django.contrib.auth import authenticate
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -22,6 +25,29 @@ class CustomUserManager(BaseUserManager):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
         return self.create_user(email, password, **extra_fields)
+
+    def authenticate_user(self, email, password):
+        """
+        Authenticates user with the given email and password.
+        """
+        user = authenticate(username=email, password=password)
+        return user
+
+    def create_and_authenticate_user(self, username, email, password):
+        """
+        Creates and authenticates user with the given email, username and password.
+        """
+        try:
+            validate_email(email)
+        except ValidationError:
+            raise ValidationError('Invalid email format')
+
+        if self.filter(email=email).exists():
+            raise ValueError('This email already in use.')
+
+        user = self.create_user(email=email, username=username, password=password)
+        user = self.authenticate_user(email=email, password=password)
+        return user
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_('email address'), unique=True)

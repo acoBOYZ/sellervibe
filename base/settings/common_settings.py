@@ -55,7 +55,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'base.middlewares.ReCaptchaMiddleware',
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -152,5 +151,6 @@ SOCIAL_AUTH_PIPELINE = (
 AUTH_USER_MODEL = 'users.CustomUser'
 
 SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']
+RECAPTCHA_V3_THRESHOLD = 0.85
 
 os.environ["SSL_CERT_FILE"] = certifi.where()

@@ -45,10 +45,12 @@
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 place-items-stretch">
                 <div class="form-control mx-1 my-2">
-                    <label class="input-group input-group-vertical">
-                    <span>Reply to:</span>
-                    <input type="email" class="input input-bordered focus:outline-none focus:placeholder-transparent" placeholder="your email" id="input_replyTo" required/>
-                    </label>
+                    <div class="tooltip" data-tip="When the email is replied to by the recipient, the response will be redirected to the email address you enter in this field.">
+                        <label class="input-group input-group-vertical">
+                        <span>Reply to:</span>
+                        <input type="email" class="input input-bordered focus:outline-none focus:placeholder-transparent" placeholder="your email" id="input_replyTo" required/>
+                        </label>
+                    </div>
                 </div>
                 <div class="form-control mx-1 my-2">
                     <div class="tooltip" data-tip="This feature does not supported yet">
@@ -60,10 +62,12 @@
                 </div>
             </div>
             <div class="form-control mx-1 my-2">
-                <label class="input-group input-group-vertical">
-                <span>To:</span>
-                <select class="select select-bordered focus:outline-none" id="pick_list" required><option disabled selected>Select a contact</option></select>
-                </label>
+                <div class="tooltip" data-tip="You can choose one of the lists you've created in the contacts section.">
+                    <label class="input-group input-group-vertical">
+                    <span>To:</span>
+                    <select class="select select-bordered focus:outline-none" id="pick_list" required><option disabled selected>Select a contact</option></select>
+                    </label>
+                </div>
             </div>
             <div class="form-control mx-1 my-2">
                 <label class="input-group input-group-vertical">
@@ -89,8 +93,17 @@
                     </div>
                     <div class="hidden" id="badge_container">
                         <div class="bg-base-100 h-px"></div>
-                        <div class="flex flex-wrap bg-base-300 space-x-3 space-y-3 pb-3" id="badge_div">
-                            
+                        <div class="flex justify-between items-center">
+                            <div class="flex flex-wrap bg-base-300 space-x-3 space-y-3 pb-3" id="badge_div">
+                                
+                            </div>
+                            <div class="tooltip" data-tip="What is this?">
+                                <div class="hidden"></div>
+                                <a href="#modal-field-help" class="btn btn-xs btn-circle btn-outline border-none">
+                                    ?
+                                </a>
+                                <div class="hidden"></div>
+                            </div>
                         </div>
                     </div>
                 </span>
@@ -149,6 +162,14 @@
     </div>
   </div>
 </div>
+
+<div class="modal" id="modal-field-help">
+    <div class="modal-box space-y-8 relative">
+        <a href="#" class="btn btn-xs btn-square btn-outline border-none absolute right-2 top-2 normal-case">x</a>
+        <p class="font-bold">What is this?</p>
+        <p class="pb-1 text-sm">You can use custom fields from your spreadsheet to personalize your emails. To do this, simply include the column headers in your email text, and the system will automatically replace the headers with the corresponding data for each recipient.<br><br>For example, if your spreadsheet contains fields such as "first_name," "last_name," and "company," you can use them in your email as follows:<br><br>"Hello {first_name} {last_name}, I hope everything is going well at {company}."<br><br>When the email is sent, the system will replace {first_name}, {last_name}, and {company} with the appropriate information for each recipient, personalizing the message for them.</p>
+    </div>
+  </div>
 {% endblock %}
 
 {% block script %}

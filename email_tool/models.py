@@ -44,6 +44,34 @@ def create_fields_dict(item):
 ##################
 ###
 
+class UserTemplates(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
+    template = models.TextField()
+
+    @classmethod
+    def save_template_content(cls, user, name, template):
+        user_template = cls.objects.filter(user=user, name=name)
+        if user_template:
+            user_template.delete()
+
+        user_template = cls(user=user, name=name, template=template)
+        user_template.save()
+        return {'success': True}
+    
+    @classmethod
+    def get_template_content(cls, user):
+        return {'success': True, 'templates': list(UserTemplates.objects.filter(user=user).values().distinct())}
+    
+    @classmethod
+    def delete_template_content(cls, user, name):
+        user_template = cls.objects.filter(user=user, name=name)
+        if user_template:
+            user_template.delete()
+            return {'success': True, 'name': name}
+        return {'success': False, 'error': f'{name} template not found'}
+
+
 class UserEmails(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
@@ -235,10 +263,3 @@ class UserEmails(models.Model):
             except ApiException as e:
                 error_message = f"Error: {e.status} - {e.reason}"
                 return {'success': False, 'error': error_message}
-
-
-
-class UserSignatures(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    name = models.CharField(max_length=255)
-    signature = models.TextField()

@@ -137,6 +137,11 @@ venv.bak/
 staticfiles/
 staticfiles.bak/
 
+# Assets
+.assets
+assets/
+assets.bak/
+
 # Spyder project settings
 .spyderproject
 .spyproject

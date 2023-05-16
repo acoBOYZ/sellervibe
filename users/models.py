@@ -48,17 +48,21 @@ class CustomUserManager(BaseUserManager):
         user = self.create_user(email=email, username=username, password=password)
         user = self.authenticate_user(email=email, password=password)
         return user
+    
+    def is_user_account_verified(self, user):
+        return user.is_verified if user else False
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(_('email address'), unique=True)
-    username =  models.CharField(_('username'), max_length=30, blank=True)
-    first_name = models.CharField(_('first name'), max_length=30, blank=True)
-    last_name = models.CharField(_('last name'), max_length=30, blank=True)
-    is_active = models.BooleanField(_('active'), default=True)
-    is_staff = models.BooleanField(_('staff'), default=False)
-    profile_picture_url = models.URLField(_('profile picture URL'), blank=True)
-    date_joined = models.DateTimeField(_('date joined'), auto_now_add=True)
-    provider = models.CharField(_('provider'), max_length=30, blank=True)
+    email = models.EmailField(_('Email address'), unique=True)
+    username =  models.CharField(_('Username'), max_length=30, blank=True)
+    first_name = models.CharField(_('First name'), max_length=30, blank=True)
+    last_name = models.CharField(_('Last name'), max_length=30, blank=True)
+    is_verified = models.BooleanField(_('Is verified'), default=False)
+    is_active = models.BooleanField(_('Active'), default=True)
+    is_staff = models.BooleanField(_('Staff'), default=False)
+    profile_picture_url = models.URLField(_('Profile picture URL'), blank=True)
+    date_joined = models.DateTimeField(_('Date joined'), auto_now_add=True)
+    provider = models.CharField(_('Account provider'), max_length=30, blank=True)
 
     objects = CustomUserManager()
 

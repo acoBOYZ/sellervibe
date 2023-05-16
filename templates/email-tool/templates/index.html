@@ -3,19 +3,145 @@
 
 {% block title %}sellervibe | email tool | templates{% endblock %}
 
-{% block stylesheet %}{% endblock %}
+{% block head %}
+    <link href="{% static 'quill/quill.snow.min.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block stylesheet %}
+    <style>
+        .ql-toolbar {
+            border: none;
+            border-radius: 4px 4px 0 0;
+            box-shadow: 0 3px 15px 0 rgba(0,0,0,0.15);
+            padding: 0;
+        }
+        .ql-container {
+            height: 32rem;
+            border: none;
+            box-shadow: 0px 3px 15px rgba(0,0,0,0.15);
+            border-radius: 0 0 4px 4px;
+        }
+        .ql-toolbar.ql-snow + .ql-container.ql-snow {
+            margin-top: 0;
+            padding-top: 0;
+        }
+
+        @media (prefers-color-scheme: light) {
+            .ql-toolbar {
+                background-color: #f9f9f9;
+                color: #000;
+            }
+            .ql-container {
+                background-color: #e5e6e6;
+                color: #000;
+            }
+            .ql-snow .ql-picker-label::before,
+            .ql-snow .ql-stroke {
+                color: #000;
+            } 
+            .ql-snow .ql-stroke {
+                stroke: #000;
+            }
+            .ql-snow .ql-stroke-miter {
+                stroke: #000;
+            }
+            .ql-snow .ql-fill,
+            .ql-snow .ql-stroke.ql-fill {
+                fill: #000;
+            }
+            .ql-snow .ql-picker {
+                color: #000;
+            }
+            .ql-snow .ql-picker-options {
+                background-color: #f9f9f9;
+            }
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .ql-toolbar {
+                background-color: #20252e;
+                color: #fff;
+            }
+            .ql-container {
+                background-color: #20252e;
+                color: #fff;
+            }
+            .ql-snow .ql-picker-label::before,
+            .ql-snow .ql-stroke {
+                color: #fff;
+            }
+            .ql-snow .ql-stroke {
+                stroke: #fff;
+            }
+            .ql-snow .ql-stroke-miter {
+                stroke: #fff;
+            }
+            .ql-snow .ql-fill,
+            .ql-snow .ql-stroke.ql-fill {
+                fill: #fff;
+            }
+            .ql-snow .ql-picker {
+                color: #fff;
+            }
+            .ql-snow .ql-picker-options {
+                background-color: #20252e;
+            }
+        }
+    </style>
+{% endblock %}
 
 {% block templates_active_line %}bg-opacity-100{% endblock %}
 {% block templates_active %}bg-base-100{% endblock %}
 
+{% block content_width %}max-w-4xl{% endblock %}
 {% block content %}
+<h1 class="text-4xl font-extrabold mb-8">Email Templates</h1>
+<p>Below, you will find your templates. You have the option to view, edit, or effortlessly create new ones.<br>You can easily access the template editor to make modifications. Simply navigate to the editor section where you can customize the content, layout, and design of your templates. Enjoy the flexibility and control to fine-tune your email communication.</p>
+<div class="bg-base-content/10 my-10 mx-1 h-px"></div>
+<div class="component-preview text-base-content max-w-4xl relative overflow-x-auto transition-all duration-200 space-y-4">
 
-    <h1 class="text-4xl font-extrabold my-8">Create Templates</h1>
-    <p>This feature is comming soon.</p>
-    <div class="bg-base-content/10 my-10 mx-1 h-px"></div>
-    <div class="component-preview text-base-content max-w-4xl relative overflow-x-auto transition-all duration-200 space-y-4">
-        <div class="w-auto max-w-xl" id="working-lottie"></div>
+    <div class="flex flex-wrap gap-4 p-4" id="template-container">
+    
+        <div class="group relative w-56 h-42 cursor-pointer overflow-hidden border-4 border-base-300/50 rounded-md shadow-lg" onclick="createNew(event)">
+            <div layz class="relative left-9 w-36 blur-sm group-hover:blur-none" id="create-new-form-lottie"></div>
+            <div class="absolute top-0 left-0 w-full h-full bg-base-100 bg-opacity-50 flex flex-col justify-end p-3">
+                <h2 class="text-accent-content text-lg font-bold text-left">New Content</h2>
+                <a class="btn btn-xs btn-secondary text-white max-w-[8rem] overflow-clip static items-center px-2 transition-all duration-300 ease-linear w-6 transform group-hover:w-full rounded-3xl group-hover:rounded-sm">
+                    <span class="absolute right-11 truncate">Create New</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="absolute right-[2px] w-3 h-3" viewBox="0 0 20 20" id="arrow"><path fill="currentColor" fill-rule="evenodd" d="M.366 19.708c.405.39 1.06.39 1.464 0l8.563-8.264a1.95 1.95 0 0 0 0-2.827L1.768.292A1.063 1.063 0 0 0 .314.282a.976.976 0 0 0-.011 1.425l7.894 7.617a.975.975 0 0 1 0 1.414L.366 18.295a.974.974 0 0 0 0 1.413"></path></svg>
+                </a>
+            </div>
+        </div>
+
+        <div class="group relative w-56 h-42 cursor-pointer overflow-hidden border-4 border-base-300/50 rounded-md shadow-lg" onclick="startEditing(event)">
+            <iframe class="relative top-0 left-0 w-[400%] h-[400%] transform scale-[.25] rounded-2xl origin-top-left transition-all duration-300 ease blur-md group-hover:blur-none" srcdoc="<!DOCTYPE html><html><head><link href=&quot;https://cdn.quilljs.com/1.3.6/quill.snow.css&quot; rel=&quot;stylesheet&quot;><style></style></head><body><div id=&quot;content&quot;><p>Subject: Price Inquiry for Products</p><p><br></p><p>Dear Walmart,</p><p><br></p><p>I am interested in purchasing the following products from your store and would like to inquire about their prices:</p><p><br></p><p>- <a href=&quot;https://www.amazon.com.tr/Yeni-Apple-iPhone-Pro-Max/dp/B09G9PD5M9/ref=sr_1_5?keywords=apple+13+pro+max+256+gb&amp;qid=1684199832&amp;sr=8-5&quot; target=&quot;_blank&quot;>Apple iPhone 13 Pro Max (256 GB)</a></p><p>- <a href=&quot;https://www.amazon.com.tr/Microsoft-Surface-8PP-00022-1145G7-13-Dokunmatik/dp/B093X3RZX6/ref=sr_1_1?__mk_tr_TR=ÅMÅŽÕÑ&amp;crid=2DACEYEMSPJS5&amp;keywords=Microsoft+Surface+Pro+8+%28Intel+Core+i7%2C+16+GB+RAM%2C+512+GB+SSD%29&amp;qid=1684199861&amp;sprefix=microsoft+surface+pro+8+intel+core+i7+16+gb+ram+512+gb+ssd+%2Caps%2C114&amp;sr=8-1&quot; target=&quot;_blank&quot;>Microsoft Surface Pro 8 (Intel Core i7, 16 GB RAM, 512 GB SSD)</a></p><p>- <a href=&quot;https://www.amazon.com.tr/Canon-15-45-3-5-6-3-Fotoğraf-Makinesi/dp/B08XB89QQ4/ref=sr_1_3?__mk_tr_TR=ÅMÅŽÕÑ&amp;crid=33X1UMF35X5WQ&amp;keywords=Canon+EOS+R5+Mirrorless+Camera+%28Body+only%29&amp;qid=1684199894&amp;sprefix=canon+eos+r5+mirrorless+camera+body+only+%2Caps%2C118&amp;sr=8-3&quot; target=&quot;_blank&quot;>Canon EOS R5 Mirrorless Camera (Body only)</a></p><p><br></p><p>Could you please provide me with the current prices for these products in your store, both online and local (if applicable)?</p><p><br></p><p>Additionally, I would appreciate it if you could inform me about any ongoing promotions, discounts, or bundles related to these products.</p><p><br></p><p>Looking forward to hearing from you soon. Thank you in advance for your assistance.</p><p><br></p><p>Best regards,</p><p><br></p><p>Ahmet Cevdet ÖZTÜRK</p><p>ahmet@cevdet.ozturk</p><p>+90(***)*** ** **</p></div></body></html>"></iframe>
+            <div class="absolute top-0 left-0 w-full h-full bg-base-100 bg-opacity-50 flex flex-col justify-end p-3">
+              <h2 class="text-accent-content text-lg font-bold text-left">Example-1</h2>
+              <a class="btn btn-xs btn-primary text-white max-w-[8rem] overflow-clip static items-center px-2 transition-all duration-300 ease-linear w-6 transform group-hover:w-full rounded-3xl group-hover:rounded-sm">
+                <span class="absolute right-7 truncate">Start Editing</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="absolute right-[2px] w-3 h-3" viewBox="0 0 20 20" id="arrow">
+                  <path fill="currentColor" fill-rule="evenodd" d="M.366 19.708c.405.39 1.06.39 1.464 0l8.563-8.264a1.95 1.95 0 0 0 0-2.827L1.768.292A1.063 1.063 0 0 0 .314.282a.976.976 0 0 0-.011 1.425l7.894 7.617a.975.975 0 0 1 0 1.414L.366 18.295a.974.974 0 0 0 0 1.413"></path>
+                </svg>
+              </a>
+            </div>
+        </div>
+
+        <div class="group relative w-56 h-42 cursor-pointer overflow-hidden border-4 border-base-300/50 rounded-md shadow-lg" onclick="startEditing(event)">
+            <iframe class="relative top-0 left-0 w-[400%] h-[400%] transform scale-[.25] rounded-2xl origin-top-left transition-all duration-300 ease blur-md group-hover:blur-none" srcdoc="<!DOCTYPE html><html><head><link href=&quot;https://cdn.quilljs.com/1.3.6/quill.snow.css&quot; rel=&quot;stylesheet&quot;><style></style></head><body><div id=&quot;content&quot;><p>Dear Walmart,</p><p><br></p><p>I am interested in purchasing the following products from your store and would like to inquire about their prices:</p><p>- <a href=&quot;https://www.amazon.com.tr/Yeni-Apple-iPhone-Pro-Max/dp/B09G9PD5M9/ref=sr_1_5?keywords=apple+13+pro+max+256+gb&amp;qid=1684199832&amp;sr=8-5&quot; target=&quot;_blank&quot;>Apple iPhone 13 Pro Max (256 GB)</a></p><p>- <a href=&quot;https://www.amazon.com.tr/Microsoft-Surface-8PP-00022-1145G7-13-Dokunmatik/dp/B093X3RZX6/ref=sr_1_1?__mk_tr_TR=ÅMÅŽÕÑ&amp;crid=2DACEYEMSPJS5&amp;keywords=Microsoft+Surface+Pro+8+%28Intel+Core+i7%2C+16+GB+RAM%2C+512+GB+SSD%29&amp;qid=1684199861&amp;sprefix=microsoft+surface+pro+8+intel+core+i7+16+gb+ram+512+gb+ssd+%2Caps%2C114&amp;sr=8-1&quot; target=&quot;_blank&quot;>Microsoft Surface Pro 8 (Intel Core i7, 16 GB RAM, 512 GB SSD)</a></p><p><br></p><p>Could you please provide me with the current prices for these products in your store, both online and local (if applicable)?</p><p>Additionally, I would appreciate it if you could inform me about any ongoing promotions, discounts, or bundles related to these products.</p><p><br></p><p>Looking forward to hearing from you soon. Thank you in advance for your assistance.</p><p><br></p><p>Best regards,</p><p><br></p><p><img src=&quot;data:image/jpeg;base64,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&quot;></p><p>Ahmet Cevdet ÖZTÜRK</p><p>ahmet@cevdet.ozturk</p><p>+90(***)*** ** **</p></div></body></html>"></iframe>
+            <div class="absolute top-0 left-0 w-full h-full bg-base-100 bg-opacity-50 flex flex-col justify-end p-3">
+              <h2 class="text-accent-content text-lg font-bold text-left">Example-2</h2>
+              <a class="btn btn-xs btn-primary text-white max-w-[8rem] overflow-clip static items-center px-2 transition-all duration-300 ease-linear w-6 transform group-hover:w-full rounded-3xl group-hover:rounded-sm">
+                <span class="absolute right-7 truncate">Start Editing</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="absolute right-[2px] w-3 h-3" viewBox="0 0 20 20" id="arrow">
+                  <path fill="currentColor" fill-rule="evenodd" d="M.366 19.708c.405.39 1.06.39 1.464 0l8.563-8.264a1.95 1.95 0 0 0 0-2.827L1.768.292A1.063 1.063 0 0 0 .314.282a.976.976 0 0 0-.011 1.425l7.894 7.617a.975.975 0 0 1 0 1.414L.366 18.295a.974.974 0 0 0 0 1.413"></path>
+                </svg>
+              </a>
+            </div>
+        </div>
+
     </div>
+
+</div>
     
 {% endblock %}
 {% block content_btn %}
@@ -33,10 +159,10 @@
         </a>
     </div>
     <div>
-        <a href="/tools/mail/signatures" class="btn btn-sm md:btn-md gap-2 normal-case lg:gap-3">
+        <a href="/tools/mail/send" class="btn btn-sm md:btn-md gap-2 normal-case lg:gap-3">
         <div class="flex flex-col items-end">
             <span class="text-neutral-content/50 hidden text-xs font-normal md:block">Next</span>
-            <span>Signatures</span>
+            <span>Send Email</span>
         </div>
         <svg class="h-6 w-6 fill-current md:h-8 md:w-8" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
             <path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"></path>
@@ -46,6 +172,86 @@
 </div>
 {% endblock %}
 
+{% block before_body %}
+
+    <input type="checkbox" id="modal-template-editor-checkbox" class="modal-toggle"/>
+    <div class="modal" id="modal-template-editor">
+    <div class="modal-box rounded-none space-y-4 max-w-full w-full m-8 overflow-x-scroll">
+
+        <h1 class="text-2xl font-extrabold mb-6">Email Template Editor</h1>
+        <div class="form-control my-2">
+            <label class="input-group input-group-vertical">
+            <span>Set a template name:</span>
+            <input type="text" class="input input-bordered focus:outline-none focus:placeholder-transparent" placeholder="Template name..." id="template-name-field" required/>
+            </label>
+        </div>
+
+        <div class="form-control my-2">
+            <div class="tooltip" data-tip="You can choose one of the lists you've created in the contacts section for seeing your custom fields.">
+                <label class="input-group input-group-vertical">
+                <span>Select a contact group:</span>
+                <select class="select select-bordered focus:outline-none" id="editor-pick-list" required><option disabled selected>Select a contact</option></select>
+                </label>
+            </div>
+        </div>
+
+        <div class="form-control my-2 hidden" id="badge-container">
+            <label class="input-group input-group-vertical">
+            <span>Fields:</span>
+            
+            <div class="border">
+                <div class="bg-base-100 h-px"></div>
+                <div class="flex justify-between items-center">
+                    <div class="flex flex-wrap space-x-3 space-y-3 pb-3" id="badge-div">
+                        
+                    </div>
+                    <div class="hidden"></div>
+                    <label for="modal-field-help" class="btn btn-xs btn-circle btn-outline border-none">?</label>
+                    <div class="hidden"></div>
+                </div>
+            </div>
+            </label>
+        </div>
+
+        <div class="" id="editor"></div>
+
+        <div class="modal-action w-full">
+            <label class="text-xs float-left w-full text-warning" id="warning-label"></label>
+            <label for="modal-template-editor-checkbox" class="btn btn-sm btn-outline">Close</label>
+            <label for="modal-template-editor-checkbox" class="btn btn-sm btn-outline btn-error" onclick="deleteContent()">Delete</label>
+            <label class="btn btn-sm btn-outline btn-success" onclick="saveContent()">Save</label>
+        </div>
+    </div>
+    </div>
+
+    <input type="checkbox" id="modal-field-help" class="modal-toggle"/>
+    <div class="modal" id="modal-field-help">
+        <div class="modal-box space-y-8 relative">
+            <label for="modal-field-help" class="btn btn-xs btn-square btn-outline border-none absolute right-2 top-2 normal-case">x</label>
+            <p class="font-bold">What is this?</p>
+            <p class="pb-1 text-sm">You can use custom fields from your spreadsheet to personalize your emails. To do this, simply include the column headers in your email text, and the system will automatically replace the headers with the corresponding data for each recipient.<br><br>For example, if your spreadsheet contains fields such as "first_name," "last_name," and "company," you can use them in your email as follows:<br><br>"Hello {first_name} {last_name}, I hope everything is going well at {company}."<br><br>When the email is sent, the system will replace {first_name}, {last_name}, and {company} with the appropriate information for each recipient, personalizing the message for them.</p>
+        </div>
+    </div>
+{% endblock %}
+
 {% block script %}
+    <script src="{% static 'quill/quill.min.js' %}"></script>
     <script src="{% static 'js/email_tool/templates.min.js' %}"></script>
 {% endblock %}
+
+
+
+
+
+
+
+
+<!-- 
+
+<div class="flex items-center justify-center gap-4 mt-4">
+    <svg xmlns="http://www.w3.org/2000/svg" class="absolute left-4 w-8 h-8 cursor-pointer hover:scale-105" viewBox="0 0 24 24" id="refresh-btn"><path fill="currentColor" d="M15.5,13c-0.276123,0-0.5,0.223877-0.5,0.5v0.8687744C14.2580566,13.5228882,13.1780396,12.9992676,11.9951782,13c-2.2091064,0.0013428-3.9989014,1.7932739-3.9975586,4.0023804C7.9989014,19.2115479,9.7908325,21.0013428,12,21c0.9715576-0.0022583,1.9091797-0.3572388,2.6386719-0.9989014c0.2076416-0.1817627,0.2286377-0.4974365,0.046875-0.7050781c-0.1817627-0.2077026-0.4974365-0.2286987-0.7050781-0.046936c-0.3551636,0.3132935-0.7794189,0.538147-1.2380981,0.656189c-1.6063232,0.4134521-3.2437134-0.5535889-3.6571655-2.1599121c-0.4134521-1.6063843,0.5535889-3.2437744,2.1599731-3.6572266C12.7642822,13.6971436,14.2978516,14.548645,14.8110962,16H12.5c-0.276123,0-0.5,0.223877-0.5,0.5s0.223877,0.5,0.5,0.5h3.0006104C15.7765503,16.9998169,16.0001831,16.776001,16,16.5v-3C16,13.223877,15.776123,13,15.5,13z M18.4169922,8.2197266c-0.982605-2.2747192-3.0957031-3.8595581-5.5545654-4.1660156c-3.8323364-0.4776001-7.3262329,2.2419434-7.803833,6.0742798c-1.5925903,0.3817139-2.789978,1.6982422-3.0192871,3.3198242c-0.3084106,2.1809082,1.2095337,4.1989136,3.3903809,4.5073242c0.0236816,0.0030518,0.0474854,0.0046997,0.0712891,0.0048828c0.2489014-0.0003662,0.4595947-0.1836548,0.4944458-0.4300537C6.0340576,17.2565308,5.84375,17.00354,5.5703125,16.9649048c-1.324707-0.1870728-2.3636475-1.2318115-2.5432739-2.5575562c-0.2216187-1.635376,0.9244995-3.1407471,2.5598755-3.3623657c0.2347412-0.0315552,0.4150391-0.2236938,0.4316406-0.4599609c0.1582642-2.3183594,1.642395-4.3362427,3.8083496-5.1779785c3.085144-1.1989746,6.5581055,0.3300781,7.7570801,3.4152222c0.0602417,0.1524658,0.1911011,0.2658691,0.3505859,0.3037109c1.3197021,0.3139648,2.3893433,1.2770996,2.8394775,2.5567627c0.730896,2.0779419-0.361145,4.3549194-2.4390869,5.0858154c-0.2601318,0.0912476-0.3972168,0.3759155-0.3063965,0.6362305c0.0909424,0.2605591,0.3759155,0.3980713,0.6364746,0.3071289c1.5147705-0.5320435,2.6808472-1.7606812,3.1330566-3.3012085C22.5740356,11.7674561,21.0602417,8.9956665,18.4169922,8.2197266z"></path></svg>
+    <svg class="w-[24px] cursor-pointer transform transition-all duration-300 ease opacity-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" id="phone-btn"><path fill="currentColor" d="M90 0H38a9.89 9.89 0 0 0-10 9.75v108.5A9.89 9.89 0 0 0 38 128h52a9.89 9.89 0 0 0 10-9.75V9.75A9.89 9.89 0 0 0 90 0Zm6 118.25a5.89 5.89 0 0 1-6 5.75H38a5.89 5.89 0 0 1-6-5.75V9.75A5.89 5.89 0 0 1 38 4h10a4.16 4.16 0 0 0 4 4h24a4.3 4.3 0 0 0 4-4h10a5.89 5.89 0 0 1 6 5.75Z"></path></svg>
+    <svg class="w-[30px] cursor-pointer transform transition-all duration-300 ease opacity-25" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" id="window-btn"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="M31.469 22.892c0 1.1-.9 2-2 2H2.532c-1.1 0-2-.9-2-2V5.38c0-1.1.9-2 2-2h26.937c1.1 0 2 .9 2 2v17.512zM.532 28.62h30.937"></path></svg>
+</div>
+
+ -->

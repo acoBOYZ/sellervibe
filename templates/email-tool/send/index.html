@@ -8,6 +8,7 @@
 {% block send_active_line %}bg-opacity-100{% endblock %}
 {% block send_active %}bg-base-100{% endblock %}
 
+{% block content_width %}max-w-4xl{% endblock %}
 {% block content %}
 
     <h1 class="text-4xl font-extrabold my-8">Send Emails</h1>
@@ -99,9 +100,7 @@
                             </div>
                             <div class="tooltip" data-tip="What is this?">
                                 <div class="hidden"></div>
-                                <a href="#modal-field-help" class="btn btn-xs btn-circle btn-outline border-none">
-                                    ?
-                                </a>
+                                <label for="modal-field-help" class="btn btn-xs btn-circle btn-outline border-none">?</label>
                                 <div class="hidden"></div>
                             </div>
                         </div>
@@ -130,13 +129,13 @@
 <div class="bg-base-content/10 my-10 mx-1 h-px"></div>
 <div class="flex justify-between">
     <div>
-        <a href="/tools/mail/signatures" class="btn btn-sm md:btn-md btn-ghost gap-2 normal-case lg:gap-3">
+        <a href="/tools/mail/templates" class="btn btn-sm md:btn-md btn-ghost gap-2 normal-case lg:gap-3">
         <svg class="h-6 w-6 fill-current md:h-8 md:w-8" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
             <path d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z"></path>
         </svg>
         <div class="flex flex-col items-start">
             <span class="text-base-content/50 hidden text-xs font-normal md:block">Prev</span>
-            <span>Signatures</span>
+            <span>Templates</span>
         </div>
         </a>
     </div>
@@ -155,21 +154,23 @@
 {% endblock %}
 
 {% block before_body %}
-<div class="modal" id="modal_send">
+<input type="checkbox" id="modal-send-checkbox" class="modal-toggle"/>
+<div class="modal" id="modal-send">
   <div class="modal-box space-y-4 h-auto max-w-2xl overflow-x-scroll overflow-y-auto relative justify-center items-center">
     <div class="modal-action">
-      <a href="#" class="btn">Close</a>
+      <label for="modal-send-checkbox" class="btn">Close</label>
     </div>
   </div>
 </div>
 
+<input type="checkbox" id="modal-field-help" class="modal-toggle"/>
 <div class="modal" id="modal-field-help">
     <div class="modal-box space-y-8 relative">
-        <a href="#" class="btn btn-xs btn-square btn-outline border-none absolute right-2 top-2 normal-case">x</a>
+        <label for="modal-field-help" class="btn btn-xs btn-square btn-outline border-none absolute right-2 top-2 normal-case">x</label>
         <p class="font-bold">What is this?</p>
         <p class="pb-1 text-sm">You can use custom fields from your spreadsheet to personalize your emails. To do this, simply include the column headers in your email text, and the system will automatically replace the headers with the corresponding data for each recipient.<br><br>For example, if your spreadsheet contains fields such as "first_name," "last_name," and "company," you can use them in your email as follows:<br><br>"Hello {first_name} {last_name}, I hope everything is going well at {company}."<br><br>When the email is sent, the system will replace {first_name}, {last_name}, and {company} with the appropriate information for each recipient, personalizing the message for them.</p>
     </div>
-  </div>
+</div>
 {% endblock %}
 
 {% block script %}

@@ -1,27 +1,33 @@
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
-from .models import UserEmails
+from .models import UserEmails, UserTemplates
 import json
 from base.decorators import limit_functionality_if_low_score, is_user_authenticated
+import os
 
 def getIndexHtml(index):
-    return f'../templates/email-tool/{index}/index.html'
+    context = { 
+        'recaptcha_site_key': os.getenv('V3_RECAPTCHA_PUBLIC_KEY'), 
+        'recaptcha_action': f'emailForm_{index}'
+        }
+    return f'../templates/email-tool/{index}/index.html', context
 
 def start(request):
-    return render(request, getIndexHtml('start'))
+    index, context = getIndexHtml('start')
+    return render(request, index, context)
 
 def contacts(request):
-    return render(request, getIndexHtml('contacts'))
+    index, context = getIndexHtml('contacts')
+    return render(request, index, context)
 
 def templates(request):
-    return render(request, getIndexHtml('templates'))
-
-def signatures(request):
-    return render(request, getIndexHtml('signatures'))
+    index, context = getIndexHtml('templates')
+    return render(request, index, context)
 
 def send(request):
-    return render(request, getIndexHtml('send'))
+    index, context = getIndexHtml('send')
+    return render(request, index, context)
 
 @is_user_authenticated
 def upload_file(request):
@@ -49,7 +55,6 @@ def save_emails(request):
     return JsonResponse({'success': False, 'error': 'Request method is not valid'})
 
 @is_user_authenticated
-# @limit_functionality_if_low_score
 def get_emails(request):
     if request.method == 'POST':
         name = request.GET.get('name')
@@ -106,3 +111,31 @@ def send_bulk_emails(request):
             return JsonResponse({'success': False, 'error': f'An error occurred: {str(e)}'})
     return JsonResponse({'success': False, 'error': 'Request method is not valid'})
 
+@is_user_authenticated
+def save_template(request):    
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        template = request.POST.get('html_content')
+
+        response = UserTemplates.save_template_content(
+            user=request.user,
+            name=name,
+            template=template
+        )
+        return JsonResponse(response)
+    return JsonResponse({"status": "error"})
+
+@is_user_authenticated
+def get_templates(request):
+    if request.method == 'POST':
+        response = UserTemplates.get_template_content(user=request.user)
+        return JsonResponse(response, safe=False)
+    return JsonResponse({'success': False, 'error': 'Request method is not valid'})
+
+@is_user_authenticated
+def delete_template(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        response = UserTemplates.delete_template_content(user=request.user, name=name)
+        return JsonResponse(response)
+    return JsonResponse({'success': False, 'error': 'Request method is not valid'})

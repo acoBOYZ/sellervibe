@@ -8,8 +8,8 @@
 {% block contacts_active_line %}bg-opacity-100{% endblock %}
 {% block contacts_active %}bg-base-100{% endblock %}
 
+{% block content_width %}max-w-4xl{% endblock %}
 {% block content %}
-
     <h1 class="text-4xl font-extrabold my-8">Contacts</h1>
     <p>With this new feature, you can simply upload a file or copy and paste text containing your contacts' information and quickly add them to your email list. You can also easily send bulk emails to all of your contacts with just a few clicks.</p>
     <div class="bg-base-content/10 my-10 mx-1 h-px"></div>
@@ -89,7 +89,7 @@
                                                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path>
                                               </svg>
                                             <span class="m-1">
-                                                  We support various formats but for the smoothest performance we recommend .xlsx file. Make sure that the file has included field labeled 'email'. Find out more about how you can prepare your file <a href="#modal_xlsx" class="link link-hover link-success opacity-75">here</a>.
+                                                  We support various formats but for the smoothest performance we recommend .xlsx file. Make sure that the file has included field labeled 'email'. Find out more about how you can prepare your file <label for="modal-xlsx" class="link link-hover link-success opacity-75">here</label>.
                                             </span>
                                         </div>
                                     </div>
@@ -263,7 +263,8 @@
 {% endblock %}
 
 {% block before_body %}
-<div class="modal" id="modal_xlsx">
+<input type="checkbox" id="modal-xlsx" class="modal-toggle" />
+<div class="modal" id="modal-xlsx">
   <div class="modal-box space-y-8">
     <h3 class="font-bold text-xl">Creating an XLSX file with Name, Title, and Email Columns</h3>
     <p class="pb-4 text-sm">In this guide, we will explain step-by-step how to create an XLSX file with columns for Name, Title, and Email. You can easily follow these instructions to prepare your own file. This will help you organize and manage your contacts efficiently.</p>
@@ -273,8 +274,8 @@
     <p class="pb-4 text-sm">Create a new blank spreadsheet by clicking "File" > "New" > "Blank Workbook" (or the equivalent in your spreadsheet application).</p>
     <h3 class="font-bold text-lg">Step 3: Add column headers</h3>
     <p class="pb-4 text-sm">In the first row of the spreadsheet, enter the following column headers:</p>
-    <p class="font-bold text-primary">An Important Note:</p>
-    <p class="pb-1 text-sm text-primary">You can use custom fields from your spreadsheet to personalize your emails. To do this, simply include the column headers in your email text, and the system will automatically replace the headers with the corresponding data for each recipient.<br><br>For example, if your spreadsheet contains fields such as "first_name," "last_name," and "company," you can use them in your email as follows:<br><br>"Hello {first_name} {last_name}, I hope everything is going well at {company}."<br><br>When the email is sent, the system will replace {first_name}, {last_name}, and {company} with the appropriate information for each recipient, personalizing the message for them.<br><br>Please ensure that the column headers in your spreadsheet match the field names you want to use in your email text. Additionally, if your header names contain characters that are not in English, make sure to convert them to English before using them in your email text. However, if you happen to miss any, don't worry – we'll automatically convert them for you &#128521;</p>
+    <p class="font-bold text-warning">An Important Note:</p>
+    <p class="pb-1 text-sm text-warning">You can use custom fields from your spreadsheet to personalize your emails. To do this, simply include the column headers in your email text, and the system will automatically replace the headers with the corresponding data for each recipient.<br><br>For example, if your spreadsheet contains fields such as "first_name," "last_name," and "company," you can use them in your email as follows:<br><br>"Hello {first_name} {last_name}, I hope everything is going well at {company}."<br><br>When the email is sent, the system will replace {first_name}, {last_name}, and {company} with the appropriate information for each recipient, personalizing the message for them.<br><br>Please ensure that the column headers in your spreadsheet match the field names you want to use in your email text. Additionally, if your header names contain characters that are not in English, make sure to convert them to English before using them in your email text. However, if you happen to miss any, don't worry – we'll automatically convert them for you &#128521;</p>
     <ul><li>&#8226;&#8195;In cell A1, type <code class="font-bold">Name</code>.</li><li>&#8226;&#8195;In cell B1, type <code class="font-bold">Title</code>.</li><li>&#8226;&#8195;In cell C1, type <code class="font-bold">Email</code>.</li></ul>
     <p class="pb-4 text-sm">It should look like this:</p>
     <div class="mockup-code overflow-y-auto text-xs">
@@ -314,7 +315,7 @@
     <p class="pb-4 text-sm">Your XLSX file with Name, Title, and Email columns is now ready. Now, upload this file to our platform and start using it to take full advantage of our features.</p>
 
     <div class="modal-action">
-      <a href="#" class="btn">Got it!</a>
+      <label for="modal-xlsx" class="btn">Got it!</label>
     </div>
   </div>
 </div>

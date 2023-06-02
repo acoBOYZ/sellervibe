@@ -226,6 +226,7 @@ class AuxiliaryService:
         
     @staticmethod
     def force_start_script(user):
+        return JsonResponse({'success': False, 'error': 'You dont have a permissions.'})
         try:
             APP_DIR = Path(__file__).resolve().parent
             venv_python_path = os.path.join(settings.BASE_DIR, '.venv/bin/python')

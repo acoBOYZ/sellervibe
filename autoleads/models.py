@@ -201,7 +201,9 @@ class AuxiliaryService:
             json_path = os.path.join(APP_DIR, 'app/running.app')
 
             data = AuxiliaryService.read_json_file(json_path)
-            return JsonResponse({'success': True, 'data': data})
+            if data:
+                return JsonResponse({'success': True, 'data': data})
+            return JsonResponse({'success': False, 'error': 'Can not read script data yet!'})
         except Exception as e:
             return JsonResponse({'success': False, 'error': f'An error occurred while getting script info: {str(e)}'})
         

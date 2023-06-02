@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'account',
     'email_tool',
     'users',
+    'autoleads',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,7 +44,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'social_django',
-    'captcha',
 ]
 
 
@@ -61,6 +61,23 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'social_core.backends.google.GoogleOAuth2',
 ]
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.getenv('GOOGLE_CLIENT_ID')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv('GOOGLE_CLIENT_SECRET')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['email', 'profile', 'openid']
+
+SOCIAL_AUTH_PIPELINE = (
+    'social_core.pipeline.social_auth.social_details',
+    'social_core.pipeline.social_auth.social_uid',
+    'social_core.pipeline.social_auth.auth_allowed',
+    'social_core.pipeline.social_auth.social_user',
+    'base.social.create_user_with_profile_picture',
+    'social_core.pipeline.social_auth.associate_user',
+    'social_core.pipeline.social_auth.load_extra_data',
+    'social_core.pipeline.user.user_details'
+)
+
+AUTH_USER_MODEL = 'users.CustomUser'
 
 ROOT_URLCONF = 'base.urls'
 
@@ -131,26 +148,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # EXPIRES_CSS = 'access plus 1 year'
 # EXPIRES_JS = 'access plus 1 year'
 # EXPIRES_FONTS = 'access plus 1 year'
-
-
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.getenv('GOOGLE_CLIENT_ID')
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.getenv('GOOGLE_CLIENT_SECRET')
-SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = ['email', 'profile', 'openid']
-
-SOCIAL_AUTH_PIPELINE = (
-    'social_core.pipeline.social_auth.social_details',
-    'social_core.pipeline.social_auth.social_uid',
-    'social_core.pipeline.social_auth.auth_allowed',
-    'social_core.pipeline.social_auth.social_user',
-    'base.social.create_user_with_profile_picture',
-    'social_core.pipeline.social_auth.associate_user',
-    'social_core.pipeline.social_auth.load_extra_data',
-    'social_core.pipeline.user.user_details'
-)
-
-AUTH_USER_MODEL = 'users.CustomUser'
-
-SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']
-RECAPTCHA_V3_THRESHOLD = 0.85
 
 os.environ["SSL_CERT_FILE"] = certifi.where()

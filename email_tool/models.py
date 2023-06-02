@@ -203,21 +203,24 @@ class UserEmails(models.Model):
     @classmethod
     def upload_attachments(cls, user, files):
         tasks = []
+        success_responses = []
+        error_responses = []
         user_folder_dir = os.path.join(settings.MEDIA_ROOT, str(user))
+
         if not os.path.exists(user_folder_dir):
             os.makedirs(user_folder_dir)
         for file in files:
-            file_path = os.path.join(user_folder_dir, f'{file.name}')
-            with open(file_path, 'wb') as destination:
-                for chunk in file.chunks():
-                    destination.write(chunk)
-            task = cls.upload_file_to_elasticemail(file_path)
-            tasks.append(task)
-            if os.path.exists(file_path):
-                os.remove(file_path)
-
-        success_responses = []
-        error_responses = []
+            try:
+                file_path = os.path.join(user_folder_dir, f'{file.name}')
+                with open(file_path, 'wb') as destination:
+                    for chunk in file.chunks():
+                        destination.write(chunk)
+                task = cls.upload_file_to_elasticemail(file_path)
+                tasks.append(task)
+                if os.path.exists(file_path):
+                    os.remove(file_path)
+            except Exception as e:
+                error_responses.append({'name': file.name, 'error': str(e)})
 
         for i, task in enumerate(tasks):
             result = task

@@ -33,31 +33,33 @@
                 <div class="divider font-bold">OR</div> 
     
                 <!-- Sign up form -->
-                <form method="post">
+                <form method="post" class="flex flex-col items-center">
                     {% csrf_token %}
-                    <div class="form-control mb-2 text-base-content">
+                    <div class="form-control mb-2 text-base-content w-full">
                       <label class="label">
                         <span class="label-text text-primary-content">Username</span>
                       </label>
-                      <input type="text" placeholder="username" class="input border-none focus:outline-none focus:placeholder-transparent" name="username" required/>
+                      <input type="text" placeholder="username" class="input border-none focus:outline-none focus:placeholder-transparent" name="username" required value="{{ username }}"/>
                     </div>
-                    <div class="form-control mb-2 text-base-content">
+                    <div class="form-control mb-2 text-base-content w-full">
                       <label class="label">
                         <span class="label-text text-primary-content">Email</span>
                       </label>
-                      <input type="email" placeholder="email" class="input border-none focus:outline-none focus:placeholder-transparent" name="email" required/>
+                      <input type="email" placeholder="email" class="input border-none focus:outline-none focus:placeholder-transparent" name="email" required value="{{ email }}"/>
                     </div>
-                    <div class="form-control mb-2 text-base-content">
+                    <div class="form-control mb-2 text-base-content w-full">
                       <label class="label">
                         <span class="label-text text-primary-content">Password</span>
                       </label>
-                      <input type="password" placeholder="password" class="input border-none focus:outline-none focus:placeholder-transparent" name="password" required/>
+                      <input type="password" placeholder="password" class="input border-none focus:outline-none focus:placeholder-transparent" name="password" required value="{{ password }}"/>
                     </div>
-                    {{ form.captcha }}
+
+                    <div class="h-captcha my-2" data-sitekey="{{ hecaptcha_site_key }}"></div>
+
                     <button class="btn btn-primary border-none btn-block normal-case shadow-xl mt-2">Sign Up</button>
-                    <div class="flex justify-between mt-4">
-                      <div class="link text-xs flex flex-nowrap"></div>
-                      <div class="link text-xs flex flex-nowrap"><a  href="/login">Already have an account?</a></div>
+                    <div class="mt-4 grid grid-cols-2 place-items-stretch w-full">
+                      <div class="link text-xs whitespace-nowrap"></div>
+                      <div class="link text-xs whitespace-nowrap text-end"><a  href="/login">Already have an account?</a></div>
                     </div>
                 </form>
           </div>

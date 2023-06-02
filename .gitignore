@@ -63,6 +63,7 @@ db.sqlite3
 db.sqlite3-journal
 data/
 data.db/
+*.db
 
 # Flask stuff:
 instance/
@@ -190,3 +191,5 @@ cython_debug/
 commands.txt
 
 tailwind.config.js
+*.sh
+!scrap.db

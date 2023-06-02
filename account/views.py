@@ -4,73 +4,106 @@ from django.contrib.auth import authenticate, login, logout, get_user_model
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .decorators import unauthenticated_user
-from django.core.validators import validate_email
-from django.core.exceptions import ValidationError
+from .decorators import authenticated_user
 
 from social_core.backends.google import GoogleOAuth2
 from django.urls import reverse
 from django.views.generic import View
 from base.social import create_user_with_profile_picture
-
-from base.decorators import limit_functionality_if_low_score
+import os
+import requests
 
 CustomUser = get_user_model()
 
 def getIndexHtml(index):
     return f'../templates/account/{index}/index.html'
 
-@unauthenticated_user
+@authenticated_user
 def getStarted(request):
     return render(request, getIndexHtml('get-started'))
 
 
-@unauthenticated_user
-@limit_functionality_if_low_score
+@authenticated_user
 def loginPage(request):
     def return_context(context={}):
         return render(request, getIndexHtml('login'), context)
 
+    context = {
+        'hecaptcha_site_key': os.getenv('HECAPTCHA_PUBLIC_KEY'),
+        'view_name': 'slow-down'
+    }
+
     if request.method == 'POST':
-        if request.recaptcha_score_is_valid:
-            email = request.POST.get('email')
-            password = request.POST.get('password')
-            
-            user = CustomUser.objects.authenticate_user(email=email, password=password)
-            if user is not None:
-                login(request, user)
-                return redirect('/tools/mail')
-            else:
-                return return_context({'error': 'Email or password is incorrect.', 'form': request.form})
+        token = request.POST.get('h-captcha-response')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        if token:
+            data = { 'secret': os.getenv('HECAPTCHA_PRIVATE_KEY'), 'response': token }
+            session = requests.session()
+            with session.post('https://hcaptcha.com/siteverify', data=data) as response:
+                if response.status_code == 200:
+                    response_json = response.json()
+                    if response_json['success']:
+                        user = CustomUser.objects.authenticate_user(email=email, password=password)
+                        if user is not None:
+                            login(request, user)
+                            return redirect('/tools/mail')
+                        else:
+                            context['error'] = 'Email or password is incorrect.'
+                    else:
+                        context['error'] = 'Please check your network connection and try again.'
+                else:
+                    context['error'] = 'Please try again with solve hcaptcha.'
+
         else:
-            return return_context({'error': request.form.errors, 'form': request.form})
+            context['error'] = 'Something went wrong. Please try again with solve hcaptcha.'
 
-    return return_context({'form': request.form})
+        context['email'] = email
+        context['password'] = password
+
+    return return_context(context)
 
 
-@unauthenticated_user
-@limit_functionality_if_low_score
+@authenticated_user
 def signupPage(request):
     def return_context(context={}):
         return render(request, getIndexHtml('signup'), context)
     
+    context = {
+        'hecaptcha_site_key': os.getenv('HECAPTCHA_PUBLIC_KEY'),
+        'view_name': 'slow-down'
+    }
+
     if request.method == 'POST':
-        if request.recaptcha_score_is_valid:
-            username = request.POST.get('username')
-            email = request.POST.get('email')
-            password = request.POST.get('password')
+        token = request.POST.get('h-captcha-response')
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
 
-            user = CustomUser.objects.create_and_authenticate_user(username=username, email=email, password=password)
-
-            if user is not None:
-                login(request, user)
-                return redirect('/tools/mail')
-            else:
-                return return_context({'error': 'Unable to create user account', 'form': request.form})
+        if token:
+            data = { 'secret': os.getenv('HECAPTCHA_PRIVATE_KEY'), 'response': token }
+            session = requests.session()
+            with session.post('https://hcaptcha.com/siteverify', data=data) as response:
+                if response.status_code == 200:
+                    response_json = response.json()
+                    if response_json['success']:
+                        user = CustomUser.objects.create_and_authenticate_user(username=username, email=email, password=password)
+                        if user is not None:
+                            login(request, user)
+                            return redirect('/tools/mail')
+                        else:
+                            context['error'] = 'Unable to create user account'
+                    else:
+                        context['error'] = 'Please check your network connection and try again.'
         else:
-            return return_context({'error': request.form.errors, 'form': request.form})
+            context['error'] = 'Something went wrong. Please try again with solve hcaptcha.'
 
-    return return_context({'form': request.form})
+        
+        context['username'] = username
+        context['email'] = email
+        context['password'] = password
+
+    return return_context(context)
 
 
 @login_required(login_url='/signup')

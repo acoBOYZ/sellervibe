@@ -176,7 +176,10 @@
 
     <input type="checkbox" id="modal-template-editor-checkbox" class="modal-toggle"/>
     <div class="modal" id="modal-template-editor">
-    <div class="modal-box rounded-none space-y-4 max-w-full w-full m-8 overflow-x-scroll">
+    <div class="modal-box relative rounded-none space-y-4 max-w-full w-full m-8 overflow-x-scroll">
+        <label for="modal-template-editor-checkbox" class="btn btn-xs btn-square btn-outline border-none absolute right-2 top-2 hover:bg-opacity-0">
+            <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="text-gray-900 dark:text-gray-200" height="20" width="20" xmlns="http://www.w3.org/2000/svg"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </label>
 
         <h1 class="text-2xl font-extrabold mb-6">Email Template Editor</h1>
         <div class="form-control my-2">
@@ -227,7 +230,9 @@
     <input type="checkbox" id="modal-field-help" class="modal-toggle"/>
     <div class="modal" id="modal-field-help">
         <div class="modal-box space-y-8 relative">
-            <label for="modal-field-help" class="btn btn-xs btn-square btn-outline border-none absolute right-2 top-2 normal-case">x</label>
+            <label for="modal-field-help" class="btn btn-xs btn-square btn-outline border-none absolute right-2 top-2 hover:bg-opacity-0">
+                <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="text-gray-900 dark:text-gray-200" height="20" width="20" xmlns="http://www.w3.org/2000/svg"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </label>
             <p class="font-bold">What is this?</p>
             <p class="pb-1 text-sm">You can use custom fields from your spreadsheet to personalize your emails. To do this, simply include the column headers in your email text, and the system will automatically replace the headers with the corresponding data for each recipient.<br><br>For example, if your spreadsheet contains fields such as "first_name," "last_name," and "company," you can use them in your email as follows:<br><br>"Hello {first_name} {last_name}, I hope everything is going well at {company}."<br><br>When the email is sent, the system will replace {first_name}, {last_name}, and {company} with the appropriate information for each recipient, personalizing the message for them.</p>
         </div>

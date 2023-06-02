@@ -51,6 +51,21 @@ class CustomUserManager(BaseUserManager):
     
     def is_user_account_verified(self, user):
         return user.is_verified if user else False
+    
+    def does_user_exist(self, email):
+        """
+        Returns True if a user account with the given email exists.
+        """
+        return self.filter(email=email).exists()
+    
+    def get_user_by_email(self, email):
+        """
+        Returns a user object for the given email.
+        """
+        try:
+            return self.get(email=email)
+        except self.model.DoesNotExist:
+            return None
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_('Email address'), unique=True)
@@ -60,6 +75,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_verified = models.BooleanField(_('Is verified'), default=False)
     is_active = models.BooleanField(_('Active'), default=True)
     is_staff = models.BooleanField(_('Staff'), default=False)
+    is_autoleads_creator = models.BooleanField(_('Autoleads creator'), default=False)
     profile_picture_url = models.URLField(_('Profile picture URL'), blank=True)
     date_joined = models.DateTimeField(_('Date joined'), auto_now_add=True)
     provider = models.CharField(_('Account provider'), max_length=30, blank=True)

@@ -7,9 +7,23 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
         <title>sellervibe | verify-human</title>
         <link rel="icon" href="{% static 'img/logo.svg' %}" type="image/x-icon">
-        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+        <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
         <script>
-            function onRecaptchaCompleted(token) {
+            function onHCaptchaCompleted(token) {
+                verifyHcaptcha(
+                    token, 
+                    function() {
+                        hecaptchaContainer = document.querySelector('.h-captcha-container');
+                        hecaptchaSaveBtn = document.createElement('button');
+                        hecaptchaSaveBtn.classList.add('btn', 'btn-sm', 'btn-block', 'btn-outline', 'text-xl', 'font-bold', 'border-2', 'gap-2');
+                        hecaptchaSaveBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path fill="currentColor" d="M6 5a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v13.131a1 1 0 0 1-1.555.832l-3.89-2.593a1 1 0 0 0-1.11 0l-3.89 2.593A1 1 0 0 1 6 18.131V5Z"></path></svg>SAVE & EXIT';
+                        hecaptchaContainer.appendChild(hecaptchaSaveBtn);
+                        hecaptchaSaveBtn.addEventListener('click', function() {
+                            saveForm();
+                        });
+                    },
+                    function(){}
+                );
                 window.location.href = "{% url view_name %}";
             }
         </script>
@@ -19,7 +33,7 @@
         <div class="container">
             <h1 class="heading">Please verify that you are human</h1>
             <div class="lottie" id="robot-lottie"></div>
-            <div class="g-recaptcha" data-sitekey="{{ recaptcha_site_key }}" data-callback="onRecaptchaCompleted"></div>
+            <div class="h-captcha" data-sitekey="{{ hecaptcha_site_key }}" data-callback="onHCaptchaCompleted"></div>
         </div>
 
         <script src="{% static 'lottie/lottie-light.min.js' %}"></script>

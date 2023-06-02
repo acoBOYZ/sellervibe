@@ -1,16 +1,11 @@
 from django.shortcuts import render
-from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from .models import UserEmails, UserTemplates
 import json
-from base.decorators import limit_functionality_if_low_score, is_user_authenticated
-import os
+from base.decorators import is_user_authenticated
 
 def getIndexHtml(index):
-    context = { 
-        'recaptcha_site_key': os.getenv('V3_RECAPTCHA_PUBLIC_KEY'), 
-        'recaptcha_action': f'emailForm_{index}'
-        }
+    context = { }
     return f'../templates/email-tool/{index}/index.html', context
 
 def start(request):

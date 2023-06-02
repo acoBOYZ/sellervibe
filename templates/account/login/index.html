@@ -36,25 +36,27 @@
             <div class="divider font-bold">OR</div> 
 
             <!-- Login form -->
-            <form method="POST">
+            <form method="POST" class="flex flex-col items-center">
                 {% csrf_token %}
-                <div class="form-control mb-2 text-base-content">
+                <div class="form-control mb-2 text-base-content w-full">
                   <label class="label">
                     <span class="label-text text-primary-content">Email</span>
                   </label>
-                  <input type="email" placeholder="email" class="input border-none focus:outline-none focus:placeholder-transparent" name="email"/>
+                  <input type="email" placeholder="email" class="input border-none focus:outline-none focus:placeholder-transparent" name="email" value="{{ email }}"/>
                 </div>
-                <div class="form-control mb-4 text-base-content">
+                <div class="form-control mb-4 text-base-content w-full">
                   <label class="label">
                     <span class="label-text text-primary-content">Password</span>
                   </label>
-                  <input type="password" placeholder="password" class="input border-none focus:outline-none focus:placeholder-transparent" name="password"/>
+                  <input type="password" placeholder="password" class="input border-none focus:outline-none focus:placeholder-transparent" name="password" value="{{ password }}"/>
                 </div>
-                {{ form.captcha }}
+
+                <div class="h-captcha mb-4" data-sitekey="{{ hecaptcha_site_key }}"></div>
+
                 <button class="btn btn-primary border-none btn-block normal-case shadow-xl">Log In</button>
-                <div class="flex justify-between mt-4">
-                  <div class="link text-xs flex flex-nowrap"><a href="">Forgot your password?</a></div>
-                  <div class="link text-xs flex flex-nowrap"><a  href="/signup">Don't have an account?</a></div>
+                <div class="mt-4 grid grid-cols-2 place-items-stretch w-full">
+                  <div class="link text-xs whitespace-nowrap"><a href="">Forgot your password?</a></div>
+                  <div class="link text-xs whitespace-nowrap text-end"><a  href="/signup">Don't have an account?</a></div>
                 </div>
             </form>
           </div>

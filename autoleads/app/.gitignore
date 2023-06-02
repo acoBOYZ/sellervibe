@@ -1,0 +1,6 @@
+*.json
+.restart
+*.app
+*.content
+
+!selector.json

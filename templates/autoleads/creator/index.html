@@ -1,0 +1,349 @@
+{% extends "base/light/index.html" %}
+{% load static %}
+
+{% block title %}sellervibe | email tool{% endblock %}
+
+{% block stylesheet %}
+{% endblock %}
+
+{% block creator_active_line %}bg-opacity-100{% endblock %}
+{% block creator_active %}bg-base-100{% endblock %}
+
+{% block content_width %}max-w-4xl{% endblock %}
+{% block content %}
+
+    <h1 class="text-4xl font-extrabold my-8">Creator <span class="text-xl">(admin only)</span></h1>
+    <div class="bg-base-content/10 my-10 mx-1 h-px"></div>
+    <div class="component-preview not-prose text-base-content max-w-4xl">
+        
+        <div class="relative overflow-x-auto transition-all duration-200">
+            <div class="space-y-4" id="form-container">
+                <div class="relative m-0 p-0 w-full h-auto overflow-auto border border-success rounded-lg border-opacity-0 transform transition-all ease-linear duration-200 outer-form">
+                    <div class="flex justify-between items-center w-full bg-base-300 rounded-t-lg h-fit p-2">
+                        <span>App settings</span>
+                        <div class="form-control">
+                            <label class="cursor-pointer label">
+                                <span class="label-text">Auto restart:&nbsp</span> 
+                                <input type="checkbox" class="toggle toggle-sm toggle-success" checked id="app-settings-autoRestart"/>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="w-full bg-base-200 rounded-b-lg grid p-2 bg-grid">
+                        <div class="grid space-y-3">
+                            <div class="form-control px-2">
+                                <label class="input-group input-group-vertical">
+                                    <span>Black list:</span>
+                                    <textarea type="text" class="input input-bordered focus:outline-none focus:placeholder-transparent h-40 sm:h-24 text-sm placeholder:italic" placeholder="type.." id="app-settings-blackList" required></textarea>
+                                </label>
+                            </div>
+                            <div class="form-control px-2">
+                                <label class="input-group input-group-sm">
+                                    <span class="whitespace-nowrap">Loop time:</span>
+                                    <input type="number" value="60" class="input input-sm input-bordered w-full focus:outline-none" required id="app-settings-loopTime"/>
+                                    <span class="whitespace-nowrap">minutes</span>
+                                </label>
+                            </div>
+                            <div class="form-control px-2">
+                                <label class="input-group input-group-sm">
+                                    <span class="whitespace-nowrap">Amazon URL:</span>
+                                    <input type="text" placeholder="https://www.amazon.com/dp/{ASIN}" value="https://www.amazon.com/dp/{ASIN}" class="input input-sm input-bordered w-full focus:outline-none focus:placeholder:opacity-0" required id="app-settings-amazonURL"/>
+                                </label>
+                            </div>
+                            <div class="form-control px-2">
+                                <label class="input-group input-group-sm">
+                                    <span class="whitespace-nowrap">Compare value:</span>
+                                    <input type="number" value="35" class="input input-sm input-bordered w-full focus:outline-none focus:placeholder:opacity-0" required id="app-settings-compareValue"/>
+                                    <span class="whitespace-nowrap">%</span>
+                                </label>
+                            </div>
+                            <div class="form-control px-2">
+                                <button class="btn btn-sm btn-block btn-accent transition-none" id="app-settings-forceStart">
+                                    Start App Now
+                                </button>
+                            </div>
+                            <div class="form-control px-2">
+                                <button class="btn btn-sm btn-block btn-warning transition-none" id="app-settings-forceRestart">
+                                    <span class="restart-active">Force To Restart Now</span>
+                                    <span class="restart-passive flex flex-row items-center justify-center gap-2 hidden">
+                                        <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-error" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                        </svg>
+                                        <span class="restart-passive-counting text-error normal-case">
+                                            Processing..
+                                        </span>
+                                    </span>
+                                </button>
+                            </div>
+                            <div class="form-control px-2">
+                                <span class="w-full h-auto whitespace-nowrap text-ellipsis flex flex-row justify-start items-center gap-3 text-xs opacity-75 app-info-label">Processing..</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative m-0 p-0 w-full h-auto overflow-auto border border-success rounded-lg border-opacity-0 transform transition-all ease-linear duration-200 outer-form">
+                    <div class="flex justify-between items-center w-full bg-base-300 rounded-t-lg h-fit p-2">
+                        <span>Proxy settings</span>
+                        <a class="btn btn-sm normal-case" id="proxy-settings-add-btn">New</a>
+                    </div>
+                    <div class="w-full bg-base-200 rounded-b-lg relative flex-col p-2 space-y-2 bg-grid" id="proxy-settings-container">
+                    </div>
+                </div>
+
+                <div class="relative m-0 p-0 w-full h-auto overflow-auto border border-success rounded-lg border-opacity-0 transform transition-all ease-linear duration-200 outer-form outer-form-amazon-products">
+                    <div class="flex justify-between items-center w-full bg-base-300 rounded-t-lg h-fit p-2">
+                        <span>Amazon products</span>
+                        <label class="swap swap-rotate">
+                            <input type="checkbox" checked id="amazon-products-view-checkBox"/>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="swap-off text-success w-7 h-7" version="1.1" viewBox="0 0 48 48" xml:space="preserve"><path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2" d="M28.8 10.6c0 2.3 1.8 4.1 4.1 4.1h9.6L28.8 1v9.6z"/><path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2" d="M28.8 1H9.6C7.3 1 5.5 2.8 5.5 5.1v37.8c0 2.3 1.8 4.1 4.1 4.1h28.8c2.3 0 4.1-1.8 4.1-4.1V14.7L28.8 1z"/><path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2" d="M36.7 31.6c-7-8.6-18.4-8.6-25.5 0 7.1 8.5 18.5 8.5 25.5 0z"/><circle cx="24" cy="31.6" r="6.4" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/><path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2" d="M22.7 31.6h2.6"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="swap-on text-success w-7 h-7" viewBox="0 0 48 48"><path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2" d="M28.8 10.6c0 2.3 1.8 4.1 4.1 4.1h9.6L28.8 1v9.6z"/><path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2" d="M28.8 1H9.6C7.3 1 5.5 2.8 5.5 5.1v37.8c0 2.3 1.8 4.1 4.1 4.1h28.8c2.3 0 4.1-1.8 4.1-4.1V14.7L28.8 1zM24 22.2v18.5M33.3 31.5H14.8"/></svg>
+                        </label>
+                    </div>
+                    <div class="w-full bg-base-200 rounded-b-lg grid p-2 space-y-2 bg-grid hidden" id="amazon-products-add-panel">
+                        <div class="grid">
+                            <div class="rounded-md border-2 border-dashed border-base-content border-opacity-75 flex justify-center items-center flex-col bg-base-100 bg-opacity-50 cursor-pointer space-y-2 h-36 m-6" id="dropZone">
+                                <div class="flex justify-center items-center flex-col space-y-2" id="dropZone_base">
+                                    <div class="rounded-full h-10 w-10 justify-center items-center bg-base-100 border-none inline-flex shadow my-4 pointer-events-none">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="currentColor" , class="h-6 w-6 text-success opacity-75">
+                                        <path cd="M0,0H20V20H0Z"></path>
+                                        <path d="M15.833,11.667H11.667v4.167a.833.833,0,0,1-1.667,0V11.667H5.833a.833.833,0,1,1,0-1.667H10V5.833a.833.833,0,1,1,1.667,0V10h4.167a.833.833,0,0,1,0,1.667Z" transform="translate(-0.833 -0.833)"></path>
+                                        </svg>
+                                    </div>
+                                    <span class="m-1 text-sm opacity-75 mx-6 pointer-events-none"><a class="link link-hover link-success opacity-75">Upload a file </a>or drag and drop </span>
+                                    <span class="pb-4 text-xs opacity-50 mx-6 pointer-events-none">you can upload <span class="font-bold">ASIN</span> and <span class="font-bold">UPC</span> codes with .xlsx file</span>
+                                </div>
+                                <div layz class="w-24 absolute pointer-events-none" id="success-lottie" style="display: none;"></div>
+                                <div layz class="w-24 absolute pointer-events-none" id="error-lottie" style="display: none;"></div>
+                                <div class="flex justify-center items-center flex-col space-y-4 pointer-events-none" style="display: none;" id="dropZone_progress"><progress class="progress progress-success w-56" value="0" max="100" id="dropZone_progress_obj"></progress><h1 class="text-sm font-bold">Please wait until files upload</h1></div>
+                                <div class="px-2 w-full flex-col space-y-2 overflow-auto" id="dropZone_fileBase" style="display: none;"></div>
+                            </div>
+                        </div>
+
+                        <div class="divider text-sm mx-6">OR</div>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 place-items-stretch mx-6 gap-2">
+                            <div class="form-control my-2">
+                                <label class="input-group input-group-sm input-group-vertical">
+                                    <span>ASIN code:</span>
+                                    <input type="text" class="input input-sm input-bordered focus:outline-none focus:placeholder-transparent" placeholder="code." id="amazon-products-input-asin"/>
+                                </label>
+                            </div>
+                            <div class="form-control my-2 flex items-center justify-center flex-row gap-2">
+                                <label class="input-group input-group-sm input-group-vertical">
+                                    <span>UPC codes: <span class="text-xs opacity-75">(not required)</span></span>
+                                    <input type="text" class="input input-sm input-bordered focus:outline-none focus:placeholder-transparent" placeholder="code_1, coce_2, ..." id="amazon-products-input-upc"/>
+                                </label>
+                                <a class="btn btn-square btn-lg text-4xl font-light">+</a>
+                            </div>
+                        </div>
+                        <div class="grid mx-6">
+                            <div class="form-control overflow-x-auto gap-4" id="amazon-products-add-table" idPrefix="add" style="display: none;">
+                                There is a no data available right now
+                            </div>
+            
+                            <div class="form-control gap-4 h-64 flex justify-center items-center" id="amazon-products-add-table-progress" style="display: none;">
+                                <div loading="lazy" class="h-24 w-24" id="loading-files-lottie"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w-full bg-base-200 rounded-b-lg grid p-2 space-y-2 bg-grid" id="amazon-products-view-panel">
+                        <div class="grid mx-6">
+                            <div class="form-control overflow-x-auto gap-4" id="amazon-products-view-table" idPrefix="view">
+                                There is a no data available right now
+                            </div>
+            
+                            <div class="form-control gap-4 h-64 flex justify-center items-center" id="amazon-products-view-table-progress" style="display: none;">
+                                <div loading="lazy" class="h-24 w-24" id="loading-files-lottie"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative m-0 p-0 w-full h-auto border border-success rounded-lg border-opacity-0 transform transition-all ease-linear duration-200 outer-form">
+                    <div class="flex justify-between items-center w-full bg-base-300 rounded-t-lg h-fit p-2">
+                        <span>Webhook designer</span>
+                    </div>
+                    <div class="w-full bg-base-200 rounded-b-lg grid p-2 bg-grid pb-4" id="discord-manage-webhook-container">
+                        <div class="grid px-2 space-y-3 discord-manage-webhook-subContainer">
+                            <div class="form-control">
+                                <label class="input-group input-group-sm">
+                                    <span class="whitespace-nowrap">Webhook Name:</span>
+                                    <input type="text" placeholder="default" class="input input-sm input-bordered w-full focus:outline-none focus:placeholder:opacity-0" required id="discord-manage-webhook-name"/>
+                                </label>
+                            </div>
+
+                            <div class="form-control">
+                                <label class="input-group input-group-sm">
+                                    <span class="whitespace-nowrap">Webhook URL:</span>
+                                    <input type="text" placeholder="https://discord.com/api/webhooks/..." class="input input-sm input-bordered w-full focus:outline-none focus:placeholder:opacity-0" required id="discord-manage-webhook-url-value"/>
+                                </label>
+                            </div>
+
+                            <div class="relative m-0 p-0 w-full h-auto">
+                                <div class="flex justify-between items-center w-full bg-base-300 rounded-t-lg h-fit p-2">
+                                    <span class="text-sm">Tags</span>
+                                </div>
+                                <div class="w-full bg-base-100 rounded-b-lg flex flex-wrap items-center gap-4 p-4" id="discord-custom-tags-container">
+                                    {% for key, value in fields.items %}
+                                        {% if key == "amazon" %}
+                                            {% for sub_key, sub_value in value.items %}
+                                                <div class="badge badge-primary select-none cursor-pointer">amazon_{{ sub_key }}</div>
+                                            {% endfor %}
+                                        {% endif %}
+                                    {% endfor %}
+
+                                    {% for item in fields.google_search.keys %}
+                                        <div class="badge badge-secondary select-none cursor-pointer">product_{{ item }}</div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                            <div class="relative m-0 p-0 w-full h-auto rounded-lg bg-base-300" id="discord-manage">
+                                <div class="form-control grid grid-cols-1 sm:grid-cols-2 place-items-stretch gap-2">
+                                    <label class="cursor-pointer label">
+                                        <span class="label-text whitespace-nowrap">author:&nbsp</span> 
+                                        <input type="text" class="input input-xs focus:outline-none w-full" required id="discord-manage-author"/>
+                                    </label>
+                                    <label class="cursor-pointer label">
+                                        <span class="label-text whitespace-nowrap">icon-url:&nbsp</span> 
+                                        <input type="text" class="input input-xs focus:outline-none w-full" id="discord-manage-author-icon-url"/>
+                                    </label>
+                                </div>
+                                <div class="form-control grid grid-cols-1 sm:grid-cols-2 place-items-stretch gap-2">
+                                    <label class="cursor-pointer label">
+                                        <span class="label-text whitespace-nowrap">description:&nbsp</span> 
+                                        <input type="text" class="input input-xs focus:outline-none w-full" required id="discord-manage-description"/>
+                                    </label>
+                                    <label class="cursor-pointer label">
+                                        <span class="label-text whitespace-nowrap">url:&nbsp</span> 
+                                        <input type="text" class="input input-xs focus:outline-none w-full" id="discord-manage-description-url"/>
+                                    </label>
+                                </div>
+                                <label class="cursor-pointer label">
+                                    <span class="label-text whitespace-nowrap">thumbnail-url:&nbsp</span> 
+                                    <input type="text" class="input input-xs focus:outline-none w-full" id="discord-manage-thumbnail-url"/>
+                                </label>
+                                <label class="cursor-pointer label">
+                                    <span class="label-text whitespace-nowrap">image-url:&nbsp</span> 
+                                    <input type="text" class="input input-xs focus:outline-none w-full" id="discord-manage-image-url"/>
+                                </label>
+                                <div class="form-control grid grid-flow-row-dense grid-cols-1 sm:grid-cols-2 place-items-stretch gap-2">
+                                    <label class="cursor-pointer label">
+                                        <span class="label-text whitespace-nowrap">footer:&nbsp</span> 
+                                        <input type="text" class="input input-xs focus:outline-none w-full" id="discord-manage-footer-text"/>
+                                    </label>
+                                    <label class="cursor-pointer label">
+                                        <span class="label-text whitespace-nowrap">icon-url:&nbsp</span> 
+                                        <input type="text" class="input input-xs focus:outline-none w-full" id="discord-manage-footer-icon-url"/>
+                                    </label>
+                                </div>
+                                <div class="form-control grid grid-cols-1 sm:grid-cols-2 place-items-stretch space-x-2" id="discord-manage-fields">
+                                </div>
+                                <a class="btn btn-xs text-error btn-block transition-none mt-6" id="discord-manage-remove-field">remove field</a>
+                                <a class="btn btn-xs text-warning btn-block transition-none mt-2" id="discord-manage-add-field">add more field</a>
+                            </div>
+
+                            <div class="relative m-0 p-0 w-full h-auto rounded-lg bg-base-300">
+                                  <div class="h-12 w-16" id="preview-icon-lottie"></div> 
+                                    
+                                <div id="discord-container" class="w-auto h-auto flex rounded-b-lg flex-row justify-start gap-4 pt-6 pb-6 pr-3 overflow-x-auto bg-[#ffffff] dark:bg-[#313338]">
+                                    <img class="ml-4 mt-1 w-8 h-8 rounded-full" src="{% static 'img/discord/discord-avatar.png' %}">
+                                    <div class="grid gap-1">
+                                        <div class="flex flex-row items-center justify-start gap-2">
+                                            <span class="text-[16px] text-[#060607] dark:text-[#f2f3f5]">SellerVibe</span>
+                                            <span class="rounded-[3px] text-[10px] text-[#ffffff] dark:text-[#f2f3f5] font-bold w-fit h-fit bg-[#5865f2] py-[1px] px-1">BOT</span>
+                                            <span class="text-[#5c5e66] dark:text-[#949ba4] text-[12px] font-light">Today at 06:56 AM</span>
+                                        </div>
+                                        <div class="max-w-lg w-auto h-auto bg-[#f2f3f5] dark:bg-[#2b2d31] rounded-[4px] flex flex-row items-center justify-start">
+                                            <div class="w-[3px] h-full bg-[#5cdaf0] rounded-l-[4px]"></div>
+                                            <div class="w-fit h-full grid ml-[12px] mr-[16px] mb-[20px] gap-2">
+                                                <div class="w-auto h-auto flex flex-row gap-4" id="webhook-header">
+                                                    <div class="w-full grid grid-flow-row justify-stretch mt-[16px]">
+                                                        <div class="flex flex-row justify-start items-center gap-2" id="webhook-preview-author">
+                                                            <img target="_blank" src="" class="w-6 h-6 rounded-full">
+                                                            <span class="text-[14px] text-[#060607] dark:text-[#f2f3f5] whitespace-normal text-ellipsis overflow-hidden">author</span>
+                                                        </div>
+                                                        <a target="_blank" href="" class="text-info text-[14px] font-light hover:underline underline-offset-2 whitespace-normal text-ellipsis overflow-hidden" id="webhook-preview-description"><span>description</span></a>
+                                                        <div class="grid grid-cols-1 sm:grid-cols-3 place-items-stretch gap-2" id="webhook-preview-field-container">
+                                                        </div>
+                                                    </div>
+                                                    <img target="_blank" class="w-20 h-20 rounded-[4px] mt-[18px]" src="" id="webhook-thumbnail-url">
+                                                </div>
+                                                <img target="_blank" src="" class="w-auto h-auto flex flex-row justify-center mt-[16px] rounded-[3px]" id="webhook-main-image">
+                                                <div class="w-auto h-auto flex flex-row justify-start items-center gap-2 dark:text-[#dbdee1] text-[12px] font-light" id="webhook-footer">
+                                                    <img target="_blank" src="" class="w-5 h-5 rounded-full">
+                                                    <span class="flex flex-row justify-start items-center gap-1"><footer class="text-ellipsis overflow-hidden">footer</footer><span class="font-bold">•</span> Today at 08:35 AM</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        
+            <div class="relative w-full mt-10">
+                <div class="float-right w-fit space-y-2 h-captcha-container">
+                    <div class="h-captcha" data-sitekey="{{ hecaptcha_site_key }}" data-callback="onHCaptchaCompleted" data-expired-callback="onHCaptchaExpired"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
+{% block content_btn %}
+<div class="bg-base-content/10 my-10 mx-1 h-px"></div>
+<div class="flex justify-between">
+    <div>
+        <a href="/autoleads/dashboard" class="btn btn-sm md:btn-md btn-ghost gap-2 normal-case lg:gap-3">
+        <svg class="h-6 w-6 fill-current md:h-8 md:w-8" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <path d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z"></path>
+        </svg>
+        <div class="flex flex-col items-start">
+            <span class="text-base-content/50 hidden text-xs font-normal md:block">Prev</span>
+            <span>Dashboard</span>
+        </div>
+        </a>
+    </div>
+    <div>
+        <a href="/autoleads/#" class="btn btn-sm md:btn-md gap-2 normal-case lg:gap-3" hidden>
+        <div class="flex flex-col items-end">
+            <span class="text-neutral-content/50 hidden text-xs font-normal md:block">Next</span>
+            <span>...</span>
+        </div>
+        <svg class="h-6 w-6 fill-current md:h-8 md:w-8" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"></path>
+        </svg>
+        </a>
+    </div>
+</div>
+{% endblock %}
+
+{% block before_body %}
+<input type="checkbox" id="modal-upload-checkbox" class="modal-toggle"/>
+<div class="modal" id="modal-upload">
+  <div class="modal-box w-full h-full max-h-[36rem] m-6 overflow-hidden relative justify-center items-center bg-neutral-content/75">
+    <div layz class="w-full h-full pointer-events-none" id="upload-to-cloud-lottie"></div>
+    <div class="grid items-center w-full h-full space-y-4 p-3 m-3 upload-error hidden">
+        <div layz class="w-full h-full pointer-events-none" id="upload-to-cloud-error-lottie"></div>
+        <div class="modal-action">
+          <label for="modal-upload-checkbox" class="btn btn-sm btn-block upload-error-close-modal">Try Again</label>
+        </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block script %}
+    <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+    <script src="{% static 'js/autoleads/creator.min.js' %}"></script>
+{% endblock %}
+
+
+

@@ -220,7 +220,7 @@
                     <input type="text" placeholder="..." class="input input-bordered outline-none" id="tb_5_2" hidden/>
                 </div>
 
-                <div class="form-control w-full gap-4" id="mf_1" style="display: none;">
+                <div class="form-control overflow-x-auto w-full gap-4" id="mf_1" style="display: none;">
 
                 </div>
   
@@ -265,7 +265,10 @@
 {% block before_body %}
 <input type="checkbox" id="modal-xlsx" class="modal-toggle" />
 <div class="modal" id="modal-xlsx">
-  <div class="modal-box space-y-8">
+  <div class="modal-box space-y-8 relative">
+    <label for="modal-xlsx" class="btn btn-xs btn-square btn-outline border-none absolute right-2 top-2 hover:bg-opacity-0">
+        <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="text-gray-900 dark:text-gray-200" height="20" width="20" xmlns="http://www.w3.org/2000/svg"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+    </label>
     <h3 class="font-bold text-xl">Creating an XLSX file with Name, Title, and Email Columns</h3>
     <p class="pb-4 text-sm">In this guide, we will explain step-by-step how to create an XLSX file with columns for Name, Title, and Email. You can easily follow these instructions to prepare your own file. This will help you organize and manage your contacts efficiently.</p>
     <h3 class="font-bold text-lg">Step 1: Open Microsoft Excel or a compatible spreadsheet application</h3>

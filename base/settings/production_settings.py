@@ -19,6 +19,8 @@ DATABASES = {
 }
 
 
+
+
 SECURE_HSTS_SECONDS = 31536000  # This sets HSTS to 1 year (recommended value)
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True

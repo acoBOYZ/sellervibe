@@ -233,9 +233,11 @@ class AuxiliaryService:
                     if data['running']:
                         return JsonResponse({'success': False, 'error': 'The app already running.'})
                     else:
-                        subprocess.Popen([venv_python_path, script_path])
+                        pass
+                        # subprocess.Popen([venv_python_path, script_path])
                 else:
-                    subprocess.Popen([venv_python_path, script_path])
+                    pass
+                    # subprocess.Popen([venv_python_path, script_path])
             else:
                 return JsonResponse({'success': False, 'error': 'The app already running.'})
 

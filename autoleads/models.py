@@ -213,8 +213,12 @@ class AuxiliaryService:
             APP_DIR = Path(__file__).resolve().parent
             script_path = os.path.join(APP_DIR, 'app/main.py')
             if AuxiliaryService.check_if_script_is_running(script_path):
-                with open(os.path.join(APP_DIR, 'app/restart.app'), 'w') as f:
-                    pass
+                if settings.IS_SERVER:
+                    subprocess.Popen(["sudo", "/bin/systemctl", "start", "autoleads_app"])
+                else:
+                    with open(os.path.join(APP_DIR, 'app/restart.app'), 'w') as f:
+                        pass
+
                 return JsonResponse({'success': True, 'message': 'App succesfuly restarted.'})
             return JsonResponse({'success': False, 'error': 'The app needs to be start first.'})
         except Exception as e:
@@ -233,11 +237,15 @@ class AuxiliaryService:
                     if data['running']:
                         return JsonResponse({'success': False, 'error': 'The app already running.'})
                     else:
-                        pass
-                        # subprocess.Popen([venv_python_path, script_path])
+                        if settings.IS_SERVER:
+                            subprocess.Popen(["sudo", "/bin/systemctl", "start", "autoleads_app"])
+                        else:
+                            subprocess.Popen([venv_python_path, script_path])
                 else:
-                    pass
-                    # subprocess.Popen([venv_python_path, script_path])
+                    if settings.IS_SERVER:
+                        subprocess.Popen(["sudo", "/bin/systemctl", "start", "autoleads_app"])
+                    else:
+                        subprocess.Popen([venv_python_path, script_path])
             else:
                 return JsonResponse({'success': False, 'error': 'The app already running.'})
 

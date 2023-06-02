@@ -19,19 +19,9 @@ proceedTime = 0
 isAppRunning = True
 APP_DIR = Path(__file__).resolve().parent
 runningFile = os.path.join(APP_DIR, 'running.app')
+runningData = {}
 exContentFile = os.path.join(APP_DIR, 'ex.content')
 
-def handle_sigint(signal, frame):
-    global proceedTime, runningFile
-    print("Stopped from keyboard.")
-    if os.path.exists(runningFile):
-        with open(runningFile, 'w') as f:
-            stop_time = datetime.datetime.now()
-            stop_reason = "Stopped from keyboard"
-            f.write(json.dumps({"running": False, "proceed_time": proceedTime, "stop_time": str(stop_time), "stop_reason": stop_reason}))
-    sys.exit(0)
-
-signal.signal(signal.SIGINT, handle_sigint)
 
 def writeExContent(response):
     global exContentFile
@@ -44,6 +34,14 @@ def readExContent():
     with open(exContentFile, mode='r', encoding='utf-8') as f:
         content = f.read()
     return content
+
+def write_json_file(filename, data):
+    try:
+        with open(filename, mode='w', encoding='utf-8') as f:
+            f.write(json.dumps(data))
+    except Exception as e:
+        print(f"Error reading JSON file: {e}")
+        return None
 
 def read_json_file(filename):
     try:
@@ -74,7 +72,7 @@ def create_urls(app_data):
 
 async def process_urls_periodically(db: Database, scraper: Scraper, logger: Logger, configFile, selectorFile):
     global startTime, proceedTime, runningFile, isAppRunning
-    exContent = readExContent()
+    # exContent = readExContent()
     while True:
         try:
             start_time = time.perf_counter()
@@ -118,16 +116,17 @@ async def process_urls_periodically(db: Database, scraper: Scraper, logger: Logg
         except Exception as e:
             isAppRunning = False
             logger.log_and_write_error('process_urls_periodically', str(e))
-            if os.path.exists(runningFile):
-                with open(runningFile, 'w', encoding='utf-8') as f:
-                    stop_time = datetime.datetime.now()
-                    stop_reason = str(e)
-                    f.write(json.dumps({"running": False, "proceed_time": proceedTime, "stop_time": str(stop_time), "stop_reason": stop_reason}))
+            runningData = {"running": False, "proceed_time": proceedTime, "stop_time": str(datetime.datetime.now()), "stop_reason": str(e)}
+            write_json_file(runningFile, runningData)
             break
 
-def restartScript():
-    python_executable = sys.executable
-    os.execv(python_executable, [python_executable, __file__] + sys.argv[1:])
+
+def handle_sigint(signal, frame):
+    global proceedTime, runningFile
+    runningData = {"running": False, "proceed_time": proceedTime, "stop_time": str(datetime.datetime.now()), "stop_reason": "Stopped from keyboard"}
+    write_json_file(runningFile, runningData)
+    sys.exit(0)
+
 
 async def main():
     global startTime, proceedTime, runningFile, isAppRunning
@@ -137,50 +136,33 @@ async def main():
     scraper = Scraper(db=db, logger=logger)
     
     selectorFile = os.path.join(APP_DIR, 'selector.json')
-    forceRestartFile = os.path.join(APP_DIR, 'restart.app')
     appFilename = os.path.join(APP_DIR, 'apps.json')
     appList = read_json_file(appFilename)
-    auto_restart = appList[0].get('auto_restart_value', False)
+    # auto_restart = appList[0].get('auto_restart_value', False)
 
     asyncio.create_task(process_urls_periodically(db, scraper, logger, appFilename, selectorFile))
 
     while True:
         try:
-            if os.path.exists(forceRestartFile):
-                os.remove(forceRestartFile)
-                if auto_restart:
-                    print("Force Restarting...")
-                    restartScript()
-            if os.path.exists(runningFile) and isAppRunning:
-                with open(runningFile, 'w', encoding='utf-8') as f:
-                    proceedTime = (datetime.datetime.now() - startTime).total_seconds()
-                    f.write(json.dumps({"running": True, "proceed_time": proceedTime}))
+            proceedTime = (datetime.datetime.now() - startTime).total_seconds()
+            runningData = {"running": True, "proceed_time": proceedTime, "stop_time": "", "stop_reason": ""}
+            write_json_file(runningFile, runningData)
+
             await asyncio.sleep(1)
         except KeyboardInterrupt:
-            print("Stopped from keyboard.")
-            if os.path.exists(runningFile):
-                with open(runningFile, 'w', encoding='utf-8') as f:
-                    stop_time = datetime.datetime.now()
-                    stop_reason = "Stopped from keyboard"
-                    f.write(json.dumps({"running": False, "proceed_time": proceedTime, "stop_time": str(stop_time), "stop_reason": stop_reason}))
-            if auto_restart:
-                print("Auto Restarting...")
-                restartScript()
+            runningData = {"running": False, "proceed_time": proceedTime, "stop_time": str(datetime.datetime.now()), "stop_reason": ""}
+            write_json_file(runningFile, runningData)
             break
         except Exception as e:
             logger.log_and_write_error('main', str(e))
-            if os.path.exists(runningFile):
-                with open(runningFile, 'w', encoding='utf-8') as f:
-                    stop_time = datetime.datetime.now()
-                    stop_reason = str(e)
-                    f.write(json.dumps({"running": False, "proceed_time": proceedTime, "stop_time": str(stop_time), "stop_reason": stop_reason}))
-            if auto_restart:
-                print("Auto Restarting...")
-                restartScript()
+            runningData = {"running": False, "proceed_time": proceedTime, "stop_time": str(datetime.datetime.now()), "stop_reason": str(e)}
+            write_json_file(runningFile, runningData)
 
 if __name__ == "__main__":
     try:
+        signal.signal(signal.SIGINT, handle_sigint)
         asyncio.run(main())
     except Exception as e:
-        print(f"Exception in main script: {e}")
+        runningData = {"running": False, "proceed_time": proceedTime, "stop_time": str(datetime.datetime.now()), "stop_reason": str(e)}
+        write_json_file(runningFile, runningData)
     

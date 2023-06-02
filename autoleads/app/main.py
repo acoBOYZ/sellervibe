@@ -19,9 +19,13 @@ proceedTime = 0
 isAppRunning = True
 APP_DIR = Path(__file__).resolve().parent
 runningFile = os.path.join(APP_DIR, 'running.app')
+restartFile = os.path.join(APP_DIR, 'restart.app')
 runningData = {}
 exContentFile = os.path.join(APP_DIR, 'ex.content')
 
+def restartScript():
+    python_executable = sys.executable
+    os.execv(python_executable, [python_executable, __file__] + sys.argv[1:])
 
 def writeExContent(response):
     global exContentFile
@@ -129,7 +133,7 @@ def handle_sigint(signal, frame):
 
 
 async def main():
-    global startTime, proceedTime, runningFile, isAppRunning
+    global startTime, proceedTime, runningFile, restartFile, isAppRunning
     logger = Logger(True, os.path.join(APP_DIR, 'err.log.json'))
     db = Database('scrap.db', logger)
     await db.create_amazon_product_table()
@@ -144,6 +148,11 @@ async def main():
 
     while True:
         try:
+            if os.path.exists(restartFile):
+                logger.debug_log('App forced to restart from creator!')
+                os.remove(restartFile)
+                restartScript()
+
             proceedTime = (datetime.datetime.now() - startTime).total_seconds()
             runningData = {"running": True, "proceed_time": proceedTime, "stop_time": "", "stop_reason": ""}
             write_json_file(runningFile, runningData)

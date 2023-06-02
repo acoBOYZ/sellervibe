@@ -2,6 +2,5 @@
 .restart
 *.app
 *.content
-data.data.html
 
 !selector.json

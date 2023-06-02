@@ -214,7 +214,7 @@ class AuxiliaryService:
             script_path = os.path.join(APP_DIR, 'app/main.py')
             if AuxiliaryService.check_if_script_is_running(script_path):
                 if settings.IS_SERVER:
-                    subprocess.Popen(["sudo", "/bin/systemctl", "start", "autoleads_app"])
+                    subprocess.Popen(["sudo", "/bin/systemctl", "restart", "autoleads_app"])
                 else:
                     with open(os.path.join(APP_DIR, 'app/restart.app'), 'w') as f:
                         pass

@@ -17,9 +17,9 @@ def authenticated_user(view_func):
             return view_func(request, *args, **kwargs)
     return wrapper_func
 
-def unauthenticated_user_is_autolead_creator(view_func):
+def authenticated_user_is_autolead_creator(view_func):
     def wrapper_func(request, *args, **kwargs):
-        if request.user.is_autoleads_creator:
+        if request.user.is_autoleads_creator and request.user.is_authenticated:
             return view_func(request, *args, **kwargs)
         else:
             return redirect('/autoleads/dashboard')

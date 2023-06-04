@@ -28,7 +28,7 @@ class Scraper:
 
     def get_proxy_api_url(self, url, proxy, super_proxy):
         if proxy['server_name'] == 'scrapedo':
-            payload = {'token': proxy['api_key'], 'url': url, 'geoCode': 'us', 'transparentResponse': True, 'super': super_proxy, 'retryTimeout': '50000'}
+            payload = {'token': proxy['api_key'], 'url': url, 'geoCode': 'us', 'transparentResponse': True, 'super': super_proxy, 'retryTimeout': '50000', 'customHeaders': True}
             api_url = f'http://api.scrape.do?{urlencode(payload)}'
         elif proxy['server_name'] == 'scraperapi':
             payload = {'api_key': proxy['api_key'], 'url': url}
@@ -36,7 +36,7 @@ class Scraper:
         return api_url
 
     async def fetch(self, client, url, proxy, super_proxy):
-        global user_agent_list_index
+        global user_agent_list, user_agent_list_index
         response = None
         headers = {
             'User-Agent': user_agent_list[user_agent_list_index],
@@ -48,7 +48,7 @@ class Scraper:
             'permissions-policy': 'fullscreen=(self "https://example.com"), geolocation=*, camera=()'
         }
 
-        user_agent_list_index += 1 if user_agent_list_index < len(user_agent_list) else -user_agent_list_index
+        user_agent_list_index = (user_agent_list_index + 1) % len(user_agent_list)
 
         try:
             url = self.get_proxy_api_url(url, proxy, super_proxy)

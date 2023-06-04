@@ -42,9 +42,11 @@ class Scraper:
             if response.status_code == 200:
                 return response.text
             else:
-                self.logger.log_and_write_error(f'Unexpected status code {response.status_code} for {url}')
+                return None
+                # self.logger.log_and_write_error(f'Unexpected status code {response.status_code} for {url}')
         except httpx.HTTPError as exc:
-            self.logger.log_and_write_error(f'HTTP Exception for {exc.request.url}', exc)
+            pass
+            # self.logger.log_and_write_error(f'HTTP Exception for {exc.request.url}', exc)
 
         return None
         
@@ -79,7 +81,7 @@ class Scraper:
                 asin_code = str(asin_url).replace(app_config['amazon_base_url'], '')
                 if self.is_asin_status_ok(asin_code, list_of_asin_has_ASIN_data):
                     for proxy in proxies:
-                        semaphore = asyncio.Semaphore(int(proxy['concurrent_requests_limit']) * 2)
+                        semaphore = asyncio.Semaphore(int(proxy['concurrent_requests_limit']))
                         asin_tasks.append(self.bounded_fetch(semaphore, client, asin_url, asin_url, proxy, False))
             
             asin_responses = [await f for f in asyncio.as_completed(asin_tasks)]
@@ -94,7 +96,7 @@ class Scraper:
                         success |= await self.scrap_from_amazon(selectorConfig, app_config, asin_url, response_text)
                     if success:
                         for proxy in proxies:
-                            semaphore = asyncio.Semaphore(int(proxy['concurrent_requests_limit']) * 2)
+                            semaphore = asyncio.Semaphore(int(proxy['concurrent_requests_limit']))
                             other_tasks.extend([self.bounded_fetch(semaphore, client, asin_url, url, proxy, False) for url in url_dict[asin_url]])
                 
                 other_responses = [await f for f in asyncio.as_completed(other_tasks)]

@@ -52,10 +52,12 @@ def upload_product_files(request):
 @is_user_authenticated_and_autolead_creator
 def get_or_set_all_apps(request):
     if request.method == 'GET':
-        return AppService.get_all(user=request.user)
+        response = AppService.get_all(user=request.user)
+        return response
     elif request.method == 'POST':
         apps = json.loads(request.POST.get('apps'))
-        return AppService.set_all(user=request.user, apps=apps)
+        response = AppService.set_all(user=request.user, apps=apps)
+        return response
     return JsonResponse({'success': False, 'error': 'Request method is not valid'})
 
 @is_user_authenticated_and_autolead_creator

@@ -57,11 +57,11 @@ class Scraper:
             if response.status_code == 200:
                 return response.text
             else:
+                self.logger.log_and_write_error(f'Unexpected status code {response.status_code} for {url}')
                 return None
-                # self.logger.log_and_write_error(f'Unexpected status code {response.status_code} for {url}')
         except httpx.HTTPError as exc:
             pass
-            # self.logger.log_and_write_error(f'HTTP Exception for {exc.request.url}', exc)
+            self.logger.log_and_write_error(f'HTTP Exception for {exc.request.url}', exc)
 
         return None
         

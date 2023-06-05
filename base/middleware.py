@@ -1,17 +1,7 @@
 import logging
 from django.conf import settings
 from urllib.parse import urlparse
-from django.contrib.auth import get_user_model
 from channels.db import database_sync_to_async
-
-CustomUser = get_user_model()
-
-@database_sync_to_async
-def get_user(user_id):
-    try:
-        return CustomUser.objects.get(id=user_id)
-    except CustomUser.DoesNotExist:
-        return None
 
 class AllowedHostsOriginValidator:
     def __init__(self, application):

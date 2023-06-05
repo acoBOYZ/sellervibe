@@ -20,7 +20,8 @@ class App(models.Model):
     created_time = models.DateTimeField(_('Date created'), default=timezone.now)
     edited_by = models.EmailField(_('Edited by'), default='')
     edited_time = models.DateTimeField(_('Date edited'), default=timezone.now)
-    black_list = models.TextField(_('Black list'), default='amazon, ebay')
+    white_list = models.TextField(_('White list'), default='amazon, ebay')
+    black_list = models.TextField(_('Black list'), default='')
     loop_time = models.CharField(_('Loop time'), max_length=10, default='60')
     amazon_base_url = models.URLField(_('Amazon base URL'), max_length=200, default='https://www.amazon.com/dp/')
     compare_value = models.CharField(_('Compare value'), max_length=10, default='35')
@@ -156,19 +157,19 @@ class AppService:
     @staticmethod
     def set_all(user, apps):
         if not apps:
-            response = {'success': False, 'error': 'Data is not available'}
+            return {'success': False, 'error': 'Data is not available'}
 
         response = App.create_or_update_multiple(user, apps)
         if response['success']:
             APP_DIR = Path(__file__).resolve().parent
             with open(os.path.join(APP_DIR, 'app/apps.json'), 'w') as f:
                 json.dump(apps, f)
-        return JsonResponse(response)
+        return response
         
     @staticmethod
     def get_all(user):
         apps = App.get_all(user=user)
-        return JsonResponse({'success': True, 'data': apps})
+        return {'success': True, 'data': apps}
 
 
 
@@ -202,10 +203,10 @@ class AuxiliaryService:
 
             data = AuxiliaryService.read_json_file(json_path)
             if data:
-                return JsonResponse({'success': True, 'data': data})
-            return JsonResponse({'success': False, 'error': 'Can not read script data yet!'})
+                return {'success': True, 'data': data}
+            return {'success': False, 'error': 'Can not read script data yet!'}
         except Exception as e:
-            return JsonResponse({'success': False, 'error': f'An error occurred while getting script info: {str(e)}'})
+            return {'success': False, 'error': f'An error occurred while getting script info: {str(e)}'}
         
     @staticmethod
     def force_restart_script(user):

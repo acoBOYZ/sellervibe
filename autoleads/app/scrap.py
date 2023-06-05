@@ -180,9 +180,9 @@ class Scraper:
         
         return False
     
-    def check_blacklist(self, text, black_list_string):
-        black_list = [item.strip() for item in black_list_string.split(',')]
-        return not any(s in text for s in black_list)
+    def check_white_list(self, text, white_list_string):
+        white_list = [item.strip() for item in white_list_string.split(',')]
+        return any(s in text for s in white_list)
     
     def convert_price_to_float(self, s):
         try:
@@ -234,7 +234,7 @@ class Scraper:
             lowest_price = 1000000
             lowest_price_url = ''
             for container in containers:
-                if self.check_blacklist(container.text, app_config['black_list']):
+                if self.check_white_list(container.text, app_config['white_list']):
                     footer = container.select_one(selector['footer'])
                     if footer:
                         prices = price_pattern.findall(footer.text)

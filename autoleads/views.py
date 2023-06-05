@@ -50,30 +50,7 @@ def upload_product_files(request):
     return JsonResponse({'success': False, 'error': 'Request method is not valid'})
 
 @is_user_authenticated_and_autolead_creator
-def get_or_set_all_apps(request):
-    if request.method == 'GET':
-        response = AppService.get_all(user=request.user)
-        return response
-    elif request.method == 'POST':
-        apps = json.loads(request.POST.get('apps'))
-        response = AppService.set_all(user=request.user, apps=apps)
-        return response
-    return JsonResponse({'success': False, 'error': 'Request method is not valid'})
-
-@is_user_authenticated_and_autolead_creator
 def force_restart_to_app(request):
     if request.method == 'POST':
         return AuxiliaryService.force_restart_script(user=request.user)
-    return JsonResponse({'success': False, 'error': 'Request method is not valid'})
-
-@is_user_authenticated_and_autolead_creator
-def get_info_from_app(request):
-    if request.method == 'GET':
-        return AuxiliaryService.get_info_script()
-    return JsonResponse({'success': False, 'error': 'Request method is not valid'})
-
-@is_user_authenticated_and_autolead_creator
-def force_start_to_app(request):
-    if request.method == 'POST':
-        return AuxiliaryService.force_start_script(user=request.user)
     return JsonResponse({'success': False, 'error': 'Request method is not valid'})

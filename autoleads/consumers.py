@@ -1,26 +1,15 @@
-from channels.generic.websocket import AsyncWebsocketConsumer
+from channels.generic.websocket import AsyncJsonWebsocketConsumer
 from django.conf import settings
 import json
 from channels.db import database_sync_to_async
-from models import AppService 
+from asgiref.sync import sync_to_async
+from .models import AppService,  AuxiliaryService
 
-class AutoleadsConsumer(AsyncWebsocketConsumer):
+class AutoleadsConsumer(AsyncJsonWebsocketConsumer):
     async def connect(self):
-        print('OK')
         self.user = self.scope["user"]
-        origin_header = self.scope['headers'].get(b'origin')
-        expected_origin = "http://localhost:8000"
-
-        if origin_header is not None:
-            origin_header = origin_header.decode('utf-8')
-
-        if origin_header != expected_origin:
-            await self.close()
-            return
         
-        if self.user.is_anonymous:
-            await self.close()
-        elif not self.user.is_autoleads_creator:
+        if not self.user:
             await self.close()
         else:
             await self.accept()
@@ -35,15 +24,21 @@ class AutoleadsConsumer(AsyncWebsocketConsumer):
         if action == 'get_all':
             apps = await self.get_all_apps(self.user)
             await self.send(text_data=json.dumps({
-                'action': 'get_all',
+                'action': action,
                 'apps': apps,
             }))
         elif action == 'set_all':
             apps = text_data_json.get('apps')
-            await self.set_all_apps(self.user, apps)
+            response = await self.set_all_apps(self.user, apps)
             await self.send(text_data=json.dumps({
-                'action': 'set_all',
-                'success': True,
+                'action': action,
+                'response': response,
+            }))
+        elif action == 'get_info':
+            info = await self.get_info_script()
+            await self.send(text_data=json.dumps({
+                'action': action,
+                'info': info,
             }))
         else:
             await self.send(text_data=json.dumps({
@@ -57,3 +52,7 @@ class AutoleadsConsumer(AsyncWebsocketConsumer):
     @database_sync_to_async
     def set_all_apps(self, user, apps):
         return AppService.set_all(user=user, apps=apps)
+
+    @sync_to_async
+    def get_info_script(self):
+        return AuxiliaryService.get_info_script()

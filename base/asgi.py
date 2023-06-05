@@ -11,7 +11,7 @@ from autoleads import routing
 from .middleware import AllowedHostsOriginValidator
 
 application = ProtocolTypeRouter({
-    "https": get_asgi_application(),
+    "http": get_asgi_application(),
     "websocket": AllowedHostsOriginValidator(
         AuthMiddlewareStack(
             URLRouter(

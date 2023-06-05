@@ -5,7 +5,7 @@ from base.settings.common_settings import *
 DEBUG = False
 IS_SERVER = False
 
-ALLOWED_HOSTS = ['sellervibe.co', 'www.sellervibe.co']
+ALLOWED_HOSTS = ['161.35.22.147', 'sellervibe.co', 'www.sellervibe.co']
 
 # Database
 DATABASES = {

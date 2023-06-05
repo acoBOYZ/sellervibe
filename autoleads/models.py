@@ -28,6 +28,9 @@ class App(models.Model):
     auto_restart_value = models.BooleanField(_('Auto restart'), default=True)
     force_restart_count = models.CharField(_('Force restart count'), max_length=10, default='0')
     auto_restart_count = models.CharField(_('Auto restart count'), max_length=10, default='0')
+        
+    class Meta:
+        app_label = 'autoleads'
     
     def __str__(self):
         return self.name

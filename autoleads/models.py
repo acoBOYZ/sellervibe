@@ -143,11 +143,17 @@ class ProxySetting(models.Model):
     concurrent_requests_limit = models.CharField(_('Concurrent requests limit'), max_length=30, default='5')
     timeout_value = models.CharField(_('Timeout value'), max_length=30, default='30')
 
+    class Meta:
+        app_label = 'autoleads'
+
 class Webhook(models.Model):
     app = models.ForeignKey(App, on_delete=models.CASCADE, related_name='webhooks')
     cls_name = 'Webhook Designer'
     name = models.CharField(_('Webhook name'), max_length=100)
     config = models.JSONField(_('Config'), default=None)
+
+    class Meta:
+        app_label = 'autoleads'
 
 class AmazonProduct(models.Model):
     app = models.ForeignKey(App, on_delete=models.CASCADE, related_name='amazon_products')
@@ -155,6 +161,9 @@ class AmazonProduct(models.Model):
     ASIN = models.CharField(_('ASIN'), max_length=10, unique=True)
     UPCS = models.TextField(_('UPCS'), default='')
     status = models.BooleanField(_('Status'), default=True)
+
+    class Meta:
+        app_label = 'autoleads'
 
 class AppService:
     @staticmethod

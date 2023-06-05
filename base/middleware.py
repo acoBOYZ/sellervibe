@@ -1,7 +1,6 @@
 import logging
 from django.conf import settings
 from urllib.parse import urlparse
-from channels.db import database_sync_to_async
 
 class AllowedHostsOriginValidator:
     def __init__(self, application):

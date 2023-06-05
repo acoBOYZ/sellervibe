@@ -181,7 +181,7 @@ class Scraper:
         return False
     
     def check_white_list(self, text, white_list_string):
-        white_list = [item.strip() for item in white_list_string.split(',')]
+        white_list = [item.strip().replace(' ', '') for item in white_list_string.split(',')]
         return any(s in text for s in white_list)
     
     def convert_price_to_float(self, s):

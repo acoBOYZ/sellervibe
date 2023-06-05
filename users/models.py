@@ -87,6 +87,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = []
 
     class Meta:
+        app_label = 'users'
         verbose_name = _('user')
         verbose_name_plural = _('users')
 

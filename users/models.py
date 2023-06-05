@@ -89,6 +89,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = _('user')
         verbose_name_plural = _('users')
+        app_label = 'users'
 
     def __str__(self):
         return self.email

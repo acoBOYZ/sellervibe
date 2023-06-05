@@ -171,7 +171,7 @@ class Scraper:
                     break
                 
 
-        if data['amazon_price'] != '':
+        if data['amazon_price'] != '' and data['amazon_title'] != '' and data['amazon_image'] != '':
             data['amazon_url'] = url
             data['amazon_asin'] = asin
             self.logger.debug_log(data)        

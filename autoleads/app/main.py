@@ -98,7 +98,7 @@ async def process_urls_periodically(db: Database, scraper: Scraper, logger: Logg
                 # await scraper.scrap_from_amazon(selectorConfig, app, app['amazon_base_url'] + 'B01D58BGTM', exContent)
 
 
-                # await scraper.process_urls(selectorConfig, app, url_dict)
+                await scraper.process_urls(selectorConfig, app, url_dict)
 
             final_cpu_percent = psutil.cpu_percent()
             final_memory = psutil.virtual_memory().used

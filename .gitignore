@@ -192,4 +192,4 @@ commands.txt
 
 tailwind.config.js
 *.sh
-# !scrap.db
+# scrap.db

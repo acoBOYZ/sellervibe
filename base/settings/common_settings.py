@@ -32,7 +32,6 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 INSTALLED_APPS = [
     'account',
     'email_tool',
-    'users',
     'autoleads',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -42,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'social_django',
     'channels',
+    'users',
 ]
 
 

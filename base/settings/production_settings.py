@@ -20,7 +20,7 @@ DATABASES = {
     }
 }
 
-CELERY_BROKER_URL = 'amqp://localhost@rabbitmq//'
+CELERY_BROKER_URL = 'amqp://acoboyz:Rb_MQ@ssw0rd@161.35.22.147//'
 
 CELERY_BEAT_SCHEDULE = {
     'keepa_app': {

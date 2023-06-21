@@ -189,6 +189,8 @@ cython_debug/
 .ssh
 .user
 commands.txt
+rabbitmq.txt
+redis.txt
 
 tailwind.config.js
 *.sh

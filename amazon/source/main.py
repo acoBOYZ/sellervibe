@@ -15,7 +15,7 @@ asin_and_domain_data_file_path = os.path.join(APP_DIR, 'asin_and_domain_data.jso
 
 
 async def main():
-    r = redis.Redis(host='redis', port=6379, db=0, password='Redis_P@ssw0rd!123**')
+    r = redis.Redis(host=os.getenv('REDIS_HOST'), port=6379, db=0, password=os.getenv('REDIS_PASSWORD'))
     while True:
         print('keepa app main loop...')
         if os.path.exists(asin_and_domain_data_file_path):

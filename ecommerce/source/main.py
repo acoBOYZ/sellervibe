@@ -15,7 +15,7 @@ config_file_path = os.path.join(APP_DIR, 'config.json')
 
 
 async def main():
-    r = redis.Redis(host='redis', port=6379, db=0, password='Redis_P@ssw0rd!123**')
+    r = redis.Redis(host=os.getenv('REDIS_HOST'), port=6379, db=0, password=os.getenv('REDIS_PASSWORD'))
     MAX_RETRY_COUNT = 3
 
     while True:

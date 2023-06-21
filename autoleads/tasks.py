@@ -22,7 +22,7 @@ is_server = bool(os.getenv('IS_SERVER').lower() == 'true')
 pid_file_path = os.path.join(APP_DIR, 'discord/script_pid.json')
 script_path = os.path.join(APP_DIR, 'discord/main.py')
 
-r = redis.Redis(host='redis', port=6379, db=0, password='Redis_P@ssw0rd!123**')
+r = redis.Redis(host=os.getenv('REDIS_HOST'), port=6379, db=0, password=os.getenv('REDIS_PASSWORD'))
 
 @shared_task
 def discord_app_fetch_model_via_redis():

@@ -10,7 +10,7 @@ import os
 import redis
 
 from dotenv import load_dotenv
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 load_dotenv(os.path.join(BASE_DIR, '.environ'))
 
 APP_DIR = Path(__file__).resolve().parent
@@ -19,8 +19,8 @@ walmart_config_file_path = os.path.join(APP_DIR, 'walmart_config.json')
 
 
 async def main():
-    r = redis.Redis(host='redis', port=6379, db=0, password='Redis_P@ssw0rd!123**')
-    post_handler = PostHandler(password='Redis_P@ssw0rd!123**')
+    r = redis.Redis(host=os.getenv('REDIS_HOST'), port=6379, db=0, password=os.getenv('REDIS_PASSWORD'))
+    post_handler = PostHandler(host=os.getenv('REDIS_HOST'), port=6379, db=0, password=os.getenv('REDIS_PASSWORD'))
     MAX_RETRY_COUNT = 3
 
     while True:

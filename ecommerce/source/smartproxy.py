@@ -49,16 +49,16 @@ class SmartProxy:
         params = config.get('params', None)
         if search_text:
             url = config['base'].format(urllib.parse.quote_plus(search_text))
-            # resp = await session.get(url=url, headers=headers, params=params)
-            # if resp.status_code == 200:
-            #     product_data = resp.text
-            #     return product_data, asin
-            try:
-                with open(f'{config.get("task", "")}_{asin}.html', 'r') as f:
-                    product_data = f.read()
-                    return product_data, asin
-            except:
-                print('TEST DATA *.html not found: smartProxy')
+            resp = await session.get(url=url, headers=headers, params=params)
+            if resp.status_code == 200:
+                product_data = resp.text
+                return product_data, asin
+            # try:
+            #     with open(f'{config.get("task", "")}_{asin}.html', 'r') as f:
+            #         product_data = f.read()
+            #         return product_data, asin
+            # except:
+            #     print('TEST DATA *.html not found: smartProxy')
         else:
             print('ERROR: Search parameter was not found!')
 

@@ -1,0 +1,534 @@
+{
+    "1_to_6": {
+        "id": "{__id__}",
+        "depoFee": 400,
+        "embed": {
+            "webhook": "https://discord.com/api/webhooks/1118133489435422741/vqihqpa6W2Sep8wlxlbPYoou6bd6AkSsqg6KvS-p0t97rpstII_JX8XeEx6RDmpLx4-l",
+            "description": "**{1_title}**",
+            "description_url": "https://www.amazon.com/dp/{1_asin}",
+            "color": "{x_color}"
+        },
+        "author": {
+            "name": "sellerVIBE USA-TO-CA",
+            "icon_url": "https://sellervibe.co/static/img/discord/avatar-amazon-us.png",
+            "url": "https://sellervibe.co"
+        },
+        "footer": {
+            "text": "© 2023 SellerVibe. All rights reserved.",
+            "icon_url": "https://i.imgur.com/rdm3W9t.png"
+        },
+        "thumbnail": "https://images-na.ssl-images-amazon.com/images/I/{1_image}",
+        "fields": [
+            {
+                "name": "",
+                "value": "",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "**US -> **[BuyBox [**{1_seller}**] - [**{1_price}**] - [**{1_stock}**]](https://www.amazon.com/dp/{1_asin})",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "**CA -> **[BuyBox [**{6_seller}**] - [**{6_price}**] - [**{6_stock}**]](https://www.amazon.ca/dp/{1_asin})",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "**ROI**: [**+{x_roi}%**](https://sellercentral.amazon.com/hz/fba/profitabilitycalculator)",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "",
+                "inline": false
+            },
+            {
+                "name": "ASIN:",
+                "value": "{1_asin}",
+                "inline": true
+            },
+            {
+                "name": "BRAND:",
+                "value": "{1_brand}",
+                "inline": true
+            },
+            {
+                "name": "CATEGORY:",
+                "value": "{1_category}",
+                "inline": true
+            },
+            {
+                "name": "",
+                "value": "",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "**SALES RANK:** #{x_rank}",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "",
+                "inline": false
+            }
+        ]
+    },
+
+
+    "1_to_2": {
+        "id": "{__id__}",
+        "depoFee": 500,
+        "embed": {
+            "webhook": "https://discord.com/api/webhooks/1118489814166163476/JZmuynCzS8CV7I0WZUSSfLRzLyg6jh3maBpWNdR4slH5K2Rf_cQHdmZ90ltDDk34NQuc",
+            "description": "**{1_title}**",
+            "description_url": "https://www.amazon.com/dp/{1_asin}",
+            "color": "{x_color}"
+        },
+        "author": {
+            "name": "sellerVIBE USA-TO-UK",
+            "icon_url": "https://sellervibe.co/static/img/discord/avatar-amazon-us.png",
+            "url": "https://sellervibe.co"
+        },
+        "footer": {
+            "text": "© 2023 SellerVibe. All rights reserved.",
+            "icon_url": "https://i.imgur.com/rdm3W9t.png"
+        },
+        "thumbnail": "https://images-na.ssl-images-amazon.com/images/I/{1_image}",
+        "fields": [
+            {
+                "name": "",
+                "value": "",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "**US -> **[BuyBox [**{1_seller}**] - [**{1_price}**] - [**{1_stock}**]](https://www.amazon.com/dp/{1_asin})",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "**UK -> **[BuyBox [**{2_seller}**] - [**{2_price}**] - [**{2_stock}**]](https://www.amazon.co.uk/dp/{1_asin})",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "**ROI**: [**+{x_roi}%**](https://sellercentral.amazon.com/hz/fba/profitabilitycalculator)",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "",
+                "inline": false
+            },
+            {
+                "name": "ASIN:",
+                "value": "{1_asin}",
+                "inline": true
+            },
+            {
+                "name": "BRAND:",
+                "value": "{1_brand}",
+                "inline": true
+            },
+            {
+                "name": "CATEGORY:",
+                "value": "{1_category}",
+                "inline": true
+            },
+            {
+                "name": "",
+                "value": "",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "**SALES RANK:** #{x_rank}",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "",
+                "inline": false
+            }
+        ]
+    },
+
+
+    "6_to_1": {
+        "id": "{__id__}",
+        "depoFee": 500,
+        "embed": {
+            "webhook": "https://discord.com/api/webhooks/1118497206001999983/WDZzkbfcCF8YxPyEf_wXh74YgpeCa4fUwKFhjbE4Ve4zFud1RzuvQV9MQVza2ia4gdjR",
+            "description": "**{6_title}**",
+            "description_url": "https://www.amazon.ca/dp/{6_asin}",
+            "color": "{x_color}"
+        },
+        "author": {
+            "name": "sellerVIBE CA-TO-USA",
+            "icon_url": "https://sellervibe.co/static/img/discord/avatar-amazon-us.png",
+            "url": "https://sellervibe.co"
+        },
+        "footer": {
+            "text": "© 2023 SellerVibe. All rights reserved.",
+            "icon_url": "https://i.imgur.com/rdm3W9t.png"
+        },
+        "thumbnail": "https://images-na.ssl-images-amazon.com/images/I/{6_image}",
+        "fields": [
+            {
+                "name": "",
+                "value": "",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "**CA -> **[BuyBox [**{6_seller}**] - [**{6_price}**] - [**{6_stock}**]](https://www.amazon.ca/dp/{6_asin})",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "**US -> **[BuyBox [**{1_seller}**] - [**{1_price}**] - [**{1_stock}**]](https://www.amazon.com/dp/{1_asin})",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "**ROI**: [**+{x_roi}%**](https://sellercentral.amazon.com/hz/fba/profitabilitycalculator)",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "",
+                "inline": false
+            },
+            {
+                "name": "ASIN:",
+                "value": "{6_asin}",
+                "inline": true
+            },
+            {
+                "name": "BRAND:",
+                "value": "{6_brand}",
+                "inline": true
+            },
+            {
+                "name": "CATEGORY:",
+                "value": "{6_category}",
+                "inline": true
+            },
+            {
+                "name": "",
+                "value": "",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "**SALES RANK:** #{x_rank}",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "",
+                "inline": false
+            }
+        ]
+    },
+
+
+    "6_to_2": {
+        "id": "{__id__}",
+        "depoFee": 1000,
+        "embed": {
+            "webhook": "https://discord.com/api/webhooks/1118499712400625798/Lk-bPn_sIeZaUmPNDO02UgApur1ms9coPsgDoSPL5g2z-S6TNR5wMpcCthV0QQjtQ7Tz",
+            "description": "**{6_title}**",
+            "description_url": "https://www.amazon.ca/dp/{6_asin}",
+            "color": "{x_color}"
+        },
+        "author": {
+            "name": "sellerVIBE CA-TO-UK",
+            "icon_url": "https://sellervibe.co/static/img/discord/avatar-amazon-us.png",
+            "url": "https://sellervibe.co"
+        },
+        "footer": {
+            "text": "© 2023 SellerVibe. All rights reserved.",
+            "icon_url": "https://i.imgur.com/rdm3W9t.png"
+        },
+        "thumbnail": "https://images-na.ssl-images-amazon.com/images/I/{6_image}",
+        "fields": [
+            {
+                "name": "",
+                "value": "",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "**CA -> **[BuyBox [**{6_seller}**] - [**{6_price}**] - [**{6_stock}**]](https://www.amazon.ca/dp/{6_asin})",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "**UK -> **[BuyBox [**{2_seller}**] - [**{2_price}**] - [**{2_stock}**]](https://www.amazon.co.uk/dp/{2_asin})",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "**ROI**: [**+{x_roi}%**](https://sellercentral.amazon.com/hz/fba/profitabilitycalculator)",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "",
+                "inline": false
+            },
+            {
+                "name": "ASIN:",
+                "value": "{6_asin}",
+                "inline": true
+            },
+            {
+                "name": "BRAND:",
+                "value": "{6_brand}",
+                "inline": true
+            },
+            {
+                "name": "CATEGORY:",
+                "value": "{6_category}",
+                "inline": true
+            },
+            {
+                "name": "",
+                "value": "",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "**SALES RANK:** #{x_rank}",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "",
+                "inline": false
+            }
+        ]
+    },
+
+
+    "2_to_1": {
+        "id": "{__id__}",
+        "depoFee": 500,
+        "embed": {
+            "webhook": "https://discord.com/api/webhooks/1118503109526835230/caEMTmAqBCNzzLxSTdh3sYu81urhyuQTDTZK1Bmd03GnzljZollJEJn1sIWFxqw7uq0k",
+            "description": "**{2_title}**",
+            "description_url": "https://www.amazon.co.uk/dp/{2_asin}",
+            "color": "{x_color}"
+        },
+        "author": {
+            "name": "sellerVIBE UK-TO-USA",
+            "icon_url": "https://sellervibe.co/static/img/discord/avatar-amazon-us.png",
+            "url": "https://sellervibe.co"
+        },
+        "footer": {
+            "text": "© 2023 SellerVibe. All rights reserved.",
+            "icon_url": "https://i.imgur.com/rdm3W9t.png"
+        },
+        "thumbnail": "https://images-na.ssl-images-amazon.com/images/I/{2_image}",
+        "fields": [
+            {
+                "name": "",
+                "value": "",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "**UK -> **[BuyBox [**{2_seller}**] - [**{2_price}**] - [**{2_stock}**]](https://www.amazon.co.uk/dp/{2_asin})",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "**US -> **[BuyBox [**{1_seller}**] - [**{1_price}**] - [**{1_stock}**]](https://www.amazon.com/dp/{1_asin})",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "**ROI**: [**+{x_roi}%**](https://sellercentral.amazon.com/hz/fba/profitabilitycalculator)",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "",
+                "inline": false
+            },
+            {
+                "name": "ASIN:",
+                "value": "{2_asin}",
+                "inline": true
+            },
+            {
+                "name": "BRAND:",
+                "value": "{2_brand}",
+                "inline": true
+            },
+            {
+                "name": "CATEGORY:",
+                "value": "{2_category}",
+                "inline": true
+            },
+            {
+                "name": "",
+                "value": "",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "**SALES RANK:** #{x_rank}",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "",
+                "inline": false
+            }
+        ]
+    },
+
+
+    "2_to_6": {
+        "id": "{__id__}",
+        "depoFee": 250,
+        "embed": {
+            "webhook": "https://discord.com/api/webhooks/1118503713208811580/YJ7OZwRxvvPZV-wMrL7JjZAYujpB4Zr7uJ9JRC7LoXHpYcl2F7uhKwS0cZWoqfqlvbzK",
+            "description": "**{2_title}**",
+            "description_url": "https://www.amazon.co.uk/dp/{2_asin}",
+            "color": "{x_color}"
+        },
+        "author": {
+            "name": "sellerVIBE UK-TO-CA",
+            "icon_url": "https://sellervibe.co/static/img/discord/avatar-amazon-us.png",
+            "url": "https://sellervibe.co"
+        },
+        "footer": {
+            "text": "© 2023 SellerVibe. All rights reserved.",
+            "icon_url": "https://i.imgur.com/rdm3W9t.png"
+        },
+        "thumbnail": "https://images-na.ssl-images-amazon.com/images/I/{2_image}",
+        "fields": [
+            {
+                "name": "",
+                "value": "",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "**UK -> **[BuyBox [**{2_seller}**] - [**{2_price}**] - [**{2_stock}**]](https://www.amazon.co.uk/dp/{2_asin})",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "**CA -> **[BuyBox [**{6_seller}**] - [**{6_price}**] - [**{6_stock}**]](https://www.amazon.ca/dp/{6_asin})",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "**ROI**: [**+{x_roi}%**](https://sellercentral.amazon.com/hz/fba/profitabilitycalculator)",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "",
+                "inline": false
+            },
+            {
+                "name": "ASIN:",
+                "value": "{2_asin}",
+                "inline": true
+            },
+            {
+                "name": "BRAND:",
+                "value": "{2_brand}",
+                "inline": true
+            },
+            {
+                "name": "CATEGORY:",
+                "value": "{2_category}",
+                "inline": true
+            },
+            {
+                "name": "",
+                "value": "",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "**SALES RANK:** #{x_rank}",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "",
+                "inline": false
+            }
+        ]
+    }
+}

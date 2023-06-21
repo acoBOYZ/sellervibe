@@ -1,0 +1,89 @@
+{
+    "walmart_to_1": {
+        "id": "{__id__}",
+        "depoFee": 250,
+        "embed": {
+            "webhook": "https://discord.com/api/webhooks/1121050764127764521/Edr5FmKBDkS_0aajv5Zh3TmHaLX9LfnCcRqUv6KhrwhXyCBTuljxxHlJRPMAH5s1ZxTC",
+            "description": "**{walmart_title}**",
+            "description_url": "https://www.walmart.com/ip/{walmart_code}",
+            "color": "{x_color}"
+        },
+        "author": {
+            "name": "sellerVIBE WALMART-TO-US",
+            "icon_url": "https://sellervibe.co/static/img/discord/avatar-amazon-us.png",
+            "url": "https://sellervibe.co"
+        },
+        "footer": {
+            "text": "© 2023 SellerVibe. All rights reserved.",
+            "icon_url": "https://i.imgur.com/rdm3W9t.png"
+        },
+        "thumbnail": "{walmart_image}",
+        "fields": [
+            {
+                "name": "",
+                "value": "",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "**WM -> **[Seller:[**Walmart**] - Price:[**{walmart_price}**] - [**IN STOCK**]](https://www.walmart.com/ip/{walmart_code})",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "**US -> **[BuyBox [**{1_seller}**] - [**{1_price}**] - [**{1_stock}**]](https://www.amazon.ca/dp/{1_asin})",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "**ROI**: [**+{x_roi}%**](https://sellercentral.amazon.com/hz/fba/profitabilitycalculator)",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "",
+                "inline": false
+            },
+            {
+                "name": "ASIN:",
+                "value": "{1_asin}",
+                "inline": true
+            },
+            {
+                "name": "BRAND:",
+                "value": "{1_brand}",
+                "inline": true
+            },
+            {
+                "name": "CATEGORY:",
+                "value": "{1_category}",
+                "inline": true
+            },
+            {
+                "name": "",
+                "value": "",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "**SALES RANK:** #{x_rank}",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "",
+                "inline": false
+            },
+            {
+                "name": "",
+                "value": "",
+                "inline": false
+            }
+        ]
+    }
+}

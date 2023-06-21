@@ -1,0 +1,15 @@
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+env
+db.sqlite3
+*.log
+*.pot
+*.pyc
+pip-log.txt
+.git
+.tox
+.cache
+docs/_build

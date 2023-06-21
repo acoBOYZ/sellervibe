@@ -3,4 +3,5 @@
 *.app
 *.content
 
-!selector.json
+!config.json
+!walmart_config.json

@@ -31,6 +31,7 @@ urlpatterns = [
     path('', include('account.urls')),
     path('tools/', include('email_tool.urls')),
     path('autoleads/', include('autoleads.urls')),
+    path('amazon/', include('amazon.urls')),
     path('accounts/profile/', RedirectView.as_view(url='/tools/mail')),
     path('verify-hcaptcha', views.verify_hcaptcha),
 ]

@@ -11,8 +11,7 @@ from openpyxl import load_workbook
 from unidecode import unidecode
 from django.utils import timezone
 import json
-import subprocess
-import psutil
+
 
 class App(models.Model):
     name = models.CharField(_('App name'), max_length=100, unique=True)
@@ -40,33 +39,13 @@ class App(models.Model):
     def create_or_update_multiple(cls, user, bulk_data):
         try:
             for data in bulk_data:
-                excluded_keys = {'proxy_settings', 'webhooks', 'amazon_products'}
+                excluded_keys = {'amazon_products'}
                 defaults = {k: v for k, v in data.items() if k not in excluded_keys}
                 defaults.update({"edited_by": user.email, "edited_time": timezone.now()})
                 app_item, created = cls.objects.update_or_create(
                     name=data.get('name'),
                     defaults=defaults
                 )
-
-                proxy_data_list = data.get('proxy_settings', [])
-                proxy_api_keys = [proxy_data.get('api_key') for proxy_data in proxy_data_list]
-                ProxySetting.objects.filter(app=app_item).exclude(api_key__in=proxy_api_keys).delete()
-                for proxy_data in proxy_data_list:
-                    ProxySetting.objects.update_or_create(
-                        app=app_item,
-                        api_key=proxy_data.get('api_key'),
-                        defaults=proxy_data
-                    )
-
-                webhook_data_list = data.get('webhooks', [])
-                webhook_names = [webhook_data.get('name') for webhook_data in webhook_data_list]
-                Webhook.objects.filter(app=app_item).exclude(name__in=webhook_names).delete()
-                for webhook_data in webhook_data_list:
-                    Webhook.objects.update_or_create(
-                        app=app_item,
-                        name=webhook_data.get('name'),
-                        defaults=webhook_data
-                    )
 
                 amazon_product_data_list = data.get('amazon_products', [])
                 product_ASINs = [amazon_product_data.get('ASIN') for amazon_product_data in amazon_product_data_list]
@@ -86,7 +65,7 @@ class App(models.Model):
     @classmethod
     def get_all(cls, user):
         try:
-            app_items = cls.objects.all().prefetch_related('proxy_settings', 'webhooks', 'amazon_products')
+            app_items = cls.objects.all().prefetch_related('amazon_products')
             if app_items.exists():
                 data = []
                 for app in app_items:
@@ -98,22 +77,6 @@ class App(models.Model):
                     app_data.pop('edited_time', None)
                     app_data.pop('force_restart_count', None)
                     app_data.pop('auto_restart_count', None)
-                    
-                    app_data['proxy_settings'] = []
-                    for proxy in app.proxy_settings.all():
-                        proxy_data = model_to_dict(proxy)
-                        proxy_data.pop('id', None)
-                        proxy_data.pop('app', None)
-                        proxy_data.pop('app_id', None)
-                        app_data['proxy_settings'].append(proxy_data)
-
-                    app_data['webhooks'] = []
-                    for webhook in app.webhooks.all():
-                        webhook_data = model_to_dict(webhook)
-                        webhook_data.pop('id', None)
-                        webhook_data.pop('app', None)
-                        webhook_data.pop('app_id', None)
-                        app_data['webhooks'].append(webhook_data)
 
                     app_data['amazon_products'] = []
                     for product in app.amazon_products.all():
@@ -126,40 +89,16 @@ class App(models.Model):
                 return {'success': True, 'data': data}
 
             default_app = cls.objects.create(name="Default App", created_by=user, edited_by=user)
-            ProxySetting.objects.create(app=default_app, server_name="scrapedo", api_key="")
-            Webhook.objects.create(app=default_app, name="default", config={})
 
-            default_app_data = list(cls.objects.filter(id=default_app.id).prefetch_related('proxy_settings', 'webhooks', 'amazon_products').values())
+            default_app_data = list(cls.objects.filter(id=default_app.id).prefetch_related('amazon_products').values())
             return {'success': True, 'data': default_app_data}
 
         except Exception as e:
             return {'success': False, 'error': str(e)}
 
-class ProxySetting(models.Model):
-    app = models.ForeignKey(App, on_delete=models.CASCADE, related_name='proxy_settings')
-    cls_name = 'Proxy Settings'
-    server_name = models.CharField(_('Server name'), max_length=30, default='scrapedo')
-    api_key = models.CharField(_('Api key'), max_length=100, default='')
-    concurrent_requests_limit = models.CharField(_('Concurrent requests limit'), max_length=30, default='5')
-    timeout_value = models.CharField(_('Timeout value'), max_length=30, default='30')
-
-    class Meta:
-        app_label = 'autoleads'
-
-class Webhook(models.Model):
-    app = models.ForeignKey(App, on_delete=models.CASCADE, related_name='webhooks')
-    cls_name = 'Webhook Designer'
-    name = models.CharField(_('Webhook name'), max_length=100)
-    config = models.JSONField(_('Config'), default=None)
-
-    class Meta:
-        app_label = 'autoleads'
-
 class AmazonProduct(models.Model):
     app = models.ForeignKey(App, on_delete=models.CASCADE, related_name='amazon_products')
-    cls_name = 'Amazon Products'
     ASIN = models.CharField(_('ASIN'), max_length=10, unique=True)
-    UPCS = models.TextField(_('UPCS'), default='')
     status = models.BooleanField(_('Status'), default=True)
 
     class Meta:
@@ -183,90 +122,7 @@ class AppService:
         apps = App.get_all(user=user)
         return {'success': True, 'data': apps}
 
-
-
 class AuxiliaryService:
-    @staticmethod
-    def check_if_script_is_running(script_name):
-        for process in psutil.process_iter():
-            try:
-                for cmd in process.cmdline():
-                    if script_name in cmd:
-                        return True
-            except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
-                pass
-        return False
-
-    @staticmethod
-    def read_json_file(filename):
-        content = ...
-        try:
-            with open(filename, 'r') as f:
-                content = f.read()
-        except:
-            return None
-        return json.loads(content)
-    
-    @staticmethod
-    def get_info_script():
-        try:
-            APP_DIR = Path(__file__).resolve().parent
-            json_path = os.path.join(APP_DIR, 'app/running.app')
-
-            data = AuxiliaryService.read_json_file(json_path)
-            if data:
-                return {'success': True, 'data': data}
-            return {'success': False, 'error': 'Can not read script data yet!'}
-        except Exception as e:
-            return {'success': False, 'error': f'An error occurred while getting script info: {str(e)}'}
-        
-    @staticmethod
-    def force_restart_script(user):
-        try:
-            APP_DIR = Path(__file__).resolve().parent
-            script_path = os.path.join(APP_DIR, 'app/main.py')
-            if AuxiliaryService.check_if_script_is_running(script_path):
-                if settings.IS_SERVER:
-                    subprocess.Popen(["sudo", "/bin/systemctl", "restart", "autoleads_app"])
-                else:
-                    with open(os.path.join(APP_DIR, 'app/restart.app'), 'w') as f:
-                        pass
-
-                return JsonResponse({'success': True, 'message': 'App succesfuly restarted.'})
-            return JsonResponse({'success': False, 'error': 'The app needs to be start first.'})
-        except Exception as e:
-            return JsonResponse({'success': False, 'error': f'An error occurred while force restart: {str(e)}'})
-        
-    @staticmethod
-    def force_start_script(user):
-        return JsonResponse({'success': False, 'error': 'You dont have a permissions.'})
-        try:
-            APP_DIR = Path(__file__).resolve().parent
-            venv_python_path = os.path.join(settings.BASE_DIR, '.venv/bin/python')
-            script_path = os.path.join(APP_DIR, 'app/main.py')
-            if not AuxiliaryService.check_if_script_is_running(script_path):
-                json_path = os.path.join(APP_DIR, 'app/running.app')
-                data = AuxiliaryService.read_json_file(json_path)
-                if data:
-                    if data['running']:
-                        return JsonResponse({'success': False, 'error': 'The app already running.'})
-                    else:
-                        if settings.IS_SERVER:
-                            subprocess.Popen(["sudo", "/bin/systemctl", "start", "autoleads_app"])
-                        else:
-                            subprocess.Popen([venv_python_path, script_path])
-                else:
-                    if settings.IS_SERVER:
-                        subprocess.Popen(["sudo", "/bin/systemctl", "start", "autoleads_app"])
-                    else:
-                        subprocess.Popen([venv_python_path, script_path])
-            else:
-                return JsonResponse({'success': False, 'error': 'The app already running.'})
-
-            return JsonResponse({'success': True, 'message': 'The app succesfuly started.'})
-        except Exception as e:
-            return JsonResponse({'success': False, 'error': f'An error occurred while force restart: {str(e)}'})
-
     @staticmethod
     def upload_product_files(user, files):
         if not files:
@@ -312,15 +168,12 @@ class AuxiliaryService:
                     ws = wb.active
                     header_row = next(ws.iter_rows(min_row=0, max_row=3, values_only=True))
                     asin_column = None
-                    upc_column = None
                     for i, header in enumerate(header_row):
                         _header = unidecode(str(header)).strip().upper().replace(' ', '_')
                         if _header == 'none':
                             continue
                         if asin_column is None and ('ASIN' in _header):
                             asin_column = i + 1
-                        elif  upc_column is None and ('UPC' in _header):
-                            upc_column = i + 1
 
                     if asin_column is None:
                         for row in ws.iter_rows(min_row=0, max_row=3, values_only=True):
@@ -347,8 +200,6 @@ class AuxiliaryService:
                         total_count += 1
                         if asin and validate_asin(asin):
                             asin_data = {'ASIN': asin}
-                            if upc_column is not None:
-                                asin_data['UPCS'] = row[upc_column - 1]
                             asin_data['status'] = True
                             products.append(asin_data)
                             validate_count += 1

@@ -1,31 +1,51 @@
 [
-    {
-      "path": "/*",
-      "timings": [
-        {
-          "metric": "interactive",
-          "budget": 3000
-        },
-        {
-          "metric": "first-meaningful-paint",
-          "budget": 1000
-        }
-      ],
-      "resourceSizes": [
-        {
-          "resourceType": "script",
-          "budget": 125
-        },
-        {
-          "resourceType": "total",
-          "budget": 300
-        }
-      ],
-      "resourceCounts": [
-        {
-          "resourceType": "third-party",
-          "budget": 10
-        }
-      ]
-    }
-  ]
+  {
+    "path": "/*",
+    "timings": [
+      {
+        "metric": "interactive",
+        "budget": 3000
+      },
+      {
+        "metric": "first-meaningful-paint",
+        "budget": 1000
+      }
+    ],
+    "resourceSizes": [
+      {
+        "resourceType": "script",
+        "budget": 250
+      },
+      {
+        "resourceType": "stylesheet",
+        "budget": 130
+      },
+      {
+        "resourceType": "document",
+        "budget": 10
+      },
+      {
+        "resourceType": "image",
+        "budget": 5
+      },
+      {
+        "resourceType": "other",
+        "budget": 2
+      },
+      {
+        "resourceType": "third-party",
+        "budget": 100
+      },
+      {
+        "resourceType": "total",
+        "budget": 400
+      }
+    ],
+    "resourceCounts": [
+      {
+        "resourceType": "third-party",
+        "budget": 5
+      }
+    ]
+  }
+]

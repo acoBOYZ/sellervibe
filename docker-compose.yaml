@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_DB=sellervibe
+      - POSTGRES_USER=acoboyz
+      - POSTGRES_PASSWORD=SVpsql_P@ssw0rd!123**
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:latest
+    command: redis-server --requirepass Redis_P@ssw0rd!123**
+    ports:
+      - "6379:6379"
+
+  web:
+    build: .
+    command: uvicorn base.asgi:application --host 0.0.0.0 --port 8000
+    volumes:
+      - .:/app
+    ports:
+      - 8000:8000
+    depends_on:
+      - rabbitmq
+      - db
+      - redis
+    environment:
+      - DATABASE_HOST=db
+
+  celery:
+    build: .
+    command: celery -A base worker --loglevel=info --pool=eventlet
+    volumes:
+      - .:/app
+    depends_on:
+      - rabbitmq
+      - db
+      - redis
+    environment:
+      - DATABASE_HOST=db
+
+  celerybeat:
+    build: .
+    command: celery -A base beat --loglevel=info
+    volumes:
+      - .:/app
+    depends_on:
+      - rabbitmq
+      - db
+      - redis
+    environment:
+      - DATABASE_HOST=db

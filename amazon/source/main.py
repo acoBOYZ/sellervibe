@@ -82,7 +82,7 @@ async def main():
                 logging.error(f'An warning occurred: You dont use keepa api!')
                 await asyncio.sleep(60)
         else:
-            logging.error(f'An error occurred: Can not find asin_and_domain_data.json file!')
+            logging.error(f'An error occurred: Can not find config.json file!')
             await asyncio.sleep(60)
 
 if __name__ == '__main__':

@@ -1,0 +1,20 @@
+{
+    "smartproxy":{
+        "is_active": true,
+        "username": "acoBoyz",
+        "password": "0qLp00DQatfcwbwq2Y",
+        "proxy": "http://{0}:{1}@gate.smartproxy.com:7000",
+        "limit_per_minutes": 20
+    },
+    "ecommerce":
+    [    
+        {
+            "task": "walmart",
+            "search_key": "title",
+            "base": "https://www.walmart.com/search?q={}",
+            "params": {
+                "facet": "exclude_oos%3AShow+available+items+only%7C%7Cretailer_type%3AWalmart"
+            }
+        }
+    ]
+}

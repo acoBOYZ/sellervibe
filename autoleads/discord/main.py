@@ -8,6 +8,9 @@ import logging
 import asyncio
 import os
 import redis
+import logging
+
+logging.basicConfig(filename='logfile.log', level=logging.debug, format='%(asctime)s - %(message)s')
 
 from dotenv import load_dotenv
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -56,7 +59,7 @@ async def main():
                         if bulk_data or bulk_data_walmart:
                             break
                         else:
-                            print('No data found in Redis. Retrying in 60 seconds...')
+                            logging.error('No data found in Redis. Retrying in 60 seconds...')
                             retries += 1
                             await asyncio.sleep(10)
                     except redis.RedisError as e:

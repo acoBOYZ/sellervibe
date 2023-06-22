@@ -2,6 +2,9 @@ import aiohttp
 import time
 import os
 import aiofiles
+import logging
+
+logging.basicConfig(filename='logfile.log', level=logging.debug, format='%(asctime)s - %(message)s')
 
 class KeepaAPI:
     BASE_URL = 'https://api.keepa.com/product'
@@ -30,7 +33,7 @@ class KeepaAPI:
                     await f.write(await resp.read())
                     await f.close()
         except Exception as e:
-            print(f'An error occurred while downloading image: {e}')
+            logging.error(f'An error occurred while downloading image: {e}')
 
     async def fetch_product_data(self, session, asin_list, domain_id):
         params = {
@@ -94,4 +97,4 @@ class KeepaAPI:
                         time.sleep(refill_in)
                         self.tokens_left += refill_rate
             except Exception as e:
-                print(f'KEEPA_API:An error occurred: {e}')
+                logging.error(f'KEEPA_API:An error occurred: {e}')

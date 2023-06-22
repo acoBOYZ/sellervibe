@@ -2,7 +2,7 @@ class TriggerService:
     @classmethod
     def control_loop(cls, bulk_data:list, config:dict, compare_value:int):
         nested_list = cls.get_all_keys_from_config(config)
-        print('nested_list:', nested_list)
+        # print('nested_list:', nested_list)
 
         low_profit_color = (237, 27, 37)
         high_profit_color = (99, 188, 70)

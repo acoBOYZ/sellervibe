@@ -4,6 +4,9 @@ from torchvision import models, transforms
 from torchvision.models.resnet import ResNet50_Weights
 from PIL import Image
 from torch.nn.functional import cosine_similarity
+import logging
+
+logging.basicConfig(filename='logfile.log', level=logging.debug, format='%(asctime)s - %(message)s')
 
 class ImageComparator:
     @classmethod
@@ -45,5 +48,5 @@ class ImageComparator:
 
             return similarity >= threshold
         except Exception as e:
-            print('Image compare error:', str(e))
+            logging.error('Image compare error:', str(e))
             return False

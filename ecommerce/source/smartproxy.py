@@ -8,6 +8,9 @@ import os
 import aiofiles
 from img import ImageComparator
 import re
+import logging
+
+logging.basicConfig(filename='logfile.log', level=logging.debug, format='%(asctime)s - %(message)s')
 
 user_agent_list_index = 0
 
@@ -43,7 +46,7 @@ class SmartProxy:
         search_key = config.get('search_key', None)
         asin = search_param.get('asin', None)
         if not search_key or not asin:
-            print('ERROR: search_key not found in config')
+            logging.error('ERROR: search_key not found in config')
             return None, asin
         search_text = search_param.get(search_key, None)
         params = config.get('params', None)
@@ -58,9 +61,9 @@ class SmartProxy:
             #         product_data = f.read()
             #         return product_data, asin
             # except:
-            #     print('TEST DATA *.html not found: smartProxy')
+            #     logging.error('TEST DATA *.html not found: smartProxy')
         else:
-            print('ERROR: Search parameter was not found!')
+            logging.error('ERROR: Search parameter was not found!')
 
         return None, asin
 
@@ -157,7 +160,7 @@ class SmartProxy:
 
                         yield product_fetch_list
                     else:
-                        print(f'ERROR: Product or asin can not found in response {asin}') 
+                        logging.error(f'ERROR: Product or asin can not found in response {asin}') 
 
             if limit_exceeded:
                 await asyncio.sleep(60)
@@ -189,4 +192,4 @@ class SmartProxy:
                         await f.write(await resp.read())
                         await f.close()
         except Exception as e:
-            print(f'An error occurred while downloading image: {e}')
+            logging.error(f'An error occurred while downloading image: {e}')

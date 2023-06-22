@@ -5,6 +5,9 @@ import logging
 import asyncio
 import os
 import redis
+import logging
+
+logging.basicConfig(filename='logfile.log', level=logging.debug, format='%(asctime)s - %(message)s')
 
 from dotenv import load_dotenv
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -22,7 +25,7 @@ async def main():
         config = None
         search_params = None
         api = None
-        print('ecommerce app main loop...')
+        logging.info('ecommerce app main loop...')
         if os.path.exists(config_file_path):
             with open(config_file_path, 'r') as f:
                 config = json.load(f)
@@ -33,27 +36,27 @@ async def main():
                 retries = 0
                 while retries < MAX_RETRY_COUNT:
                     try:
-                        print('retries count:', )
+                        logging.info('retries count:', retries)
                         data = r.get('ecommerce_data_from_models')
                         if data is not None:
                             search_params = json.loads(data)
                             r.delete('ecommerce_data_from_models')
                             break
                         else:
-                            print('ECOMMERCE: No data found in Redis. Retrying in 60 seconds...')
+                            logging.warning('ECOMMERCE: No data found in Redis. Retrying in 60 seconds...')
                             retries += 1
                             await asyncio.sleep(10)
                     except redis.RedisError as e:
-                        print(f'ECOMMERCE: An error occurred while fetching data from Redis: {e}')
+                        logging.error(f'ECOMMERCE: An error occurred while fetching data from Redis: {e}')
                         retries += 1
                         await asyncio.sleep(10)
                     except json.JSONDecodeError as e:
-                        print(f'ECOMMERCE: An error occurred while decoding JSON data from Redis: {e}')
+                        logging.error(f'ECOMMERCE: An error occurred while decoding JSON data from Redis: {e}')
                         retries += 1
                         await asyncio.sleep(10)
 
                 if retries == MAX_RETRY_COUNT:
-                    print(f'ECOMMERCE: Unable to fetch data from Redis after {MAX_RETRY_COUNT} attempts. Skipping this cycle.')
+                    logging.warning(f'ECOMMERCE: Unable to fetch data from Redis after {MAX_RETRY_COUNT} attempts. Skipping this cycle.')
                     await asyncio.sleep(10)
                     continue
 
@@ -78,13 +81,13 @@ async def main():
                                 bulk_data.clear()
 
                     except Exception as e:
-                        print(f'An error occurred: {e}')
+                        logging.error(f'An error occurred: {e}')
                         await asyncio.sleep(60)
             else:
-                print(f'An warning occurred: You dont use smartproxy api!')
+                logging.error(f'An warning occurred: You dont use smartproxy api!')
                 await asyncio.sleep(60)
         else:
-            print(f'An error occurred: Can not find config.json file!')
+            logging.error(f'An error occurred: Can not find config.json file!')
             await asyncio.sleep(60)
 
 if __name__ == '__main__':

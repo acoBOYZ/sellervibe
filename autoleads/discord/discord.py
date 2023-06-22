@@ -3,6 +3,9 @@ import ssl
 import certifi
 import pickle
 from dhooks import Webhook, Embed
+import logging
+
+logging.basicConfig(filename='logfile.log', level=logging.debug, format='%(asctime)s - %(message)s')
 
 class AsyncEmbedHandler:
     def __init__(self):
@@ -19,7 +22,7 @@ class AsyncEmbedHandler:
                 self.embed = Embed(description=description, color=int(embed.get('color', '0'), 16), timestamp='now')
                 return True
         except Exception as e:
-            print(f"Error in set_embed: {str(e)}")
+            logging.error(f"Error in set_embed: {str(e)}")
             return False
         
     def set_author(self, author):
@@ -54,7 +57,7 @@ class AsyncEmbedHandler:
                 self.set_thumbnail(config.get('thumbnail'))
             return status
         except Exception as e:
-            print(f"Error in set_all_attrs: {str(e)}")
+            logging.error(f"Error in set_all_attrs: {str(e)}")
             return False
 
     async def send(self, config):
@@ -65,9 +68,9 @@ class AsyncEmbedHandler:
                     async with Webhook.Async(self.webhook_url, session=session) as hook:
                         await hook.send(embed=self.embed)
             else:
-                print("Error in webhook config dict!")
+                logging.warning("Warning in webhook config dict!")
         except Exception as e:
-            print(f"Error in send: {str(e)}")
+            logging.error(f"Error in send: {str(e)}")
             return False
 
     def save_webhook_url(self):
@@ -88,4 +91,4 @@ class AsyncEmbedHandler:
                 async with Webhook.Async(webhook_url, session=session) as hook:
                     await hook.delete()
         except Exception as e:
-            print(f"Error in delete_webhook: {str(e)}")
+            logging.error(f"Error in delete_webhook: {str(e)}")

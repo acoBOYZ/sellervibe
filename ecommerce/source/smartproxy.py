@@ -54,6 +54,11 @@ class SmartProxy:
             if resp.status_code == 200:
                 product_data = resp.text
                 return product_data, asin
+            else:
+                logging.warning('\n\r')
+                logging.warning('Status Code:', resp.status_code)
+                logging.warning('HTML Content:', resp.text)
+                logging.warning('\n\r')
             # try:
             #     with open(f'{config.get("task", "")}_{asin}.html', 'r') as f:
             #         product_data = f.read()

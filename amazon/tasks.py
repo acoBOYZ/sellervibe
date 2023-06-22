@@ -2013,7 +2013,7 @@ if is_server:
     "B00AY6RO9U",
 ]
 
-asin_and_domain_data_file_path = os.path.join(APP_DIR, 'source/asin_and_domain_data.json')
+config_file_path = os.path.join(APP_DIR, 'source/config.json')
 pid_file_path = os.path.join(APP_DIR, 'source/script_pid.json')
 script_path = os.path.join(APP_DIR, 'source/main.py')
 
@@ -2039,19 +2039,21 @@ def keepa_app_fetch_model_via_redis():
 def keepa_app():
     data = {
         'domain_ids': DOMAIN_IDS,
-        'keepa_api': {
-            'is_active': True,
-            'access_key': KEEPA_API_KEY,
-            'tokens_per_minute': 60,
-            'params': {
-                'stats': 20,
-                'buybox': 1,
-                'history': 1,
+        'keepa_api': [
+            {
+                'is_active': True,
+                'access_key': KEEPA_API_KEY,
+                'tokens_per_minute': 60,
+                'params': {
+                    'stats': 20,
+                    'buybox': 1,
+                    'history': 1,
+                }
             }
-        },
+        ],
         'asins': PRODUCT_ASINS,
     }
-    with open(asin_and_domain_data_file_path, 'w') as f:
+    with open(config_file_path, 'w') as f:
         json.dump(data, f)
     print('keepa app is running...')
 

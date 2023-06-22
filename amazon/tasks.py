@@ -2016,6 +2016,7 @@ if is_server:
 asin_and_domain_data_file_path = os.path.join(APP_DIR, 'source/asin_and_domain_data.json')
 pid_file_path = os.path.join(APP_DIR, 'source/script_pid.json')
 script_path = os.path.join(APP_DIR, 'source/main.py')
+logging_path = os.path.join(APP_DIR, 'source/logfile.log')
 
 r = redis.Redis(host=os.getenv('REDIS_HOST'), port=6379, db=0, password=os.getenv('REDIS_PASSWORD'))
 
@@ -2074,7 +2075,8 @@ def keepa_app():
             pass
 
     if not is_script_running:
-        script_process = subprocess.Popen([venv_python_path, script_path])
+        with open(logging_path, 'w') as f:
+            script_process = subprocess.Popen([venv_python_path, script_path], stdout=f, stderr=subprocess.STDOUT)
         script_info = {'pid': script_process.pid, 'start_time': psutil.Process(script_process.pid).create_time()}
         with open(pid_file_path, 'w') as f:
             json.dump(script_info, f)

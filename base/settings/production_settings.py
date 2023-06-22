@@ -30,12 +30,12 @@ CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 CELERY_BEAT_SCHEDULE = {
     'keepa_app': {
         'task': 'amazon.tasks.keepa_app',
-        'schedule': crontab(minute='*/3'),
+        'schedule': crontab(minute='*/1'),
         'args': ()
     },
     'keepa_app_fetch_model_via_redis': {
         'task': 'amazon.tasks.keepa_app_fetch_model_via_redis',
-        'schedule': crontab(minute='*/5'),
+        'schedule': crontab(minute='*/1'),
         'args': ()
     },
     'exchangerate_request': {
@@ -46,12 +46,12 @@ CELERY_BEAT_SCHEDULE = {
 
     'ecommerce_app': {
         'task': 'ecommerce.tasks.ecommerce_app',
-        'schedule': crontab(minute='*/3'),
+        'schedule': crontab(minute='*/1'),
         'args': ()
     },
     'ecommerce_app_fetch_model_via_redis': {
         'task': 'ecommerce.tasks.ecommerce_app_fetch_model_via_redis',
-        'schedule': crontab(minute='*/5'),
+        'schedule': crontab(minute='*/1'),
         'args': ()
     },
     'ecommerce_app_get_model_via_redis': {
@@ -62,7 +62,7 @@ CELERY_BEAT_SCHEDULE = {
     
     'discord_app': {
         'task': 'autoleads.tasks.discord_app',
-        'schedule': crontab(minute='*/3'),
+        'schedule': crontab(minute='*/1'),
         'args': ()
     },
     'discord_app_fetch_model_via_redis': {

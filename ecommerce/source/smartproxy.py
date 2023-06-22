@@ -82,7 +82,7 @@ class SmartProxy:
             search_param_batches.append(search_param_in_current_batch)
 
         img_comparator = ImageComparator()
-        timeout = httpx.Timeout(10.0, read=20.0)
+        timeout = httpx.Timeout(30.0, read=60.0)
         async with httpx.AsyncClient(proxies={"http://": self.proxy, "https://": self.proxy}, timeout=timeout) as session:
             for search_param_batch in search_param_batches:
                 tasks = [self.fetch_product_data(session, search_param, config) for search_param in search_param_batch]

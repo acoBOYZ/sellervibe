@@ -4,7 +4,7 @@
         "username": "acoBoyz",
         "password": "0qLp00DQatfcwbwq2Y",
         "proxy": "http://{0}:{1}@gate.smartproxy.com:7000",
-        "limit_per_minutes": 20
+        "limit_per_minutes": 3
     },
     "ecommerce":
     [    

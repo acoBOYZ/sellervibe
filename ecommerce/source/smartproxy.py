@@ -10,7 +10,7 @@ from img import ImageComparator
 import re
 import logging
 
-logging.basicConfig(filename='logfile.log', level=logging.debug, format='%(asctime)s - %(message)s')
+logging.basicConfig(filename='logfile.log', level=logging.DEBUG, format='%(asctime)s - %(message)s')
 
 user_agent_list_index = 0
 

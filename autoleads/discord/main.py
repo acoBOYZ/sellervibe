@@ -10,7 +10,7 @@ import os
 import redis
 import logging
 
-logging.basicConfig(filename='logfile.log', level=logging.debug, format='%(asctime)s - %(message)s')
+logging.basicConfig(filename='logfile.log', level=logging.DEBUG, format='%(asctime)s - %(message)s')
 
 from dotenv import load_dotenv
 BASE_DIR = Path(__file__).resolve().parent.parent.parent

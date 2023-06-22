@@ -4,7 +4,7 @@ import os
 import aiofiles
 import logging
 
-logging.basicConfig(filename='logfile.log', level=logging.debug, format='%(asctime)s - %(message)s')
+logging.basicConfig(filename='logfile.log', level=logging.DEBUG, format='%(asctime)s - %(message)s')
 
 class KeepaAPI:
     BASE_URL = 'https://api.keepa.com/product'

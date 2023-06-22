@@ -5,7 +5,7 @@ import pickle
 from dhooks import Webhook, Embed
 import logging
 
-logging.basicConfig(filename='logfile.log', level=logging.debug, format='%(asctime)s - %(message)s')
+logging.basicConfig(filename='logfile.log', level=logging.DEBUG, format='%(asctime)s - %(message)s')
 
 class AsyncEmbedHandler:
     def __init__(self):

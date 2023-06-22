@@ -27,6 +27,7 @@ CELERY_BROKER_POOL_LIMIT = None
 
 CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 
+
 CELERY_BEAT_SCHEDULE = {
     'keepa_app': {
         'task': 'amazon.tasks.keepa_app',
@@ -67,7 +68,7 @@ CELERY_BEAT_SCHEDULE = {
     },
     'discord_app_fetch_model_via_redis': {
         'task': 'autoleads.tasks.discord_app_fetch_model_via_redis',
-        'schedule': crontab(minute='*/30'),
+        'schedule': crontab(minute=0, hour='*/3'),
         'args': ()
     }
 }

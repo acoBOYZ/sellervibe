@@ -6,7 +6,7 @@ from PIL import Image
 from torch.nn.functional import cosine_similarity
 import logging
 
-logging.basicConfig(filename='logfile.log', level=logging.debug, format='%(asctime)s - %(message)s')
+logging.basicConfig(filename='logfile.log', level=logging.DEBUG, format='%(asctime)s - %(message)s')
 
 class ImageComparator:
     @classmethod

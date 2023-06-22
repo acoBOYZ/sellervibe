@@ -30,49 +30,49 @@ async def main():
 
             api = KeepaAPI(keepa_api_config, BASE_DIR)
             if api:
-                try:
-                    for domain_id in domain_ids:
-                        product_data_generator = api.get_products(asins, domain_id)
-                        async for product_data in product_data_generator:
-                            if product_data is None:
-                                continue
-                            bulk_data = []
-                            for product in product_data.get('products'):
-                                
-                                product.pop('csv', None)
-                                product.pop('buyBoxSellerIdHistory', None)
-                                product.pop('variations', None)
-                                product.pop('offers', None)
-                                product['updated'] = True
+                # try:
+                for domain_id in domain_ids:
+                    product_data_generator = api.get_products(asins, domain_id)
+                    async for product_data in product_data_generator:
+                        if product_data is None:
+                            continue
+                        bulk_data = []
+                        for product in product_data.get('products'):
+                            
+                            product.pop('csv', None)
+                            product.pop('buyBoxSellerIdHistory', None)
+                            product.pop('variations', None)
+                            product.pop('offers', None)
+                            product['updated'] = True
 
-                                salesRanks = product.get('salesRanks', None)
-                                salesRankReference = product.get('salesRankReference', 0)
-                                if salesRankReference > 0:
-                                    salesRanksTemp = salesRanks.get(f'{salesRankReference}', None)
-                                    if salesRanksTemp and isinstance(salesRanksTemp, list):
-                                        product['salesRanks'] = {"rank": salesRanksTemp[-1]}
-                                elif salesRanks and isinstance(salesRanks, dict):
-                                    product['salesRanks'] = {"rank": next(iter(salesRanks.values()))[-1]}
-                                else:
-                                    product.pop('salesRanks', None)
+                            salesRanks = product.get('salesRanks', None)
+                            salesRankReference = product.get('salesRankReference', 0)
+                            if salesRankReference > 0:
+                                salesRanksTemp = salesRanks.get(f'{salesRankReference}', None)
+                                if salesRanksTemp and isinstance(salesRanksTemp, list):
+                                    product['salesRanks'] = {"rank": salesRanksTemp[-1]}
+                            elif salesRanks and isinstance(salesRanks, dict):
+                                product['salesRanks'] = {"rank": next(iter(salesRanks.values()))[-1]}
+                            else:
+                                product.pop('salesRanks', None)
 
-                                bulk_data.append(product)
+                            bulk_data.append(product)
 
-                            if bulk_data:        
-                                old_data = r.get('keepa_data_set')
-                                if old_data is not None:
-                                    old_data = json.loads(old_data)
-                                else:
-                                    old_data = []
+                        if bulk_data:        
+                            old_data = r.get('keepa_data_set')
+                            if old_data is not None:
+                                old_data = json.loads(old_data)
+                            else:
+                                old_data = []
 
-                                combined_data = old_data + bulk_data
-                                r.set('keepa_data_set', json.dumps(combined_data))
-                                bulk_data.clear()
+                            combined_data = old_data + bulk_data
+                            r.set('keepa_data_set', json.dumps(combined_data))
+                            bulk_data.clear()
 
-                    await asyncio.sleep(3)
-                except Exception as e:
-                    logging.error(f'An error occurred: {e}')
-                    await asyncio.sleep(60)
+                await asyncio.sleep(3)
+                # except Exception as e:
+                #     logging.error(f'An error occurred: {e}')
+                #     await asyncio.sleep(60)
             else:
                 logging.error(f'An warning occurred: You dont use keepa api!')
                 await asyncio.sleep(60)

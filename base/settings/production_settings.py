@@ -68,7 +68,7 @@ CELERY_BEAT_SCHEDULE = {
     },
     'discord_app_fetch_model_via_redis': {
         'task': 'autoleads.tasks.discord_app_fetch_model_via_redis',
-        'schedule': crontab(minute=0, hour='*/3'),
+        'schedule': crontab(minute='*/15'),
         'args': ()
     }
 }

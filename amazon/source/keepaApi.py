@@ -89,7 +89,7 @@ class KeepaAPI:
                     if product_data:
                         if isinstance(product_data, dict) and ('tokensLeft' in product_data and 'refillIn' in product_data and 'refillRate' in product_data and 'tokensConsumed' in product_data):
                             self.tokens_left = product_data['tokensLeft']
-                            refill_in = product_data['refillIn'] / 1000
+                            refill_in = product_data['refillIn'] // 1000
                             refill_rate = product_data['refillRate']
                             self.single_asin_cost = product_data['tokensConsumed'] // len(product_data['products'])
                             force_to_refill = False

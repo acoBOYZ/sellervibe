@@ -1,5 +1,5 @@
 import aiohttp
-import time
+import asyncio
 import os
 import aiofiles
 import logging
@@ -80,6 +80,8 @@ class KeepaAPI:
                 force_to_refill = True
                 refill_in = 60
                 refill_rate = self.tokens_per_minute
+
+                logging.warning(f'Ready to fetch data from keepa api...')
                 product_data_generator = self.bulk_fetch_product_data([asin_list], domain_id)
                 async for product_data in product_data_generator:
                     if product_data:
@@ -92,7 +94,8 @@ class KeepaAPI:
                         yield product_data
 
                     if (self.tokens_left < len(asin_list) * self.single_asin_cost) or force_to_refill:
-                        time.sleep(refill_in)
+                        logging.warning(f'Not enough token - {refill_in}')
+                        await asyncio.sleep(refill_in)
                         self.tokens_left += refill_rate
             except Exception as e:
                 logging.error(f'KEEPA_API:An error occurred: {e}')

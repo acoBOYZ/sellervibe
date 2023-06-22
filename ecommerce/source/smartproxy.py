@@ -53,6 +53,12 @@ class SmartProxy:
             resp = await session.get(url=url, headers=headers, params=params)
             if resp.status_code == 200:
                 product_data = resp.text
+
+                logging.warning('\n\r')
+                logging.warning('Status Code:', resp.status_code)
+                logging.warning('HTML Content:', resp.text)
+                logging.warning('\n\r')
+                
                 return product_data, asin
             else:
                 logging.warning('\n\r')

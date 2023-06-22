@@ -69,6 +69,8 @@ class KeepaAPI:
         for asin in asin_list:
             asins_in_current_batch.append(asin)
             if len(asins_in_current_batch) * self.single_asin_cost > (self.tokens_left - self.single_asin_cost) or len(asins_in_current_batch) * self.single_asin_cost > (99 - self.single_asin_cost):
+                self.tokens_left -= (len(asins_in_current_batch) * self.single_asin_cost)
+                self.tokens_left += self.tokens_per_minute if self.tokens_left <= 0 else 0
                 asin_list_batches.append(asins_in_current_batch)
                 asins_in_current_batch = []
 

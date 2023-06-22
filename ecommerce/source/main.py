@@ -7,7 +7,6 @@ import os
 import redis
 import logging
 
-logging.basicConfig(filename='logfile.log', level=logging.DEBUG, format='%(asctime)s - %(message)s')
 
 from dotenv import load_dotenv
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -15,6 +14,8 @@ load_dotenv(os.path.join(BASE_DIR, '.environ'))
 
 APP_DIR = Path(__file__).resolve().parent
 config_file_path = os.path.join(APP_DIR, 'config.json')
+
+logging.basicConfig(filename=os.path.join(APP_DIR, 'logfile.log'), level=logging.DEBUG, format='%(asctime)s - %(message)s')
 
 
 async def main():

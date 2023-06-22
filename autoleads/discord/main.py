@@ -10,8 +10,6 @@ import os
 import redis
 import logging
 
-logging.basicConfig(filename='logfile.log', level=logging.DEBUG, format='%(asctime)s - %(message)s')
-
 from dotenv import load_dotenv
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 load_dotenv(os.path.join(BASE_DIR, '.environ'))
@@ -20,6 +18,7 @@ APP_DIR = Path(__file__).resolve().parent
 config_file_path = os.path.join(APP_DIR, 'config.json')
 walmart_config_file_path = os.path.join(APP_DIR, 'walmart_config.json')
 
+logging.basicConfig(filename=os.path.join(APP_DIR, 'logfile.log'), level=logging.DEBUG, format='%(asctime)s - %(message)s')
 
 async def main():
     r = redis.Redis(host=os.getenv('REDIS_HOST'), port=6379, db=0, password=os.getenv('REDIS_PASSWORD'))
@@ -110,11 +109,8 @@ async def main():
 
                 await asyncio.sleep(10)
             else:
-                logging.warning(f'A warning occurred: You are not using the Keepa API!')
+                logging.warning(f'A warning occurred: You are not using the Discord API!')
                 await asyncio.sleep(60)
-        else:
-            logging.error(f'An error occurred: Can not find asin_and_domain_data.json file!')
-            await asyncio.sleep(60)
 
 if __name__ == '__main__':
     asyncio.run(main())

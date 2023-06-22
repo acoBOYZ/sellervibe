@@ -7,8 +7,6 @@ import os
 import redis
 import logging
 
-logging.basicConfig(filename='logfile.log', level=logging.DEBUG, format='%(asctime)s - %(message)s')
-
 from dotenv import load_dotenv
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 load_dotenv(os.path.join(BASE_DIR, '.environ'))
@@ -16,6 +14,7 @@ load_dotenv(os.path.join(BASE_DIR, '.environ'))
 APP_DIR = Path(__file__).resolve().parent
 asin_and_domain_data_file_path = os.path.join(APP_DIR, 'asin_and_domain_data.json')
 
+logging.basicConfig(filename=os.path.join(APP_DIR, 'logfile.log'), level=logging.DEBUG, format='%(asctime)s - %(message)s')
 
 async def main():
     r = redis.Redis(host=os.getenv('REDIS_HOST'), port=6379, db=0, password=os.getenv('REDIS_PASSWORD'))

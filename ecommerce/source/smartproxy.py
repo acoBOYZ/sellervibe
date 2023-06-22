@@ -10,8 +10,6 @@ from img import ImageComparator
 import re
 import logging
 
-logging.basicConfig(filename='logfile.log', level=logging.DEBUG, format='%(asctime)s - %(message)s')
-
 user_agent_list_index = 0
 
 class SmartProxy:

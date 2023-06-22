@@ -59,23 +59,23 @@ async def main():
 
                 if search_params and isinstance(search_params, list):
                     try:
-                        bulk_data = []
                         for index, config in enumerate(ecommerce_config_list):
+                            bulk_data = []
                             product_data_generator = api.get_products(search_params, config)
                             async for product in product_data_generator:
                                 if product:
                                     bulk_data.append(product)
 
-                        if bulk_data:
-                            old_data = r.get('ecommerce_data_from_app')
-                            if old_data is not None:
-                                old_data = json.loads(old_data)
-                            else:
-                                old_data = []
+                            if bulk_data:
+                                old_data = r.get('ecommerce_data_from_app')
+                                if old_data is not None:
+                                    old_data = json.loads(old_data)
+                                else:
+                                    old_data = []
 
-                            combined_data = old_data + bulk_data
-                            r.set('ecommerce_data_from_app', json.dumps(combined_data))
-                            bulk_data.clear()
+                                combined_data = old_data + bulk_data
+                                r.set('ecommerce_data_from_app', json.dumps(combined_data))
+                                bulk_data.clear()
 
                     except Exception as e:
                         print(f'An error occurred: {e}')

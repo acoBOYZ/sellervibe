@@ -108,7 +108,7 @@ class SmartProxy:
                             if len(images) > 0 and len(link_identifiers) > 0:
                                 await self.download_image(images[0], link_identifiers[0])
                             
-                            amazon_image = os.path.join(self.AMAZON_IMAGE_DIR, f'{asin}/1_source.png')
+                            amazon_image = os.path.join(self.AMAZON_IMAGE_DIR, f'{asin}.png')
                             related_image = f'{self.WALMART_IMAGE_DIR}/{link_identifiers[0]}.png'
                             if not await img_comparator.compare(amazon_image, related_image, .84):
                                 break

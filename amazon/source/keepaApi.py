@@ -17,8 +17,8 @@ class KeepaAPI:
         self.params = config['params']
         self.IMAGE_DIR = os.path.join(BASE_DIR, 'media/amazon/images')
 
-    async def download_image(self, session, url, domainId, asin):
-        file_path = f'{self.IMAGE_DIR}/{asin}/{domainId}_source.png'
+    async def download_image(self, session, url, asin):
+        file_path = f'{self.IMAGE_DIR}/{asin}.png'
         if os.path.exists(file_path):
             return
 
@@ -50,7 +50,7 @@ class KeepaAPI:
                     image_url_str = product.get('imagesCSV', None)
                     if image_url_str and isinstance(image_url_str, str):
                         image_url = f'https://images-na.ssl-images-amazon.com/images/I/{image_url_str.split(",")[0]}'
-                        await self.download_image(session, image_url, product['domainId'], product['asin'])
+                        await self.download_image(session, image_url, product['asin'])
 
                 return product_data
         except Exception as e:

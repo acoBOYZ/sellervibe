@@ -21,7 +21,7 @@ is_server = bool(os.getenv('IS_SERVER').lower() == 'true')
 
 pid_file_path = os.path.join(APP_DIR, 'discord/script_pid.json')
 script_path = os.path.join(APP_DIR, 'discord/main.py')
-logging_path = os.path.join(APP_DIR, 'source/logfile.log')
+logging_path = os.path.join(APP_DIR, 'discord/logfile.log')
 
 r = redis.Redis(host=os.getenv('REDIS_HOST'), port=6379, db=0, password=os.getenv('REDIS_PASSWORD'))
 

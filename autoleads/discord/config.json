@@ -26,7 +26,7 @@
             },
             {
                 "name": "",
-                "value": "**US -> **[BuyBox [**{1_seller}**] - [**{1_price_org}** ▶ ({1_price})] - [**{1_stock}**]](https://www.amazon.com/dp/{1_asin})",
+                "value": "**US -> **[BuyBox [**{1_seller}**] - [**{1_price_org}** ⇢ ({1_price})] - [**{1_stock}**]](https://www.amazon.com/dp/{1_asin})",
                 "inline": false
             },
             {
@@ -115,7 +115,7 @@
             },
             {
                 "name": "",
-                "value": "**US -> **[BuyBox [**{1_seller}**] - [**{1_price_org}** ▶ ({1_price})] - [**{1_stock}**]](https://www.amazon.com/dp/{1_asin})",
+                "value": "**US -> **[BuyBox [**{1_seller}**] - [**{1_price_org}** ⇢ ({1_price})] - [**{1_stock}**]](https://www.amazon.com/dp/{1_asin})",
                 "inline": false
             },
             {
@@ -204,7 +204,7 @@
             },
             {
                 "name": "",
-                "value": "**CA -> **[BuyBox [**{6_seller}**] - [**{6_price_org}** ▶ ({6_price})] - [**{6_stock}**]](https://www.amazon.ca/dp/{6_asin})",
+                "value": "**CA -> **[BuyBox [**{6_seller}**] - [**{6_price_org}** ⇢ ({6_price})] - [**{6_stock}**]](https://www.amazon.ca/dp/{6_asin})",
                 "inline": false
             },
             {
@@ -293,7 +293,7 @@
             },
             {
                 "name": "",
-                "value": "**CA -> **[BuyBox [**{6_seller}**] - [**{6_price_org}** ▶ ({6_price})] - [**{6_stock}**]](https://www.amazon.ca/dp/{6_asin})",
+                "value": "**CA -> **[BuyBox [**{6_seller}**] - [**{6_price_org}** ⇢ ({6_price})] - [**{6_stock}**]](https://www.amazon.ca/dp/{6_asin})",
                 "inline": false
             },
             {
@@ -382,7 +382,7 @@
             },
             {
                 "name": "",
-                "value": "**UK -> **[BuyBox [**{2_seller}**] - [**{2_price_org}** ▶ ({2_price})] - [**{2_stock}**]](https://www.amazon.co.uk/dp/{2_asin})",
+                "value": "**UK -> **[BuyBox [**{2_seller}**] - [**{2_price_org}** ⇢ ({2_price})] - [**{2_stock}**]](https://www.amazon.co.uk/dp/{2_asin})",
                 "inline": false
             },
             {
@@ -471,7 +471,7 @@
             },
             {
                 "name": "",
-                "value": "**UK -> **[BuyBox [**{2_seller}**] - [**{2_price_org}** ▶ ({2_price})] - [**{2_stock}**]](https://www.amazon.co.uk/dp/{2_asin})",
+                "value": "**UK -> **[BuyBox [**{2_seller}**] - [**{2_price_org}** ⇢ ({2_price})] - [**{2_stock}**]](https://www.amazon.co.uk/dp/{2_asin})",
                 "inline": false
             },
             {

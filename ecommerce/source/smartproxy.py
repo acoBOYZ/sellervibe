@@ -29,6 +29,8 @@ class SmartProxy:
             self.limit_per_minutes = config['limit_per_minutes']
 
     async def fetch_product_data(self, session:httpx.AsyncClient, search_param, config):
+        logging.info('\n\r')
+        logging.info('search_param:', search_param)
         global user_agent_list, user_agent_list_index
         headers = {
             'User-Agent': user_agent_list[user_agent_list_index],
@@ -50,21 +52,25 @@ class SmartProxy:
         params = config.get('params', None)
         if search_text:
             url = config['base'].format(urllib.parse.quote_plus(search_text))
-            resp = await session.get(url=url, headers=headers, params=params)
-            if resp.status_code == 200:
-                product_data = resp.text
+            logging.info('ASIN:', asin)
+            logging.info('URL:', url)
+            logging.info('\n\r')
+            # resp = await session.get(url=url, headers=headers, params=params)
+            # if resp.status_code == 200:
+            #     product_data = resp.text
 
-                logging.warning('\n\r')
-                logging.warning('Status Code:', resp.status_code)
-                logging.warning('HTML Content:', resp.text)
-                logging.warning('\n\r')
-                
-                return product_data, asin
-            else:
-                logging.warning('\n\r')
-                logging.warning('Status Code:', resp.status_code)
-                logging.warning('HTML Content:', resp.text)
-                logging.warning('\n\r')
+            #     logging.info('\n\r')
+            #     logging.info('Status Code:', resp.status_code)
+            #     logging.info('HTML Content:', resp.text)
+            #     logging.info('\n\r')
+
+            #     return product_data, asin
+            # else:
+            #     logging.info('\n\r')
+            #     logging.info('Status Code:', resp.status_code)
+            #     logging.info('HTML Content:', resp.text)
+            #     logging.info('\n\r')
+
             # try:
             #     with open(f'{config.get("task", "")}_{asin}.html', 'r') as f:
             #         product_data = f.read()

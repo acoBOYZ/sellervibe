@@ -10,6 +10,7 @@ import signal
 from psutil import process_iter, NoSuchProcess, AccessDenied, ZombieProcess
 import redis
 import logging
+from celery.signals import after_setup_logger
 
 from amazon.models import ProductService
 
@@ -19,17 +20,27 @@ APP_DIR = Path(__file__).resolve().parent
 load_dotenv(os.path.join(BASE_DIR, '.environ'))
 is_server = bool(os.getenv('IS_SERVER').lower() == 'true')
 
-logging.basicConfig(filename=os.path.join(APP_DIR, 'logfile.log'), level=logging.DEBUG, format='%(asctime)s - %(message)s')
-
 
 pid_file_path = os.path.join(APP_DIR, 'discord/script_pid.json')
 script_path = os.path.join(APP_DIR, 'discord/main.py')
 
 r = redis.Redis(host=os.getenv('REDIS_HOST'), port=6379, db=0, password=os.getenv('REDIS_PASSWORD'))
+logger = logging.getLogger(__name__)
+
+
+@after_setup_logger.connect
+def setup_loggers(logger, *args, **kwargs):
+    # setup your loggers
+    formatter = logging.Formatter('%(asctime)s - %(message)s')
+    handler = logging.FileHandler(os.path.join(APP_DIR, 'logfile.log'))
+    handler.setFormatter(formatter)
+
+    logger.addHandler(handler)
+    logger.propagate = False
 
 @shared_task
 def discord_app_fetch_model_via_redis():
-    logging.info('discord app fetch model via redis is scheduled...')
+    logger.info('discord app fetch model via redis is scheduled...')
     data = ProductService.get_all_data_for_discord()
     r.delete('discord_data_all')
     r.set('discord_data_all', json.dumps(data))
@@ -41,7 +52,7 @@ def discord_app_fetch_model_via_redis():
 
 @shared_task
 def discord_app():
-    logging.info('discord app is running...')
+    logger.info('discord app is running...')
 
     venv_python_path = os.path.join(BASE_DIR, '.venv/bin/python') if is_server else 'python3'
     is_script_running = False
@@ -49,13 +60,13 @@ def discord_app():
     script_info = None
 
     if os.path.exists(pid_file_path):
-        logging.info(f'{pid_file_path} exist.')
+        logger.info(f'{pid_file_path} exist.')
         with open(pid_file_path, 'r') as f:
             script_info = json.load(f)
-            logging.info(f'{pid_file_path}: {script_info}')
+            logger.info(f'{pid_file_path}: {script_info}')
     else:
         script_info = {}
-        logging.info(f'{pid_file_path} does not exist.')
+        logger.info(f'{pid_file_path} does not exist.')
 
     for process in psutil.process_iter():
         try:
@@ -65,7 +76,7 @@ def discord_app():
             pass
     
 
-    logging.info(f'script is running: {is_script_running}')
+    logger.info(f'script is running: {is_script_running}')
 
     if not is_script_running:
         script_process = subprocess.Popen([venv_python_path, script_path], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)

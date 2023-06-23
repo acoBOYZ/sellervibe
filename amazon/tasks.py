@@ -11,6 +11,7 @@ import redis
 from .models import ProductService, DomainExchangeRate
 import requests
 import logging
+from celery.signals import after_setup_logger
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -19,7 +20,7 @@ load_dotenv(os.path.join(BASE_DIR, '.environ'))
 is_server = bool(os.getenv('IS_SERVER').lower() == 'true')
 EXCHANGERATE_API_KEY = os.getenv('EXCHANGERATE_API_KEY')
 
-logging.basicConfig(filename=os.path.join(APP_DIR, 'logfile.log'), level=logging.DEBUG, format='%(asctime)s - %(message)s')
+logger = logging.getLogger(__name__)
 
 # https://www.google.com/search?q=&oq=&uule=w+CAIQICINVW5pdGVkIFN0YXRlcw&hl=en&gl=us&sourceid=chrome&ie=UTF-8
 
@@ -2022,20 +2023,31 @@ script_path = os.path.join(APP_DIR, 'source/main.py')
 
 r = redis.Redis(host=os.getenv('REDIS_HOST'), port=6379, db=0, password=os.getenv('REDIS_PASSWORD'))
 
+
+@after_setup_logger.connect
+def setup_loggers(logger, *args, **kwargs):
+    # setup your loggers
+    formatter = logging.Formatter('%(asctime)s - %(message)s')
+    handler = logging.FileHandler(os.path.join(APP_DIR, 'logfile.log'))
+    handler.setFormatter(formatter)
+
+    logger.addHandler(handler)
+    logger.propagate = False
+
 @shared_task
 def keepa_app_fetch_model_via_redis():
-    print('keepa app fetch model via redis is scheduled...')
+    logger.info('keepa app fetch model via redis is scheduled...')
     try:
         data = r.get('keepa_data_set')
         if data is not None:
             r.delete('keepa_data_set')
             ProductService.sync_bulk_create_or_update(json.loads(data))
         else:
-            print('KEEPA:No data found in Redis.')
+            logger.warning('KEEPA:No data found in Redis.')
     except redis.RedisError as e:
-        print(f'KEEPA:An error occurred while fetching data from Redis: {e}')
+        logger.error(f'KEEPA:An error occurred while fetching data from Redis: {e}')
     except json.JSONDecodeError as e:
-        print(f'KEEPA:An error occurred while decoding JSON data from Redis: {e}')
+        logger.error(f'KEEPA:An error occurred while decoding JSON data from Redis: {e}')
 
 
 @shared_task
@@ -2058,8 +2070,7 @@ def keepa_app():
     }
     with open(config_file_path, 'w') as f:
         json.dump(data, f)
-    print('keepa app is running...')
-    logging.info('keepa app is running...')
+    logger.info('keepa app is running...')
 
     venv_python_path = os.path.join(BASE_DIR, '.venv/bin/python') if is_server else 'python3'
     is_script_running = False
@@ -2067,13 +2078,13 @@ def keepa_app():
     script_info = None
 
     if os.path.exists(pid_file_path):
-        logging.info(f'{pid_file_path} exist.')
+        logger.info(f'{pid_file_path} exist.')
         with open(pid_file_path, 'r') as f:
             script_info = json.load(f)
-            logging.info(f'{pid_file_path}: {script_info}')
+            logger.info(f'{pid_file_path}: {script_info}')
     else:
         script_info = {}
-        logging.info(f'{pid_file_path} does not exist.')
+        logger.info(f'{pid_file_path} does not exist.')
 
     for process in psutil.process_iter():
         try:
@@ -2083,7 +2094,7 @@ def keepa_app():
             pass
     
 
-    logging.info(f'script is running: {is_script_running}')
+    logger.info(f'script is running: {is_script_running}')
 
     if not is_script_running:
         script_process = subprocess.Popen([venv_python_path, script_path], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
@@ -2122,7 +2133,7 @@ def exchangerate_request():
     response = requests.get(url)
 
     if response.status_code != 200:
-        print(f'Error fetching exchange rates: {response.content}')
+        logger.warning(f'Error fetching exchange rates: {response.content}')
         return
 
     data = response.json()
@@ -2135,6 +2146,6 @@ def exchangerate_request():
                 domain_code=code,
                 defaults={'exchange_rate': exchange_rate, 'currency_code': DomainExchangeRate.CURRENCY_CODES[domain], 'domain_name': domain}
             )
-            print(f'Updated exchange rate for {domain}: {exchange_rate}')
+            logger.info(f'Updated exchange rate for {domain}: {exchange_rate}')
         else:
-            print(f'No conversion rate found for {domain}')
+            logger.warning(f'No conversion rate found for {domain}')

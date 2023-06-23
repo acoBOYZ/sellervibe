@@ -57,7 +57,7 @@ CELERY_BEAT_SCHEDULE = {
     },
     'ecommerce_app_get_model_via_redis': {
         'task': 'ecommerce.tasks.ecommerce_app_get_model_via_redis',
-        'schedule': crontab(minute='*/30'), # change here
+        'schedule': crontab(minute=0, hour='*/3'),
         'args': ()
     },
     

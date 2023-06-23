@@ -2,6 +2,8 @@ import httpx
 import aiohttp
 import urllib.parse
 import asyncio
+import ssl
+import certifi
 from useragent import user_agent_list
 from bs4 import BeautifulSoup
 import os
@@ -18,6 +20,8 @@ class SmartProxy:
         self.password = None
         self.proxy = None
         self.limit_per_minutes = None
+        self.ssl_context = ssl.create_default_context()
+        self.ssl_context.load_verify_locations(certifi.where())
 
         self.AMAZON_IMAGE_DIR = os.path.join(BASE_DIR, 'media/amazon/images')
         self.WALMART_IMAGE_DIR = os.path.join(BASE_DIR, 'media/walmart/images')
@@ -57,15 +61,15 @@ class SmartProxy:
                 product_data = resp.text
 
                 # logging.info('\n\r')
-                # logging.info('Status Code:', resp.status_code)
-                # logging.info('HTML Content:', resp.text)
+                # logging.info(f'Status Code: {resp.status_code}')
+                # logging.info(f'HTML Content: {resp.text}')
                 # logging.info('\n\r')
 
                 return product_data, asin
             else:
                 logging.info('\n\r')
-                logging.info('Status Code:', resp.status_code)
-                logging.info('HTML Content:', resp.text)
+                logging.info(f'Status Code: {resp.status_code}')
+                logging.info(f'HTML Content: {resp.text}')
                 logging.info('\n\r')
 
             # try:
@@ -96,7 +100,7 @@ class SmartProxy:
             search_param_batches.append(search_param_in_current_batch)
 
         img_comparator = ImageComparator()
-        timeout = httpx.Timeout(30.0, read=60.0)
+        timeout = httpx.Timeout(10.0, read=20.0)
         async with httpx.AsyncClient(proxies={"http://": self.proxy, "https://": self.proxy}, timeout=timeout) as session:
             for search_param_batch in search_param_batches:
                 tasks = [self.fetch_product_data(session, search_param, config) for search_param in search_param_batch]
@@ -197,7 +201,7 @@ class SmartProxy:
             url = url.split('?')[0]
 
         try:
-            async with aiohttp.ClientSession() as session:
+            async with aiohttp.ClientSession(connector=aiohttp.TCPConnector(ssl_context=self.ssl_context)) as session:
                 async with session.get(url) as resp:
                     os.makedirs(os.path.dirname(file_path), exist_ok=True)
                     if resp.status == 200:

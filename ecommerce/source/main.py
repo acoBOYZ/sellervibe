@@ -5,7 +5,6 @@ import logging
 import asyncio
 import os
 import redis
-import logging
 
 
 from dotenv import load_dotenv
@@ -29,24 +28,17 @@ async def main():
         api = None
         logging.info('ecommerce app main loop...')
         if os.path.exists(config_file_path):
-            logging.info('config exist')
             with open(config_file_path, 'r') as f:
-                logging.info('config is reading...')
                 config = json.load(f)
-                logging.info('config:', config)
             
             ecommerce_config_list = config.get('ecommerce')
-            logging.info('ecommerce_config_list:', ecommerce_config_list)
             api = SmartProxy(config.get('smartproxy', None), BASE_DIR)
-            logging.info('api:', api)
         if config:
-            logging.log('config IN')
             if api:
-                logging.log('api IN')
                 retries = 0
                 while retries < MAX_RETRY_COUNT:
                     try:
-                        logging.info('retries count:', retries)
+                        logging.info(f'retries count: {retries}')
                         data = r.get('ecommerce_data_from_models')
                         if data is not None:
                             search_params = json.loads(data)
@@ -70,7 +62,6 @@ async def main():
                     await asyncio.sleep(10)
                     continue
 
-                logging.info('search_params:', search_params)
                 if search_params and isinstance(search_params, list):
                     try:
                         for index, config in enumerate(ecommerce_config_list):

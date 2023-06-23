@@ -30,7 +30,7 @@ class SmartProxy:
 
     async def fetch_product_data(self, session:httpx.AsyncClient, search_param, config):
         logging.info('\n\r')
-        logging.info('search_param:', search_param)
+        logging.info(f'search_param: {search_param}')
         global user_agent_list, user_agent_list_index
         headers = {
             'User-Agent': user_agent_list[user_agent_list_index],
@@ -52,8 +52,8 @@ class SmartProxy:
         params = config.get('params', None)
         if search_text:
             url = config['base'].format(urllib.parse.quote_plus(search_text))
-            logging.info('ASIN:', asin)
-            logging.info('URL:', url)
+            logging.info(f'ASIN: {asin}')
+            logging.info(f'URL: {url}')
             logging.info('\n\r')
             # resp = await session.get(url=url, headers=headers, params=params)
             # if resp.status_code == 200:
@@ -87,7 +87,6 @@ class SmartProxy:
         search_param_in_current_batch = []
         limit_exceeded = False
 
-        logging.info('search_param_list:', search_param_list)
         for search_param in search_param_list:
             if search_param:
                 search_param_in_current_batch.append(search_param)

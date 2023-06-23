@@ -17,5 +17,5 @@ app = Celery('base')
 app.config_from_object('django.conf:settings', namespace='CELERY')
 app.autodiscover_tasks()
 
-from celeryLogger import LoggingTask
+from .celeryLogger import LoggingTask
 LoggingTask.init()

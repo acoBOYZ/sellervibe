@@ -95,8 +95,4 @@ async def main():
 
 if __name__ == '__main__':
     logging.info('### APPLICATION STARTED ###')
-
-    try:
-        asyncio.run(main())
-    except Exception as e:
-        logging.exception("An unhandled exception occurred: %s", e)
+    asyncio.run(main())

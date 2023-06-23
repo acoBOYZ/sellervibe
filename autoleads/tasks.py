@@ -9,6 +9,7 @@ import psutil
 import signal
 from psutil import process_iter, NoSuchProcess, AccessDenied, ZombieProcess
 import redis
+import logging
 
 from amazon.models import ProductService
 
@@ -17,6 +18,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 APP_DIR = Path(__file__).resolve().parent
 load_dotenv(os.path.join(BASE_DIR, '.environ'))
 is_server = bool(os.getenv('IS_SERVER').lower() == 'true')
+
+logging.basicConfig(filename=os.path.join(APP_DIR, 'logfile.log'), level=logging.DEBUG, format='%(asctime)s - %(message)s')
 
 
 pid_file_path = os.path.join(APP_DIR, 'discord/script_pid.json')
@@ -46,10 +49,13 @@ def discord_app():
     script_info = None
 
     if os.path.exists(pid_file_path):
+        logging.info(f'{pid_file_path} exist.')
         with open(pid_file_path, 'r') as f:
             script_info = json.load(f)
+            logging.info(f'{pid_file_path}: {script_info}')
     else:
         script_info = {}
+        logging.info(f'{pid_file_path} does not exist.')
 
     for process in psutil.process_iter():
         try:
@@ -57,6 +63,9 @@ def discord_app():
                 is_script_running = True
         except (NoSuchProcess, AccessDenied, ZombieProcess):
             pass
+    
+
+    logging.info(f'script is running: {is_script_running}')
 
     if not is_script_running:
         script_process = subprocess.Popen([venv_python_path, script_path], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)

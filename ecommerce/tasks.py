@@ -9,6 +9,7 @@ import signal
 from psutil import process_iter, NoSuchProcess, AccessDenied, ZombieProcess
 import redis
 from amazon.models import ProductService
+import logging
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,6 +21,7 @@ pid_file_path = os.path.join(APP_DIR, 'source/script_pid.json')
 script_path = os.path.join(APP_DIR, 'source/main.py')
 
 r = redis.Redis(host=os.getenv('REDIS_HOST'), port=6379, db=0, password=os.getenv('REDIS_PASSWORD'))
+logging.basicConfig(filename=os.path.join(APP_DIR, 'logfile.log'), level=logging.DEBUG, format='%(asctime)s - %(message)s')
 
 @shared_task
 def ecommerce_app_fetch_model_via_redis():
@@ -52,17 +54,22 @@ def ecommerce_app_get_model_via_redis():
 
 
 @shared_task
-def ecommerce_app():
+def ecommerce_app():    
+    logging.info('ecommerce app is running...')
+
     venv_python_path = os.path.join(BASE_DIR, '.venv/bin/python') if is_server else 'python3'
     is_script_running = False
 
     script_info = None
 
     if os.path.exists(pid_file_path):
+        logging.info(f'{pid_file_path} exist.')
         with open(pid_file_path, 'r') as f:
             script_info = json.load(f)
+            logging.info(f'{pid_file_path}: {script_info}')
     else:
         script_info = {}
+        logging.info(f'{pid_file_path} does not exist.')
 
     for process in psutil.process_iter():
         try:
@@ -70,6 +77,9 @@ def ecommerce_app():
                 is_script_running = True
         except (NoSuchProcess, AccessDenied, ZombieProcess):
             pass
+    
+
+    logging.info(f'script is running: {is_script_running}')
 
     if not is_script_running:
         script_process = subprocess.Popen([venv_python_path, script_path], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)

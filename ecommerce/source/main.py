@@ -61,6 +61,7 @@ async def main():
                     await asyncio.sleep(10)
                     continue
 
+                logging.info('search_params:', search_params)
                 if search_params and isinstance(search_params, list):
                     try:
                         for index, config in enumerate(ecommerce_config_list):

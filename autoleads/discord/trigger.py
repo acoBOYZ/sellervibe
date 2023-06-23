@@ -100,6 +100,7 @@ class TriggerService:
                                 f"{domainId}_title": title,
                                 f"{rp_domainId}_title": title,
 
+                                f"{domainId}_price_org": f'{exchangeSymbol}{round(price / 100, 2)}',
                                 f"{domainId}_price": f'{rp_exchangeSymbol}{round(co_price / 100, 2)}',
                                 f"{rp_domainId}_price": f'{rp_exchangeSymbol}{round(rp_price / 100, 2)}',
 

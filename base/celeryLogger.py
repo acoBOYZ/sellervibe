@@ -5,42 +5,49 @@ from pathlib import Path
 import logging
 
 class LoggingTask(Task):
-    def init(self) -> None:
-        self.logger = logging.getLogger(__name__)
+    logger = None
 
-    
+    @classmethod
+    def init(cls) -> None:
+        cls.logger = logging.getLogger(__name__)
+
+    @classmethod
     @after_setup_logger.connect
-    def setup_loggers(self, logger, *args, **kwargs):
+    def setup_loggers(cls, logger, *args, **kwargs):
         formatter = logging.Formatter('%(asctime)s - %(message)s')
 
         APP_DIR = Path(__file__).resolve().parent
         handler = logging.FileHandler(os.path.join(APP_DIR, 'celery.log'))
         handler.setFormatter(formatter)
 
-        self.logger.addHandler(handler)
-        self.logger.propagate = False
+        cls.logger.addHandler(handler)
+        cls.logger.propagate = False
+    
+    @classmethod
+    def on_success(cls, retval, task_id, args, kwargs):
+        info = f'Task success: {cls.name} [{task_id}]'
+        cls.logger.info(info)
 
     
-    def on_success(self, retval, task_id, args, kwargs):
-        info = f'Task success: {self.name} [{task_id}]'
-        self.logger.info(info)
+    @classmethod
+    def on_failure(cls, exc, task_id, args, kwargs, einfo):
+        error = f'Task failure: {cls.name} [{task_id}] - Error: {exc}'
+        cls.logger.error(error)
 
     
-    def on_failure(self, exc, task_id, args, kwargs, einfo):
-        error = f'Task failure: {self.name} [{task_id}] - Error: {exc}'
-        self.logger.error(error)
+    @classmethod
+    def on_retry(cls, exc, task_id, args, kwargs, einfo):
+        warning = f'Task retry: {cls.name} [{task_id}] - Error: {exc}'
+        cls.logger.warning(warning)
 
     
-    def on_retry(self, exc, task_id, args, kwargs, einfo):
-        warning = f'Task retry: {self.name} [{task_id}] - Error: {exc}'
-        self.logger.warning(warning)
+    @classmethod
+    def after_return(cls, status, retval, task_id, args, kwargs, einfo):
+        debug = f'Task return: {cls.name} [{task_id}] - {status}'
+        cls.logger.debug(debug)
 
     
-    def after_return(self, status, retval, task_id, args, kwargs, einfo):
-        debug = f'Task return: {self.name} [{task_id}] - {status}'
-        self.logger.debug(debug)
-
-    
-    def on_start(self, task_id, args, kwargs):
-        debug = f'Task start: {self.name} [{task_id}]'
-        self.logger.debug(debug)
+    @classmethod
+    def on_start(cls, task_id, args, kwargs):
+        debug = f'Task start: {cls.name} [{task_id}]'
+        cls.logger.debug(debug)

@@ -58,7 +58,7 @@ async def main():
                         if bulk_data or bulk_data_walmart:
                             break
                         else:
-                            logging.error('No data found in Redis. Retrying in 60 seconds...')
+                            logging.error('No data found in Redis. Retrying in 10 seconds...')
                             retries += 1
                             await asyncio.sleep(10)
                     except redis.RedisError as e:
@@ -113,4 +113,5 @@ async def main():
                 await asyncio.sleep(60)
 
 if __name__ == '__main__':
+    logging.info('### APPLICATION STARTED ###')
     asyncio.run(main())

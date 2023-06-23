@@ -87,6 +87,7 @@ class SmartProxy:
         search_param_in_current_batch = []
         limit_exceeded = False
 
+        logging.info('search_param_list:', search_param_list)
         for search_param in search_param_list:
             if search_param:
                 search_param_in_current_batch.append(search_param)

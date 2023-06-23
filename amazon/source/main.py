@@ -86,4 +86,5 @@ async def main():
             await asyncio.sleep(60)
 
 if __name__ == '__main__':
+    logging.info('### APPLICATION STARTED ###')
     asyncio.run(main())

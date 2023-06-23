@@ -44,7 +44,7 @@ async def main():
                             r.delete('ecommerce_data_from_models')
                             break
                         else:
-                            logging.warning('ECOMMERCE: No data found in Redis. Retrying in 60 seconds...')
+                            logging.warning('ECOMMERCE: No data found in Redis. Retrying in 10 seconds...')
                             retries += 1
                             await asyncio.sleep(10)
                     except redis.RedisError as e:
@@ -92,4 +92,5 @@ async def main():
             await asyncio.sleep(60)
 
 if __name__ == '__main__':
+    logging.info('### APPLICATION STARTED ###')
     asyncio.run(main())

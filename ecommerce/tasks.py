@@ -11,6 +11,8 @@ import redis
 from amazon.models import ProductService
 import logging
 from celery.signals import after_setup_logger
+from base.celery_logging import LoggingTask
+
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,6 +25,7 @@ script_path = os.path.join(APP_DIR, 'source/main.py')
 
 r = redis.Redis(host=os.getenv('REDIS_HOST'), port=6379, db=0, password=os.getenv('REDIS_PASSWORD'))
 logger = logging.getLogger(__name__)
+loggingTask = LoggingTask(logger)
 
 
 @after_setup_logger.connect
@@ -35,7 +38,7 @@ def setup_loggers(logger, *args, **kwargs):
     logger.addHandler(handler)
     logger.propagate = False
 
-@shared_task
+@shared_task(base=loggingTask)
 def ecommerce_app_fetch_model_via_redis():
     logger.info('ecommerce app fetch model via redis is scheduled...')
     try:
@@ -51,7 +54,7 @@ def ecommerce_app_fetch_model_via_redis():
     except json.JSONDecodeError as e:
         logger.error(f'ECOMMERCE:An error occurred while decoding JSON data from Redis: {e}')
 
-@shared_task
+@shared_task(base=loggingTask)
 def ecommerce_app_get_model_via_redis():
     logger.info('ecommerce app set model via redis is scheduled...')
     try:
@@ -65,7 +68,7 @@ def ecommerce_app_get_model_via_redis():
         logger.error(f'ECOMMERCE:An error occurred while decoding JSON data from Redis: {e}')
 
 
-@shared_task
+@shared_task(base=loggingTask)
 def ecommerce_app():    
     logger.info('ecommerce app is running...')
 
@@ -100,7 +103,7 @@ def ecommerce_app():
             json.dump(script_info, f)
 
 
-@shared_task
+@shared_task(base=loggingTask)
 def stop_ecommerce_app():
     if os.path.exists(pid_file_path):
         with open(pid_file_path, 'r') as f:
@@ -117,7 +120,7 @@ def stop_ecommerce_app():
                 pass
 
 
-@shared_task
+@shared_task(base=loggingTask)
 def restart_ecommerce_app():
     stop_ecommerce_app.delay()
     ecommerce_app.delay()

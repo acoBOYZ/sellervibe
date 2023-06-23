@@ -11,6 +11,7 @@ from psutil import process_iter, NoSuchProcess, AccessDenied, ZombieProcess
 import redis
 import logging
 from celery.signals import after_setup_logger
+from base.celery_logging import LoggingTask
 
 from amazon.models import ProductService
 
@@ -26,6 +27,7 @@ script_path = os.path.join(APP_DIR, 'discord/main.py')
 
 r = redis.Redis(host=os.getenv('REDIS_HOST'), port=6379, db=0, password=os.getenv('REDIS_PASSWORD'))
 logger = logging.getLogger(__name__)
+loggingTask = LoggingTask(logger)
 
 
 @after_setup_logger.connect
@@ -38,7 +40,7 @@ def setup_loggers(logger, *args, **kwargs):
     logger.addHandler(handler)
     logger.propagate = False
 
-@shared_task
+@shared_task(base=loggingTask)
 def discord_app_fetch_model_via_redis():
     logger.info('discord app fetch model via redis is scheduled...')
     data = ProductService.get_all_data_for_discord()
@@ -50,7 +52,7 @@ def discord_app_fetch_model_via_redis():
     r.set('discord_data_walmart', json.dumps(data))
 
 
-@shared_task
+@shared_task(base=loggingTask)
 def discord_app():
     logger.info('discord app is running...')
 
@@ -86,7 +88,7 @@ def discord_app():
 
 
 
-@shared_task
+@shared_task(base=loggingTask)
 def stop_discord_app():
     if os.path.exists(pid_file_path):
         with open(pid_file_path, 'r') as f:
@@ -103,7 +105,7 @@ def stop_discord_app():
                 pass
 
 
-@shared_task
+@shared_task(base=loggingTask)
 def restart_discord_app():
     stop_discord_app.delay()
     discord_app.delay()

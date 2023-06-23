@@ -12,6 +12,7 @@ from .models import ProductService, DomainExchangeRate
 import requests
 import logging
 from celery.signals import after_setup_logger
+from base.celery_logging import LoggingTask
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,6 +22,7 @@ is_server = bool(os.getenv('IS_SERVER').lower() == 'true')
 EXCHANGERATE_API_KEY = os.getenv('EXCHANGERATE_API_KEY')
 
 logger = logging.getLogger(__name__)
+loggingTask = LoggingTask(logger)
 
 # https://www.google.com/search?q=&oq=&uule=w+CAIQICINVW5pdGVkIFN0YXRlcw&hl=en&gl=us&sourceid=chrome&ie=UTF-8
 
@@ -2026,7 +2028,6 @@ r = redis.Redis(host=os.getenv('REDIS_HOST'), port=6379, db=0, password=os.geten
 
 @after_setup_logger.connect
 def setup_loggers(logger, *args, **kwargs):
-    # setup your loggers
     formatter = logging.Formatter('%(asctime)s - %(message)s')
     handler = logging.FileHandler(os.path.join(APP_DIR, 'logfile.log'))
     handler.setFormatter(formatter)
@@ -2034,7 +2035,7 @@ def setup_loggers(logger, *args, **kwargs):
     logger.addHandler(handler)
     logger.propagate = False
 
-@shared_task
+@shared_task(base=loggingTask)
 def keepa_app_fetch_model_via_redis():
     logger.info('keepa app fetch model via redis is scheduled...')
     try:
@@ -2050,7 +2051,7 @@ def keepa_app_fetch_model_via_redis():
         logger.error(f'KEEPA:An error occurred while decoding JSON data from Redis: {e}')
 
 
-@shared_task
+@shared_task(base=loggingTask)
 def keepa_app():
     data = {
         'domain_ids': DOMAIN_IDS,
@@ -2104,7 +2105,7 @@ def keepa_app():
 
 
 
-@shared_task
+@shared_task(base=loggingTask)
 def stop_keepa_app():
     if os.path.exists(pid_file_path):
         with open(pid_file_path, 'r') as f:
@@ -2121,13 +2122,13 @@ def stop_keepa_app():
                 pass
 
 
-@shared_task
+@shared_task(base=loggingTask)
 def restart_keepa_app():
     stop_keepa_app.delay()
     keepa_app.delay()
 
 
-@shared_task
+@shared_task(base=loggingTask)
 def exchangerate_request():
     url = f'https://v6.exchangerate-api.com/v6/{EXCHANGERATE_API_KEY}/latest/USD'
     response = requests.get(url)

@@ -2,6 +2,7 @@
 .restart
 *.app
 *.content
+*.log
 
 !config.json
 !walmart_config.json

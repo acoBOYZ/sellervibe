@@ -112,3 +112,71 @@
 2023-06-23 12:35:07,211 - 
 
 2023-06-23 12:35:07,211 - search_param:
+2023-06-23 16:19:32,782 - ### APPLICATION STARTED ###
+2023-06-23 16:19:32,783 - ecommerce app main loop...
+2023-06-23 16:19:34,055 - load_ssl_context verify=True cert=None trust_env=True http2=False
+2023-06-23 16:19:34,057 - load_verify_locations cafile='/usr/local/lib/python3.9/site-packages/certifi/cacert.pem'
+2023-06-23 16:19:34,073 - load_ssl_context verify=True cert=None trust_env=True http2=False
+2023-06-23 16:19:34,073 - load_verify_locations cafile='/usr/local/lib/python3.9/site-packages/certifi/cacert.pem'
+2023-06-23 16:19:34,089 - load_ssl_context verify=True cert=None trust_env=True http2=False
+2023-06-23 16:19:34,089 - load_verify_locations cafile='/usr/local/lib/python3.9/site-packages/certifi/cacert.pem'
+2023-06-23 16:19:34,105 - 
+
+2023-06-23 16:19:34,105 - search_param:
+2023-06-23 16:19:34,106 - 
+
+2023-06-23 16:19:34,107 - 
+
+2023-06-23 16:19:34,107 - search_param:
+2023-06-23 16:19:34,108 - 
+
+2023-06-23 16:19:34,108 - 
+
+2023-06-23 16:19:34,109 - search_param:
+2023-06-23 16:19:34,109 - 
+
+2023-06-23 16:19:34,110 - ERROR: Product or asin can not found in response B077GT29HM
+2023-06-23 16:19:34,110 - ERROR: Product or asin can not found in response B00006IBNJ
+2023-06-23 16:19:34,111 - ERROR: Product or asin can not found in response B00BUB7TM0
+2023-06-23 16:19:34,111 - 
+
+2023-06-23 16:19:34,111 - search_param:
+2023-06-23 16:19:34,112 - 
+
+2023-06-23 16:19:34,112 - 
+
+2023-06-23 16:19:34,113 - search_param:
+2023-06-23 16:19:34,113 - 
+
+2023-06-23 16:19:34,114 - 
+
+2023-06-23 16:19:34,114 - search_param:
+2023-06-23 16:19:34,115 - 
+
+2023-06-23 16:19:34,115 - ERROR: Product or asin can not found in response B001PBW4FW
+2023-06-23 16:19:34,116 - ERROR: Product or asin can not found in response B001CJVTLC
+2023-06-23 16:19:34,116 - ERROR: Product or asin can not found in response B0030HBU6I
+2023-06-23 16:19:34,117 - 
+
+2023-06-23 16:19:34,118 - search_param:
+2023-06-23 16:19:34,118 - 
+
+2023-06-23 16:19:34,118 - 
+
+2023-06-23 16:19:34,119 - search_param:
+2023-06-23 16:19:34,120 - 
+
+2023-06-23 16:19:34,120 - 
+
+2023-06-23 16:19:34,120 - search_param:
+2023-06-23 16:19:34,121 - 
+
+2023-06-23 16:19:34,121 - ERROR: Product or asin can not found in response B07N7PK9QK
+2023-06-23 16:19:34,122 - ERROR: Product or asin can not found in response B07X8Y24HR
+2023-06-23 16:19:34,122 - ERROR: Product or asin can not found in response B00PBX3L7K
+2023-06-23 16:19:34,123 - 
+
+2023-06-23 16:19:34,123 - search_param:
+2023-06-23 16:19:34,123 - 
+
+2023-06-23 16:19:34,124 - ERROR: Product or asin can not found in response B01D58BGTM

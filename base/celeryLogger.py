@@ -1,12 +1,8 @@
 from celery import Task
-from celery.signals import after_setup_logger
 import os
 from pathlib import Path
 import logging
 
-@after_setup_logger.connect
-def setup_loggers(logger, *args, **kwargs):
-    LoggingTask.setup_loggers(logger, *args, **kwargs)
 
 class LoggingTask(Task):
     logger = None

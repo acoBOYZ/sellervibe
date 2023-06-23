@@ -2,6 +2,7 @@ import os
 from celery import Celery
 from pathlib import Path
 from dotenv import load_dotenv
+from celery.signals import after_setup_logger
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(os.path.join(BASE_DIR, '.environ'))
@@ -19,3 +20,9 @@ app.autodiscover_tasks()
 
 from .celeryLogger import LoggingTask
 LoggingTask.init()
+
+
+@after_setup_logger.connect
+def setup_loggers(logger, *args, **kwargs):
+    print("Setting up loggers...")
+    LoggingTask.setup_loggers(logger, *args, **kwargs)

@@ -52,24 +52,21 @@ class SmartProxy:
         params = config.get('params', None)
         if search_text:
             url = config['base'].format(urllib.parse.quote_plus(search_text))
-            logging.info(f'ASIN: {asin}')
-            logging.info(f'URL: {url}')
-            logging.info('\n\r')
-            # resp = await session.get(url=url, headers=headers, params=params)
-            # if resp.status_code == 200:
-            #     product_data = resp.text
+            resp = await session.get(url=url, headers=headers, params=params)
+            if resp.status_code == 200:
+                product_data = resp.text
 
-            #     logging.info('\n\r')
-            #     logging.info('Status Code:', resp.status_code)
-            #     logging.info('HTML Content:', resp.text)
-            #     logging.info('\n\r')
+                # logging.info('\n\r')
+                # logging.info('Status Code:', resp.status_code)
+                # logging.info('HTML Content:', resp.text)
+                # logging.info('\n\r')
 
-            #     return product_data, asin
-            # else:
-            #     logging.info('\n\r')
-            #     logging.info('Status Code:', resp.status_code)
-            #     logging.info('HTML Content:', resp.text)
-            #     logging.info('\n\r')
+                return product_data, asin
+            else:
+                logging.info('\n\r')
+                logging.info('Status Code:', resp.status_code)
+                logging.info('HTML Content:', resp.text)
+                logging.info('\n\r')
 
             # try:
             #     with open(f'{config.get("task", "")}_{asin}.html', 'r') as f:
@@ -172,6 +169,7 @@ class SmartProxy:
 
                             pos += 1
                             product_fetch_list.append(product_fetch_dict)
+                            logging.info(f'Found it!: {asin}')
 
                         yield product_fetch_list
                     else:

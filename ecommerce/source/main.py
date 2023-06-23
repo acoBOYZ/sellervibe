@@ -16,6 +16,7 @@ APP_DIR = Path(__file__).resolve().parent
 config_file_path = os.path.join(APP_DIR, 'config.json')
 
 logging.basicConfig(filename=os.path.join(APP_DIR, 'logfile.log'), level=logging.DEBUG, format='%(asctime)s - %(message)s')
+logging.getLogger('asyncio').setLevel(logging.WARNING)
 
 
 async def main():
@@ -94,4 +95,8 @@ async def main():
 
 if __name__ == '__main__':
     logging.info('### APPLICATION STARTED ###')
-    asyncio.run(main())
+
+    try:
+        asyncio.run(main())
+    except Exception as e:
+        logging.exception("An unhandled exception occurred: %s", e)

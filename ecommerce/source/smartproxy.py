@@ -32,7 +32,7 @@ class SmartProxy:
             self.proxy = config['proxy'].format(self.username, self.password)
             self.limit_per_minutes = config['limit_per_minutes']
 
-    async def fetch_product_data(self, session:httpx.AsyncClient, search_param, config):
+    async def fetch_product_data(self, search_param, config):
         logging.info('\n\r')
         logging.info(f'search_param: {search_param}')
         global user_agent_list, user_agent_list_index
@@ -56,28 +56,30 @@ class SmartProxy:
         params = config.get('params', None)
         if search_text:
             url = config['base'].format(urllib.parse.quote_plus(search_text))
-            resp = await session.get(url=url, headers=headers, params=params)
-            if resp.status_code == 200:
-                product_data = resp.text
+            timeout = httpx.Timeout(10.0, read=20.0)
+            async with httpx.AsyncClient(proxies={"http://": self.proxy, "https://": self.proxy}, timeout=timeout) as session:
+                resp = await session.get(url=url, headers=headers, params=params)
+                if resp.status_code == 200:
+                    product_data = resp.text
 
-                # logging.info('\n\r')
-                # logging.info(f'Status Code: {resp.status_code}')
-                # logging.info(f'HTML Content: {resp.text}')
-                # logging.info('\n\r')
+                    # logging.info('\n\r')
+                    # logging.info(f'Status Code: {resp.status_code}')
+                    # logging.info(f'HTML Content: {resp.text}')
+                    # logging.info('\n\r')
 
-                return product_data, asin
-            else:
-                logging.info('\n\r')
-                logging.info(f'Status Code: {resp.status_code}')
-                logging.info(f'HTML Content: {resp.text}')
-                logging.info('\n\r')
+                    return product_data, asin
+                else:
+                    logging.info('\n\r')
+                    logging.info(f'Status Code: {resp.status_code}')
+                    logging.info(f'HTML Content: {resp.text}')
+                    logging.info('\n\r')
 
-            # try:
-            #     with open(f'{config.get("task", "")}_{asin}.html', 'r') as f:
-            #         product_data = f.read()
-            #         return product_data, asin
-            # except:
-            #     logging.error('TEST DATA *.html not found: smartProxy')
+                # try:
+                #     with open(f'{config.get("task", "")}_{asin}.html', 'r') as f:
+                #         product_data = f.read()
+                #         return product_data, asin
+                # except:
+                #     logging.error('TEST DATA *.html not found: smartProxy')
         else:
             logging.error('ERROR: Search parameter was not found!')
 
@@ -100,10 +102,9 @@ class SmartProxy:
             search_param_batches.append(search_param_in_current_batch)
 
         img_comparator = ImageComparator()
-        timeout = httpx.Timeout(10.0, read=20.0)
-        async with httpx.AsyncClient(proxies={"http://": self.proxy, "https://": self.proxy}, timeout=timeout) as session:
+        async with httpx.AsyncClient(proxies={"http://": self.proxy, "https://": self.proxy}) as session:
             for search_param_batch in search_param_batches:
-                tasks = [self.fetch_product_data(session, search_param, config) for search_param in search_param_batch]
+                tasks = [self.fetch_product_data(search_param, config) for search_param in search_param_batch]
                 for task in asyncio.as_completed(tasks):
                     product_data, asin = await task
                     if product_data and asin:
@@ -211,3 +212,5 @@ class SmartProxy:
                         await f.close()
         except Exception as e:
             logging.error(f'An error occurred while downloading image: {e}')
+
+

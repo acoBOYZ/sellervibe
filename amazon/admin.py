@@ -33,3 +33,7 @@ class ProductAdmin(admin.ModelAdmin):
 @admin.register(DomainExchangeRate)
 class DomainExchangeRateAdmin(admin.ModelAdmin):
     list_display = ['id', 'domain_code', 'exchange_rate']
+
+@admin.register(WalmartProduct)
+class WalmartProductAdmin(admin.ModelAdmin):
+    list_display = ['id', 'walmartCode', 'pos', 'title', 'priceCurrent', 'updated']

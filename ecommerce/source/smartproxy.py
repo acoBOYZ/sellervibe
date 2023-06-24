@@ -142,7 +142,7 @@ class SmartProxy:
                                 if not current_price:
                                     current_price = next((text for text in texts if re.search(r"current price \$\d+\.\d+", text)), None)
                                     if current_price:
-                                        current_price = current_price.replace('current price $', '')
+                                        current_price = current_price.replace('$', '').replace('Now $', '').replace('current price Now $', '')
                                 if current_price:
                                     product_fetch_dict['priceCurrent'] = current_price.replace('$', '').replace('Now $', '')
                                 
@@ -151,7 +151,7 @@ class SmartProxy:
                                 if not current_price_now:
                                     current_price_now = next((text for text in texts if re.search(r"current price Now \$\d+\.\d+", text)), None)
                                     if current_price_now:
-                                        current_price_now = current_price_now.replace('current price Now $', '')
+                                        current_price_now = current_price_now.replace('$', '').replace('Now $', '').replace('current price Now $', '')
                                 if current_price_now:
                                     product_fetch_dict['priceCurrent'] = current_price_now
 

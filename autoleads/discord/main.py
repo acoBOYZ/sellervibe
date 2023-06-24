@@ -84,7 +84,7 @@ async def main():
                     bulk_data.clear()
 
                     for post in post_list:
-                        post = post_handler.check_post(post=post, expiration_time=86400)
+                        post = post_handler.check_post(post=post, expiration_time=43200)
                         if post:
                             await api.send(post)
 
@@ -101,7 +101,7 @@ async def main():
                     bulk_data.clear()
 
                     for post in post_list:
-                        post = post_handler.check_post(post=post, expiration_time=86400)
+                        post = post_handler.check_post(post=post, expiration_time=43200)
                         if post:
                             await api.send(post)
 

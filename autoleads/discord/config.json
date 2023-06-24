@@ -71,7 +71,7 @@
             },
             {
                 "name": "",
-                "value": "**SALES RANK:** #{x_rank}",
+                "value": "**SALES RANK:** #{6_rank}",
                 "inline": false
             },
             {
@@ -160,7 +160,7 @@
             },
             {
                 "name": "",
-                "value": "**SALES RANK:** #{x_rank}",
+                "value": "**SALES RANK:** #{2_rank}",
                 "inline": false
             },
             {
@@ -249,7 +249,7 @@
             },
             {
                 "name": "",
-                "value": "**SALES RANK:** #{x_rank}",
+                "value": "**SALES RANK:** #{1_rank}",
                 "inline": false
             },
             {
@@ -338,7 +338,7 @@
             },
             {
                 "name": "",
-                "value": "**SALES RANK:** #{x_rank}",
+                "value": "**SALES RANK:** #{2_rank}",
                 "inline": false
             },
             {
@@ -427,7 +427,7 @@
             },
             {
                 "name": "",
-                "value": "**SALES RANK:** #{x_rank}",
+                "value": "**SALES RANK:** #{1_rank}",
                 "inline": false
             },
             {
@@ -516,7 +516,7 @@
             },
             {
                 "name": "",
-                "value": "**SALES RANK:** #{x_rank}",
+                "value": "**SALES RANK:** #{6_rank}",
                 "inline": false
             },
             {

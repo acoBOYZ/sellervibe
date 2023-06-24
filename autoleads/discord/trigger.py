@@ -87,6 +87,13 @@ class TriggerService:
                             else:
                                 rank = 'N/A'
 
+                            rp_rank = rp.get('salesRanks', None)
+                            if rp_rank and isinstance(rp_rank, dict):
+                                rp_rank = rp_rank.get('rank', -1)
+                                rp_rank = rp_rank if rp_rank > 0 else 'N/A'
+                            else:
+                                rp_rank = 'N/A'
+
                             color = cls.interpolate_color(low_profit_color, high_profit_color, roi / 100)
                             # print('color:', color, int(color, 16))
                                 
@@ -119,8 +126,10 @@ class TriggerService:
                                 f"{domainId}_category": category,
                                 f"{rp_domainId}_category": category,
 
+                                f"{domainId}_rank": f"{rank}",
+                                f"{rp_domainId}_rank": f"{rp_rank}",
+
                                 f"x_roi": roi,
-                                f"x_rank": f"{rank}",
                                 f"x_color": f"{color}"
                             }
                             cpy_config = cls.deep_replace(cpy_config, related_keys)

@@ -200,6 +200,7 @@ class SmartProxy:
         if '?' in url:
             url = url.split('?')[0]
 
+        logging.info(f'{code} image will start to download')
         try:
             async with aiohttp.ClientSession(connector=aiohttp.TCPConnector(ssl_context=self.ssl_context)) as session:
                 async with session.get(url) as resp:

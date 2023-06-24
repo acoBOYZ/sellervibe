@@ -194,6 +194,7 @@ commands.txt
 rabbitmq.txt
 redis.txt
 celery.txt
+smartProxyChat.txt
 
 tailwind.config.js
 *.sh

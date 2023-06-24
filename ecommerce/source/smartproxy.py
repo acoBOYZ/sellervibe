@@ -56,30 +56,18 @@ class SmartProxy:
         params = config.get('params', None)
         if search_text:
             url = config['base'].format(urllib.parse.quote_plus(search_text))
-            timeout = httpx.Timeout(10.0, read=20.0)
-            async with httpx.AsyncClient(proxies={"http://": self.proxy, "https://": self.proxy}, timeout=timeout) as session:
-                resp = await session.get(url=url, headers=headers, params=params)
-                if resp.status_code == 200:
-                    product_data = resp.text
-
-                    # logging.info('\n\r')
-                    # logging.info(f'Status Code: {resp.status_code}')
-                    # logging.info(f'HTML Content: {resp.text}')
-                    # logging.info('\n\r')
-
-                    return product_data, asin
-                else:
-                    logging.info('\n\r')
-                    logging.info(f'Status Code: {resp.status_code}')
-                    logging.info(f'HTML Content: {resp.text}')
-                    logging.info('\n\r')
-
-                # try:
-                #     with open(f'{config.get("task", "")}_{asin}.html', 'r') as f:
-                #         product_data = f.read()
-                #         return product_data, asin
-                # except:
-                #     logging.error('TEST DATA *.html not found: smartProxy')
+            try:
+                timeout = httpx.Timeout(10.0, read=20.0)
+                async with httpx.AsyncClient(proxies={"http://": self.proxy, "https://": self.proxy}, timeout=timeout) as session:
+                    resp = await session.get(url=url, headers=headers, params=params)
+                    if resp.status_code == 200:
+                        product_data = resp.text
+                        return product_data, asin
+                    else:
+                        logging.info(f'Status Code: {resp.status_code}')
+            except Exception as e:
+                logging.error(f'Error while fetching data: {e}')
+                return None, asin
         else:
             logging.error('ERROR: Search parameter was not found!')
 
@@ -106,79 +94,82 @@ class SmartProxy:
             for search_param_batch in search_param_batches:
                 tasks = [self.fetch_product_data(search_param, config) for search_param in search_param_batch]
                 for task in asyncio.as_completed(tasks):
-                    product_data, asin = await task
-                    if product_data and asin:
-                        # with open(f'{config.get("task", "")}_{asin}.html', 'w') as f:
-                        #     f.write(product_data)
-                        #     yield product_data
-                        soup = BeautifulSoup(product_data, 'html.parser')
+                    try:
+                        product_data, asin = await task
+                        if product_data and asin:
+                            # with open(f'{config.get("task", "")}_{asin}.html', 'w') as f:
+                            #     f.write(product_data)
+                            #     yield product_data
+                            soup = BeautifulSoup(product_data, 'html.parser')
 
-                        product_fetch_list = []
-                        pos = 1
-                        group_els = soup.select('[role=\"group\"]')
+                            product_fetch_list = []
+                            pos = 1
+                            group_els = soup.select('[role=\"group\"]')
 
-                        for group in group_els:
-                            # Extract link-identifier values
-                            link_identifiers = [a['link-identifier'] for a in group.find_all('a', {'link-identifier': True})]
-                            # Extract all the images
-                            images = [img['src'] for img in group.find_all('img', src=True)]
-                            for index, image in enumerate(images):
-                                images[index] = self.clean_image_url(image)
+                            for group in group_els:
+                                # Extract link-identifier values
+                                link_identifiers = [a['link-identifier'] for a in group.find_all('a', {'link-identifier': True})]
+                                # Extract all the images
+                                images = [img['src'] for img in group.find_all('img', src=True)]
+                                for index, image in enumerate(images):
+                                    images[index] = self.clean_image_url(image)
 
-                            if len(images) > 0 and len(link_identifiers) > 0:
-                                await self.download_image(images[0], link_identifiers[0])
-                            
-                            amazon_image = os.path.join(self.AMAZON_IMAGE_DIR, f'{asin}.png')
-                            related_image = f'{self.WALMART_IMAGE_DIR}/{link_identifiers[0]}.png'
-                            if not await img_comparator.compare(amazon_image, related_image, .84):
-                                break
+                                if len(images) > 0 and len(link_identifiers) > 0:
+                                    await self.download_image(images[0], link_identifiers[0])
+                                
+                                amazon_image = os.path.join(self.AMAZON_IMAGE_DIR, f'{asin}.png')
+                                related_image = f'{self.WALMART_IMAGE_DIR}/{link_identifiers[0]}.png'
+                                if not await img_comparator.compare(amazon_image, related_image, .84):
+                                    break
 
-                            product_fetch_dict = {}
-                            product_fetch_dict['updated'] = True
-                            product_fetch_dict['asin'] = asin
-                            product_fetch_dict['pos'] = pos
-                            product_fetch_dict['walmartCode'] = link_identifiers[0]
-                            product_fetch_dict['imageUrl'] = images[0]
-                            if len(images) > 1:
-                                product_fetch_dict['opportunity'] = True
-                            
-                            # Extract all the texts
-                            texts = [tag.text for tag in group.find_all(text=True) if tag.parent.name != 'script']
+                                product_fetch_dict = {}
+                                product_fetch_dict['updated'] = True
+                                product_fetch_dict['asin'] = asin
+                                product_fetch_dict['pos'] = pos
+                                product_fetch_dict['walmartCode'] = link_identifiers[0]
+                                product_fetch_dict['imageUrl'] = images[0]
+                                if len(images) > 1:
+                                    product_fetch_dict['opportunity'] = True
+                                
+                                # Extract all the texts
+                                texts = [tag.text for tag in group.find_all(text=True) if tag.parent.name != 'script']
 
-                            #Title
-                            product_fetch_dict['title'] = texts[0]
+                                #Title
+                                product_fetch_dict['title'] = texts[0]
 
-                            #Current Price
-                            current_price = next((text for text in texts if re.search(r"\$\d+\.\d+(?!\s*/)", text)), None)
-                            if not current_price:
-                                current_price = next((text for text in texts if re.search(r"current price \$\d+\.\d+", text)), None)
+                                #Current Price
+                                current_price = next((text for text in texts if re.search(r"\$\d+\.\d+(?!\s*/)", text)), None)
+                                if not current_price:
+                                    current_price = next((text for text in texts if re.search(r"current price \$\d+\.\d+", text)), None)
+                                    if current_price:
+                                        current_price = current_price.replace('current price $', '')
                                 if current_price:
-                                    current_price = current_price.replace('current price $', '')
-                            if current_price:
-                                product_fetch_dict['priceCurrent'] = current_price.replace('$', '')
-                            
-                            #Current Price Now
-                            current_price_now = next((text for text in texts if re.search(r"Now \$\d+\.\d+(?!\s*/)", text)), None)
-                            if not current_price_now:
-                                current_price_now = next((text for text in texts if re.search(r"current price Now \$\d+\.\d+", text)), None)
+                                    product_fetch_dict['priceCurrent'] = current_price.replace('$', '').replace('Now $', '')
+                                
+                                #Current Price Now
+                                current_price_now = next((text for text in texts if re.search(r"Now \$\d+\.\d+(?!\s*/)", text)), None)
+                                if not current_price_now:
+                                    current_price_now = next((text for text in texts if re.search(r"current price Now \$\d+\.\d+", text)), None)
+                                    if current_price_now:
+                                        current_price_now = current_price_now.replace('current price Now $', '')
                                 if current_price_now:
-                                    current_price_now = current_price_now.replace('current price Now $', '')
-                            if current_price_now:
-                                product_fetch_dict['priceCurrent'] = current_price_now
+                                    product_fetch_dict['priceCurrent'] = current_price_now
 
-                            #Current Price Was
-                            current_price_was = next((text for text in texts if re.search(r"Was \$\d+\.\d+(?!\s*/)", text)), None)
-                            if current_price_was:
-                                current_price_was = current_price_was.replace('Was $', '')
-                                product_fetch_dict['priceWas'] = current_price_was
+                                #Current Price Was
+                                current_price_was = next((text for text in texts if re.search(r"Was \$\d+\.\d+(?!\s*/)", text)), None)
+                                if current_price_was:
+                                    current_price_was = current_price_was.replace('Was $', '')
+                                    product_fetch_dict['priceWas'] = current_price_was
 
-                            pos += 1
-                            product_fetch_list.append(product_fetch_dict)
-                            logging.info(f'Found it!: {asin}')
+                                pos += 1
+                                product_fetch_list.append(product_fetch_dict)
+                                logging.info(f'Found it!: {asin}')
 
-                        yield product_fetch_list
-                    else:
-                        logging.error(f'ERROR: Product or asin can not found in response {asin}') 
+                            yield product_fetch_list
+                        else:
+                            logging.error(f'ERROR: Product or asin can not found in response {asin}') 
+                    except Exception as e:
+                        logging.error(f'An error occurred while getting data from html context: {e}')
 
             if limit_exceeded:
                 await asyncio.sleep(60)

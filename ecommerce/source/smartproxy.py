@@ -137,24 +137,26 @@ class SmartProxy:
                                 #Title
                                 product_fetch_dict['title'] = texts[0]
 
-                                #Current Price
+                                # Current Price
                                 current_price = next((text for text in texts if re.search(r"\$\d+\.\d+(?!\s*/)", text)), None)
                                 if not current_price:
                                     current_price = next((text for text in texts if re.search(r"current price \$\d+\.\d+", text)), None)
-                                    if current_price:
-                                        current_price = current_price.replace('$', '').replace('Now $', '').replace('current price Now $', '')
                                 if current_price:
-                                    product_fetch_dict['priceCurrent'] = current_price.replace('$', '').replace('Now $', '')
-                                
-                                #Current Price Now
+                                    current_price = current_price.replace('current price $', '').replace('Now $', '').replace('$', '')
+                                    product_fetch_dict['priceCurrent'] = current_price
+
+                                # Current Price Now
                                 current_price_now = next((text for text in texts if re.search(r"Now \$\d+\.\d+(?!\s*/)", text)), None)
                                 if not current_price_now:
                                     current_price_now = next((text for text in texts if re.search(r"current price Now \$\d+\.\d+", text)), None)
-                                    if current_price_now:
-                                        current_price_now = current_price_now.replace('$', '').replace('Now $', '').replace('current price Now $', '')
                                 if current_price_now:
+                                    current_price_now = current_price_now.replace('current price Now $', '').replace('Now $', '').replace('$', '')
                                     product_fetch_dict['priceCurrent'] = current_price_now
 
+                                priceTemp = product_fetch_dict.get('priceCurrent', '').split('$')
+                                if priceTemp and len(priceTemp) > 1 and isinstance(priceTemp, list):
+                                    product_fetch_dict['priceCurrent'] = priceTemp[1]
+                                    
                                 #Current Price Was
                                 current_price_was = next((text for text in texts if re.search(r"Was \$\d+\.\d+(?!\s*/)", text)), None)
                                 if current_price_was:

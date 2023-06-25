@@ -28,6 +28,9 @@ class TriggerService:
                 price = int(product.get('buyBoxPrice', 0))
             except:
                 pass
+            if price == 0:
+                continue
+
             isAmazon = product.get('buyBoxIsAmazon', None)
             inStock = (str(product.get('buyBoxAvailabilityMessage', '')).lower() == "in stock.")
             image = ''
@@ -53,6 +56,9 @@ class TriggerService:
                         w_price = float(walmart.get('priceCurrent', 0))
                     except:
                         pass
+                    if w_price == 0:
+                        continue
+
                     w_image = walmart.get('imageUrl', None)
                     w_exchangeRate = 1.0
 

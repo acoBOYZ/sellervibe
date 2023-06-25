@@ -37,3 +37,8 @@ class DomainExchangeRateAdmin(admin.ModelAdmin):
 @admin.register(WalmartProduct)
 class WalmartProductAdmin(admin.ModelAdmin):
     list_display = ['id', 'walmartCode', 'pos', 'title', 'priceCurrent', 'updated']
+    actions = ['make_updated']
+
+    def make_updated(self, request, queryset):
+        queryset.update(updated=True)
+    make_updated.short_description = "Mark selected products as updated"

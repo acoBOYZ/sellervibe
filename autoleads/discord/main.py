@@ -78,7 +78,7 @@ async def main():
                 if bulk_data and config:
                     post_list = []
                     try:
-                        post_list = domainTrigger.control_loop(bulk_data, config, 35)
+                        post_list = domainTrigger.control_loop(bulk_data, config, 15)
                     except Exception as e:
                         logging.error(f'An error occurred in domainTrigger: {e}')
                     bulk_data.clear()
@@ -95,7 +95,7 @@ async def main():
                 if bulk_data_walmart and walmart_config:
                     post_list = []
                     try:
-                        post_list = walmartTrigger.control_loop(bulk_data_walmart, walmart_config, 35)
+                        post_list = walmartTrigger.control_loop(bulk_data_walmart, walmart_config, 15)
                     except Exception as e:
                         logging.error(f'An error occurred in walmartTrigger: {e}')
                     bulk_data.clear()
